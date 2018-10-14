@@ -1,0 +1,62 @@
+es-MX:
+  errors:
+    messages:
+      expired: "ha expirado, por favor pida uno nuevo"
+      not_found: "no fue encontrado"
+      already_confirmed: "ya había sido confirmado"
+      not_locked: "no está bloqueada"
+      not_saved:
+        one: "Ocurrió un error"
+        other: "Ocurrieron %{count} errores"
+
+  devise:
+    failure:
+      already_authenticated: 'Ya iniciaste sesión.'
+      unauthenticated: 'Necesitas ingresar o registrarte para continuar.'
+      unconfirmed: 'Por favor confirma tu correo antes de continuar.'
+      locked: 'Tu cuenta está bloqueada.'
+      invalid: 'El email o la contraseña no son válidos'
+      invalid_token: 'El token no es válido'
+      timeout: 'Tu sesión ya expiró, por favor ingresa de nuevo'
+      inactive: 'Tu cuenta aún no ha sido activada.'
+      member:
+        not_found_in_database: 'No se encontró el correo en nuestro sistema.'
+    sessions:
+      member:
+        signed_in: '¡Bienvenido!'
+        signed_out: ''
+    passwords:
+      forgot: '¿Olvidaste tu contraseña?'
+      send_instructions: 'Te enviamos un correo con instrucciones para reestablecer tu contraseña.'
+      updated: 'Tu contraseña fue cambiada exitosamente.'
+      updated_not_active: 'Tu contraseña se cambió exitosamente.'
+      send_paranoid_instructions: "Si tu correo electrónico existe en nuestra base de datos, recibirás un enlace para reiniciar tu contraseña en unos minutos."
+      member:
+        no_token: El token no es válido
+    confirmations:
+      send_instructions: 'Recibirás un correo electrónico con instrucciones sobre cómo confirmar tu cuenta en unos minutos.'
+      send_paranoid_instructions: 'Si tu correo electrónico existe en nuestra base de datos, recibirás un correo con instrucciones sobre cómo confirmar tu cuenta en unos minutos.'
+      confirmed: 'Tu cuenta fue confirmada exitosamente.'
+    registrations:
+      signed_up: ¡Bienvenido!
+      inactive_signed_up: 'Te has registrado exitosamente; sin embargo, no te hemos podido ingresar debido a que tu cuenta está %{reason}.'
+      updated: 'Actualizaste tu cuenta exitosamente.'
+      destroyed: '¡Nos vemos! Tu cuenta fue cancelada con éxito, esperamos verte de nuevo pronto. Gracias.'
+      reasons:
+        inactive: 'inactiva'
+        unconfirmed: 'sin confirmar'
+        locked: 'bloqueada'
+    unlocks:
+      send_instructions: 'Recibirás un correo electrónico con instrucciones sobre cómo desbloquear tu cuenta en unos minutos.'
+      unlocked: 'Tu cuenta fue desbloqueada con éxito, has sido ingresado al sistema.'
+      send_paranoid_instructions: 'Si tu cuenta existe, recibirás un correo electrónico con instrucciones sobre cómo desbloquear tu cuenta en unos minutos.'
+    omniauth_callbacks:
+      success: 'Ingreso autorizado con tu cuenta de %{kind}.'
+      failure: 'No se te pudo autorizar en %{kind} debido a "%{reason}".'
+    mailer:
+      confirmation_instructions:
+        subject: 'Confirma tu email'
+      reset_password_instructions:
+        subject: 'Recupera tu contraseña'
+      unlock_instructions:
+        subject: 'Desbloquea tu cuenta'
