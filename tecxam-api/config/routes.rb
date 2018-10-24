@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'exams#index'
   resources :users, only: [:show, :edit, :update]
-  resources :exams, only: [:index, :create, :edit]
+  resources :exams, only: [:index, :create, :destroy, :update] do
+    resources :questions, only: [:index, :update]
+  end
   resources :questions
   resources :answers
 end
