@@ -3,7 +3,7 @@ class ExamsController < ApplicationController
   after_action :render_json, except: [:index]
 
   def index
-    @exams = Exam.where(user: User.first) # CHANGE
+    @exams = Exam.where(course: Course.second) # CHANGE
     json_response(@exams)
   end
 
@@ -32,7 +32,7 @@ class ExamsController < ApplicationController
     params
       .require(:exam)
       .permit(:name, :is_random)
-      .merge(user: User.first) # CHANGE
+      .merge(course: Course.second) # CHANGE
   end
 
   def render_json

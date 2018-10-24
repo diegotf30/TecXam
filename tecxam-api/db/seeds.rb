@@ -7,8 +7,20 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User::Create.create(email: 'a@gmail.com', password: '123456789', name: 'diego', gender: 'male')
 user = User.first
+courses = Course.create([
+  {name: 'Base de Datos', acronym: 'TC123456', user: user},
+  {name: 'AMSS', acronym: 'FC00125', user: user},
+  {name: 'FIS', acronym: 'TC1222', user: user}
+])
 
-exams = Exam.create([{name: 'bases', is_random: false, user: user}, {name: 'fundamentos', is_random: true, user: user}, {name: 'amss', is_random: false, user: user}])
+exams = []
+(0...2).each do |i|
+  exams |= Exam.create([
+    {name: '1er parcial', is_random: true, course: Course.all[i]},
+    {name: '2o parcial', is_random: true, course: Course.all[i]},
+    {name: '3er parcial', is_random: false, course: Course.all[i]}]
+  )
+end
 
 questions = ['Cuanto pesa Enrique?', 'Por qué samuel usa expansores?', 'Como bajo tanto peso jaime', 'xq no puedo dormir']
 
