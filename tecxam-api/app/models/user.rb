@@ -20,6 +20,6 @@ class User < ApplicationRecord
   end
 
   def tags
-    questions.pluck(:tag)
+    questions.pluck(:tag).compact
   end
 end

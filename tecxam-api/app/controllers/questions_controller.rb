@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
   def question_params
     params
       .require(:question)
-      .permit(:name)
+      .permit(:name, :tag)
       .merge(user: User.first) # CHANGE
   end
 
