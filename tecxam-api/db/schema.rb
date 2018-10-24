@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181024190503) do
+ActiveRecord::Schema.define(version: 2018_10_24_195613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,13 +24,23 @@ ActiveRecord::Schema.define(version: 20181024190503) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
-  create_table "exams", force: :cascade do |t|
+  create_table "courses", force: :cascade do |t|
     t.string "name"
-    t.boolean "is_random"
+    t.text "description"
+    t.string "acronym"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_exams_on_user_id"
+    t.index ["user_id"], name: "index_courses_on_user_id"
+  end
+
+  create_table "exams", force: :cascade do |t|
+    t.string "name"
+    t.boolean "is_random"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_exams_on_course_id"
   end
 
   create_table "exams_questions", id: false, force: :cascade do |t|
@@ -45,6 +55,7 @@ ActiveRecord::Schema.define(version: 20181024190503) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tag"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
@@ -68,6 +79,6 @@ ActiveRecord::Schema.define(version: 20181024190503) do
   end
 
   add_foreign_key "answers", "questions"
-  add_foreign_key "exams", "users"
+  add_foreign_key "courses", "users"
   add_foreign_key "questions", "users"
 end

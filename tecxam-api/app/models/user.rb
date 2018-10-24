@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  has_many :exams
+  has_many :courses
+  has_many :exams, through: :courses
   has_many :questions
 
   validates :name, length: { maximum: 50 }, allow_blank: true
