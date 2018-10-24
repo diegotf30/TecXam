@@ -1,5 +1,6 @@
 <navbar></navbar>
-<div id="main" class="">
+<div id="main" class="container">
+  <h1 class="page-title">Cursos</h1>
   <ngx-datatable
     #table
     class="material fullscreen expandable"
@@ -58,7 +59,9 @@
     </ngx-datatable-column>
   </ngx-datatable>
 
-  <div class='selected-column'>
+  <button class="btn btn-primary btn-add" (click)="open()">Agregar <fa name="plus-circle " class="icons"></fa></button>
+
+  <!-- <div class='selected-column'>
         <h4>Selections <small>({{selected?.length}})</small></h4>
         <ul>
           <li *ngFor='let sel of selected'>
@@ -66,7 +69,10 @@
           </li>
           <li *ngIf="!selected?.length">No Selections</li>
         </ul>
-      </div>
+      </div> -->
+
+
+
   <!-- <ngx-datatable
         class="material"
         [rows]="rows"

@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddCourseModalComponent } from '../add-course-modal/add-course-modal.component';
 
 @Component({
   selector: 'app-main-page',
@@ -22,7 +24,7 @@ export class MainPageComponent implements OnInit {
 
   @ViewChild('table') table: any;
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
@@ -53,6 +55,17 @@ export class MainPageComponent implements OnInit {
 
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
+  }
+
+  open(){
+    this.modalService.open(AddCourseModalComponent, { centered: true, windowClass: 'add-modal' }).result.then((result) => {
+      console.log(result);
+      let row = { Siglas: result.siglas, Nombre: result.name, Info: result.info};
+      this.rows.push(row);
+      this.rows = [...this.rows];
+    }, (reason) => {
+      console.log('Closed');
+    });;  //size: 'sm',
   }
 
 }

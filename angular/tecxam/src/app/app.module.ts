@@ -33,6 +33,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ExamsPageComponent } from './components/_exams-page/exams-page.component';
+import { BackButtonComponent } from './components/back-button/back-button.component';
+import { NextButtonComponent } from './components/next-button/next-button.component';
+import { AddCourseModalComponent } from './components/add-course-modal/add-course-modal.component';
+import { AddExamModalComponent } from './components/add-exam-modal/add-exam-modal.component';
+import { EditExamComponent } from './components/_edit-exam/edit-exam.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,12 @@ import { ExamsPageComponent } from './components/_exams-page/exams-page.componen
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
-    ExamsPageComponent
+    ExamsPageComponent,
+    BackButtonComponent,
+    NextButtonComponent,
+    AddCourseModalComponent,
+    AddExamModalComponent,
+    EditExamComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +69,10 @@ import { ExamsPageComponent } from './components/_exams-page/exams-page.componen
     BaseService,
     AuthGuard
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AddCourseModalComponent,
+    AddExamModalComponent
+  ]
 })
 export class AppModule { }

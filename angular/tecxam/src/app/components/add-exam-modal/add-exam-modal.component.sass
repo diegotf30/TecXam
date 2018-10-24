@@ -1,28 +1,11 @@
 @import "src/styles.sass"
 
-div#main
-  position: relative
-  .row
-    display: flex
-    justify-content: center
-    align-items: center
-    align-self: center
-    align-content: center
-    --input-padding-x: 1.8rem
-    --input-padding-y: .5rem
-
-
-.separator
-  display: inline-block
-  width: 29px
-  height: 1px
-  content: ""
-
-ngx-datatable
-  margin-top: 15px
+div#addExam
+  --input-padding-x: 1.8rem
+  --input-padding-y: .5rem
 
 .card
-  margin: 10px 0px !important
+  margin: 0px 0px !important
 
 .card-signin
   border: 0
@@ -52,11 +35,15 @@ ngx-datatable
   position: relative
   margin-bottom: 1rem
 
-.form-label-group input, textarea
+.form-label-group input
+  border-radius: 2rem
+
+.form-group select
   border-radius: 2rem
 
 .form-label-group>input,
-.form-label-group>label, .form-label-group>textarea
+.form-label-group>label,
+.form-group>select
   padding: var(--input-padding-y) var(--input-padding-x)
 
 .form-label-group>label
@@ -88,11 +75,11 @@ ngx-datatable
 .form-label-group input::placeholder
   color: transparent
 
-.form-label-group input:not(:placeholder-shown), .form-label-group textarea:not(:placeholder-shown)
+.form-label-group input:not(:placeholder-shown)
   padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3))
   padding-bottom: calc(var(--input-padding-y) / 3)
 
-.form-label-group input:not(:placeholder-shown)~label, .form-label-group textarea:not(:placeholder-shown)~label
+.form-label-group input:not(:placeholder-shown)~label
   padding-top: calc(var(--input-padding-y) / 3)
   padding-bottom: calc(var(--input-padding-y) / 3)
   font-size: 12px
@@ -106,9 +93,45 @@ ngx-datatable
   color: white
   background-color: #3b5998
 
-.btn-add
-  margin: 10px 0
 
-.btn-edit
-  margin-right: 10px
-  cursor: pointer
+
+.input-icons
+  width: 100%
+  // &:not(:first-child):not(:last-child)
+  //   margin: 18px 0px
+  &.file-input
+    // font-family: $font-body
+    font-size: 16px
+    label, input
+      width: 100%
+      border-radius: 2rem
+      color: white
+      background-color: #007bff
+      padding-bottom: 32px
+
+    fa
+      top: 15px
+      color: white
+
+    &:focus + .icons
+      color: $blue-tec
+    &.is-valid + .icons
+      color: $blue-tec
+    &:focus.is-valid + .icons
+      color: $blue-tec
+
+  > input
+    text-indent: 30px
+    &.custom-file-input
+      cursor: pointer
+
+  > select
+    text-indent: 14px
+    color: rgba(155, 155, 155, 1.0)
+
+  > .icons
+    position: absolute
+    top: 8px
+    left: 40px
+    font-size: 15px
+    color: #777777

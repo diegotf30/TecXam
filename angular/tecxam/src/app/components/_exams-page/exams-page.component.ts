@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddExamModalComponent } from '../add-exam-modal/add-exam-modal.component';
 
 @Component({
   selector: 'exams-page',
@@ -6,12 +8,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./exams-page.component.sass']
 })
 export class ExamsPageComponent implements OnInit {
+
+
   rows = [
-    { Examen: 'Primer Parcial', NotasAdicionales: 'Aqui se puede escribir mucho'},
-    { Examen: 'Segundo Parcial', NotasAdicionales: 'Aqui se puede escribir mucho'},
+    { Type:'Examen', Nombre: 'Primer Parcial', NotasAdicionales: 'Aqui se puede escribir mucho'},
+    { Type:'Examen', Nombre: 'Segundo Parcial', NotasAdicionales: 'Aqui se puede escribir mucho'},
+    { Type:'Tarea', Nombre: 'Tarea', NotasAdicionales: 'Aqui se puede escribir mucho'},
+    { Type:'Otro', Nombre: 'Documento subido por profesor', NotasAdicionales: 'Aqui se puede escribir mucho'},
   ];
   columns = [
-    { prop: 'Examen' },
+    { prop: 'Documento' },
   ];
 
   selected = [];
@@ -20,7 +26,7 @@ export class ExamsPageComponent implements OnInit {
 
   @ViewChild('table') table: any;
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
@@ -49,7 +55,35 @@ export class ExamsPageComponent implements OnInit {
     this.table.rowDetail.toggleExpandRow(row);
   }
 
+  toggleExpandGroup(group) {
+    console.log('Toggled Expand Group!', group);
+    this.table.groupHeader.toggleExpandGroup(group);
+  }
+
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
   }
+
+  info(group: string){
+    if(group == 'Examen'){
+      return 'Sección de examenes genearados';
+    }
+    if(group == 'Tarea'){
+      return 'Sección de tareas genearados';
+    }
+    if(group == 'Otro'){
+      return 'Sección de documentos subidos que no se pueden editar';
+    }
+  }
+
+  open(){
+    this.modalService.open(AddExamModalComponent, { centered: true, windowClass: 'add-modal' }).result.then((result) => {
+      let row = { Type: result.type, Nombre: result.name, NotasAdicionales: result.notes};
+      this.rows.push(row);
+      this.rows = [...this.rows];
+    }, (reason) => {
+      console.log('Closed');
+    });;  //size: 'sm',
+  }
+
 }
