@@ -1,3 +1,149 @@
-<p>
-  edit-exam works!
-</p>
+<navbar></navbar>
+<div class="container" style="position: relative">
+  <back-button (click)="test2()" [title]="'Cursos'"></back-button><h1 class="page-title">Preguntas del examen</h1>
+</div>
+<div id="addExam" class="row">
+  <div class="card card-signin my-5 col-sm-9 col-md-5 col-lg-3 mx-auto">
+    <h5 class="card-title text-center" style="margin-top: 33px; margin-bottom: ;">Lista de preguntas</h5>
+    <ngx-datatable
+      #table
+      class="material"
+
+      style="height: 300px;"
+      [scrollbarV]="true"
+
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="columns"
+      [headerHeight]="0"
+      [footerHeight]="50"
+      [rowHeight]="50"
+      [selected]="selected"
+      [selectionType]="'single'"
+      [selectCheck]="singleSelectCheck"
+      (activate)="onActivate($event)"
+      (select)='onSelect($event)'>
+    </ngx-datatable>
+  </div>
+
+
+  <div class="card card-signin my-5 col-sm-9 col-md-5 col-lg-3 mx-auto" *ngIf="selected.length >= 1">
+    <div class="card-body">
+      <h5 class="card-title text-center">Editar Pregunta</h5>
+      <form class="form-signin" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
+
+        <!-- <div class="form-group">
+          <select class="form-control selectpicker" id="selectType" (change)="onChange($event.target)">
+            <option selected disabled>Tipo de pregunta</option>
+            <option>Examen</option>
+            <option>Tarea</option>
+            <option>Otro</option>
+          </select>
+        </div> -->
+
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          value="{{this.selected[0].Nombre}}">
+          <!-- #name="ngModel" name="name" ngModel > -->
+          <label for="inputName">Nombre de la pregunta</label>
+        </div>
+
+        <div class="form-label-group">
+          <input type="number" id="inputNumber" class="form-control" value="0" min="0" max="3" (change)="onChangeVar($event.target)">
+          <label for="inputNumber">Cantidad de variables</label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block text-uppercase" *ngIf="variables > 0" (click)="test()">Editar Variables</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card card-signin my-5 col-sm-9 col-md-5 col-lg-3 mx-auto" *ngIf="openvar && selected.length >= 1">
+    <div class="card-body">
+      <h5 class="card-title text-center">Editar Variables</h5>
+      <form class="form-signin" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
+
+        <!-- <div class="form-group">
+          <select class="form-control selectpicker" id="selectType" (change)="onChange($event.target)">
+            <option selected disabled>Tipo de pregunta</option>
+            <option>Examen</option>
+            <option>Tarea</option>
+            <option>Otro</option>
+          </select>
+        </div> -->
+
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card card-signin my-5 col-sm-9 col-md-5 col-lg-3 mx-auto" *ngIf="selected.length >= 1">
+    <div class="card-body">
+      <h5 class="card-title text-center">Editar Respuestas</h5>
+      <form class="form-signin" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
+
+        <!-- <div class="form-group">
+          <select class="form-control selectpicker" id="selectType" (change)="onChange($event.target)">
+            <option selected disabled>Tipo de pregunta</option>
+            <option>Examen</option>
+            <option>Tarea</option>
+            <option>Otro</option>
+          </select>
+        </div> -->
+
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+        <div class="form-label-group">
+          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
+          #name="ngModel" name="name" ngModel>
+          <label for="inputName">Respuesta</label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

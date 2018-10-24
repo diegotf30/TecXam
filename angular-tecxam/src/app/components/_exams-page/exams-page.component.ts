@@ -11,10 +11,10 @@ export class ExamsPageComponent implements OnInit {
 
 
   rows = [
-    { Type:'Examen', Nombre: 'Primer Parcial', NotasAdicionales: 'Aqui se puede escribir mucho'},
-    { Type:'Examen', Nombre: 'Segundo Parcial', NotasAdicionales: 'Aqui se puede escribir mucho'},
-    { Type:'Tarea', Nombre: 'Tarea', NotasAdicionales: 'Aqui se puede escribir mucho'},
-    { Type:'Otro', Nombre: 'Documento subido por profesor', NotasAdicionales: 'Aqui se puede escribir mucho'},
+    { Type:'Examen', Nombre: 'Primer Parcial'},
+    { Type:'Examen', Nombre: 'Segundo Parcial'},
+    { Type:'Tarea', Nombre: 'Tarea'},
+    { Type:'Otro', Nombre: 'Documento subido por profesor'},
   ];
   columns = [
     { prop: 'Documento' },
