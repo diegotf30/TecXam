@@ -18,4 +18,8 @@ class User < ApplicationRecord
   def verified?
     !!confirmed_at
   end
+
+  def tags
+    questions.pluck(:tag)
+  end
 end
