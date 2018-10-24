@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   resources :courses
   resources :questions
   resources :answers
+  get 'tags', to: 'questions#tags'
 end

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:update, :destroy, :show, :edit]
-  after_action :render_json, except: [:index]
+  after_action :render_json, except: [:index, :tags]
 
   def index
     @questions = Question.where(user: User.first) # CHANGE
@@ -24,6 +24,11 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
+  end
+
+  def tags
+    @tags = User.first.tags
+    json_response(@tags)
   end
 
   private

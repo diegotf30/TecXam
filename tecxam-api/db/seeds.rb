@@ -24,9 +24,12 @@ end
 
 questions = ['Cuanto pesa Enrique?', 'Por qué samuel usa expansores?', 'Como bajo tanto peso jaime', 'xq no puedo dormir']
 
-questions.each do |q|
-  Question.create(name: q, user: user)
-end
+Question.create([
+  {name: 'de donde es enrique?', user: user, tag: 'bases'},
+  {name: 'Por que samuel usa expansores?', user: user, tag: 'amss'},
+  {name: 'como bajo tanto peso jaime', user: user, tag: 'nutricion'},
+  {name: 'xq no puedo dormir', user: user, tag: 'psicologia'}
+])
 
 # Populate exams
 exams.each do |e|
