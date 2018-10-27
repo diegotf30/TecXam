@@ -47,14 +47,14 @@
           <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event); onSelect($event)"/>
         </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column prop="Siglas">
+    <ngx-datatable-column prop="acronym">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <a  class="table-link" routerLink="/course/{{row.Siglas}}">{{row.Siglas}}</a>
+        <a  class="table-link" routerLink="/course/{{row.acronym}}">{{row.acronym}}</a>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column prop="Nombre">
+    <ngx-datatable-column prop="name">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <a  class="table-link">{{row.Nombre}}</a>
+        <a  class="table-link">{{row.name}}</a>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>
@@ -65,7 +65,7 @@
         <h4>Selections <small>({{selected?.length}})</small></h4>
         <ul>
           <li *ngFor='let sel of selected'>
-            {{sel.Siglas}}
+            {{sel.acronym}}
           </li>
           <li *ngIf="!selected?.length">No Selections</li>
         </ul>
@@ -80,16 +80,16 @@
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'">
-        <ngx-datatable-column name="Siglas">
+        <ngx-datatable-column name="acronym">
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <span [innerHTML]="row['Siglas']"></span>
+            <span [innerHTML]="row['acronym']"></span>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Nombre">
+        <ngx-datatable-column name="nanme">
         <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
           </ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <span [innerHTML]="row['Nombre']"></span>
+            <span [innerHTML]="row['nanme']"></span>
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable> -->

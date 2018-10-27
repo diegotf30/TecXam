@@ -5,7 +5,7 @@
       <form class="form-signin" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
         <div class="form-label-group">
           <input type="text" id="inputSiglas" class="form-control" placeholder="Siglas" required autofocus
-          #siglas="ngModel" name="siglas" ngModel>
+          #acronym="ngModel" name="acronym" ngModel>
           <label for="inputName">Siglas</label>
         </div>
 
@@ -18,7 +18,7 @@
         <div class="form-label-group">
 
           <textarea class="form-control" id="textAreaNotes" rows="3" placeholder="Notas adicionales"
-          #info="ngModel" name="info" ngModel></textarea>
+          #description="ngModel" name="description" ngModel></textarea>
           <!-- <label for="textAreaNotes">Notas adicionales</label> -->
         </div>
         <button class="btn btn-lg btn-primary btn-block text-uppercase">Agregar</button>

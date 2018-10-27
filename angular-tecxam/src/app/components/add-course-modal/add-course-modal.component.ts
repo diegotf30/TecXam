@@ -18,11 +18,11 @@ export class AddCourseModalComponent implements OnInit {
   }
 
   onSubmit(f: NgForm){
-    if(f.value.siglas && f.value.name){
+    if(f.value.acronym && f.value.name){
       this.modal.close(f.value);
     }
     else{
-      if(!f.value.siglas){
+      if(!f.value.acronym){
         this.showError('Agrega las siglas!');
       }
       if(!f.value.name){

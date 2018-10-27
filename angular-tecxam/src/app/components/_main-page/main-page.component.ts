@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddCourseModalComponent } from '../add-course-modal/add-course-modal.component';
+import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-main-page',
@@ -8,14 +9,11 @@ import { AddCourseModalComponent } from '../add-course-modal/add-course-modal.co
   styleUrls: ['./main-page.component.sass']
 })
 export class MainPageComponent implements OnInit {
-  rows = [
-    { Siglas: 'TC1019', Nombre: ' Introduction to Software Engineering', Info: 'Upon completion of this course, students will be able to understand the fundamentals of software engineering and use object-oriented modeling tools and methodologies'},
-    { Siglas: 'TC1020', Nombre: ' Databases', Info: 'Upon completion of this course, students will be able to design and build an effective, efficient information system that meets the information requirements of an organization using relational databases, producing the appropriate documentation for the analysis and design phases, and ensuring the consistency of the data given the multi-user access. '},
-  ];
+  rows = [];
 
   columns = [
-    { prop: 'Siglas' },
-    { prop: 'Nombre' },
+    { prop: 'acronym' },
+    { prop: 'name' },
   ];
 
   selected = [];
@@ -24,9 +22,28 @@ export class MainPageComponent implements OnInit {
 
   @ViewChild('table') table: any;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(public courseService: CoursesService, private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.courseService.fill()
+      .subscribe(
+        (result) => {
+          this.rows = [];
+          console.log(result);
+          for(var i in result as Course[]){
+            let row = { acronym: result[i].acronym, name: result[i].name,
+                        description: result[i].description, created_at: result[i].created_at,
+                        updated_at: result[i].updated_at, user_id: result[i].user_id,
+                        id: result[i].id};
+            this.rows.push(row);
+          }
+          this.rows = [...this.rows];
+        },
+        (error) => {
+          this.rows = [{ acronym: '', name: 'No hay examenes', description: ''}];
+          console.error(error);
+        }
+      );
   }
 
   onSelect({ selected }) {
@@ -60,12 +77,18 @@ export class MainPageComponent implements OnInit {
   open(){
     this.modalService.open(AddCourseModalComponent, { centered: true, windowClass: 'add-modal' }).result.then((result) => {
       console.log(result);
-      let row = { Siglas: result.siglas, Nombre: result.name, Info: result.info};
+      let row = { acronym: result.acronym, name: result.name, description: result.description};
       this.rows.push(row);
       this.rows = [...this.rows];
     }, (reason) => {
       console.log('Closed');
     });;  //size: 'sm',
   }
+}
 
+interface Course {
+    acronym: string;
+    name: string;
+    description: string;
+    created_at: any;
 }

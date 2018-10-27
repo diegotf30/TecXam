@@ -5,3 +5,11 @@ export interface ServerResponse {
     error: string[];
     message: string;
 }
+
+export interface CoursesResponse {
+  acronym?: string;
+  name?: string;
+  description?: string,
+  created_at?: any;
+  [key: string]: any; // optional
+}
