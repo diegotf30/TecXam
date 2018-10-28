@@ -11,4 +11,8 @@ export class CoursesService {
   fill(){
     return this.base.get('courses');
   }
+
+  add(postBody: any){
+    return this.base.post('courses', postBody);
+  }
 }

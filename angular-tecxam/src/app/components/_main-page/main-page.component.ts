@@ -25,6 +25,10 @@ export class MainPageComponent implements OnInit {
   constructor(public courseService: CoursesService, private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.load();
+  }
+
+  load(){
     this.courseService.fill()
       .subscribe(
         (result) => {
@@ -37,6 +41,18 @@ export class MainPageComponent implements OnInit {
             this.rows.push(row);
           }
           this.rows = [...this.rows];
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  add(course: any){
+    this.courseService.add(course)
+      .subscribe(
+        (result) => {
+          this.load();
         },
         (error) => {
           console.error(error);
@@ -64,20 +80,21 @@ export class MainPageComponent implements OnInit {
   }
 
   toggleExpandRow(row) {
-    console.log('Toggled Expand Row!', row);
+    // console.log('Toggled Expand Row!', row);
     this.table.rowDetail.toggleExpandRow(row);
   }
 
   onDetailToggle(event) {
-    console.log('Detail Toggled', event);
+    // console.log('Detail Toggled', event);
   }
 
   open(){
-    this.modalService.open(AddCourseModalComponent, { centered: true, windowClass: 'add-modal' }).result.then((result) => {
-      console.log(result);
-      let row = { acronym: result.acronym, name: result.name, description: result.description};
-      this.rows.push(row);
-      this.rows = [...this.rows];
+    this.modalService.open(AddCourseModalComponent,
+                          { centered: true, windowClass: 'add-modal' }
+                          ).result.then((result) => {
+      let course = { acronym: result.acronym, name: result.name,
+                  description: result.description };
+      this.add(course);
     }, (reason) => {
       console.log('Closed');
     });;  //size: 'sm',
