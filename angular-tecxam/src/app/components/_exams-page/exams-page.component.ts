@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddExamModalComponent } from '../add-exam-modal/add-exam-modal.component';
+import { ExamsService } from 'src/app/services/exams.service';
 
 @Component({
   selector: 'exams-page',
@@ -8,14 +9,7 @@ import { AddExamModalComponent } from '../add-exam-modal/add-exam-modal.componen
   styleUrls: ['./exams-page.component.sass']
 })
 export class ExamsPageComponent implements OnInit {
-
-
-  rows = [
-    { Type:'Examen', Nombre: 'Primer Parcial'},
-    { Type:'Examen', Nombre: 'Segundo Parcial'},
-    { Type:'Tarea', Nombre: 'Tarea'},
-    { Type:'Otro', Nombre: 'Documento subido por profesor'},
-  ];
+  rows = [];
   columns = [
     { prop: 'Documento' },
   ];
@@ -26,9 +20,27 @@ export class ExamsPageComponent implements OnInit {
 
   @ViewChild('table') table: any;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(public examsService: ExamsService, private modalService: NgbModal) { }
 
   ngOnInit() {
+    let courseID = window.location.pathname.substr(8,1);
+    this.examsService.fill()
+      .subscribe(
+        (result) => {
+          this.rows = [];
+          // console.log(result);
+          for(var i in result){
+            let row = { name: result[i].name, created_at: result[i].created_at,
+                        uploaded_at: result[i].updated_at, course_id: result[i].course_id,
+                        id: result[i].id, is_random: result[i].is_random, type: 'Examen'};
+            this.rows.push(row);
+          }
+          this.rows = [...this.rows];
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   onSelect({ selected }) {

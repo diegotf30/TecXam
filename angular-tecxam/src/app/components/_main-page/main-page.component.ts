@@ -29,8 +29,7 @@ export class MainPageComponent implements OnInit {
       .subscribe(
         (result) => {
           this.rows = [];
-          console.log(result);
-          for(var i in result as Course[]){
+          for(var i in result){
             let row = { acronym: result[i].acronym, name: result[i].name,
                         description: result[i].description, created_at: result[i].created_at,
                         updated_at: result[i].updated_at, user_id: result[i].user_id,
@@ -40,7 +39,6 @@ export class MainPageComponent implements OnInit {
           this.rows = [...this.rows];
         },
         (error) => {
-          this.rows = [{ acronym: '', name: 'No hay examenes', description: ''}];
           console.error(error);
         }
       );
@@ -84,11 +82,4 @@ export class MainPageComponent implements OnInit {
       console.log('Closed');
     });;  //size: 'sm',
   }
-}
-
-interface Course {
-    acronym: string;
-    name: string;
-    description: string;
-    created_at: any;
 }

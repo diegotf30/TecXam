@@ -17,7 +17,7 @@ const routes: Routes = [
      component: LoginPageComponent
   },
   {
-     path: 'course/:id',
+     path: 'course/:id/:name',
      component: ExamsPageComponent,
      canActivate: [AuthGuard]
   },
