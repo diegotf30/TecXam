@@ -22,11 +22,11 @@ class AnswersController < ApplicationController
   private
 
   def question
-    @question ||= Pool.find(params[:question_id])
+    @question ||= Question.find(params[:question_id])
   end
 
   def set_answer
-    @answer = answer.find(params[:id])
+    @answer = Answer.find(params[:id])
   end
 
   def answer_params

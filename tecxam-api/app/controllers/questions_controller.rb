@@ -28,11 +28,11 @@ class QuestionsController < ApplicationController
   private
 
   def exam
-    @exam ||= Pool.find(params[:exam_id])
+    @exam ||= Exam.find(params[:exam_id])
   end
 
   def set_question
-    @question = question.find(params[:id])
+    @question = Question.find(params[:id])
   end
 
   def question_params
