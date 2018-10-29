@@ -17,13 +17,13 @@ const routes: Routes = [
      component: LoginPageComponent
   },
   {
-     path: 'course/:id/:name',
-     component: ExamsPageComponent,
+     path: 'course/edit/:id',
+     component: EditExamComponent,
      canActivate: [AuthGuard]
   },
   {
-     path: 'editar',
-     component: EditExamComponent,
+     path: 'course/:name/:id',
+     component: ExamsPageComponent,
      canActivate: [AuthGuard]
   },
 ];

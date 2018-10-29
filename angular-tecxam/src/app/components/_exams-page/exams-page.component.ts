@@ -9,6 +9,7 @@ import { ExamsService } from 'src/app/services/exams.service';
   styleUrls: ['./exams-page.component.sass']
 })
 export class ExamsPageComponent implements OnInit {
+  courseID: string;
   rows = [];
   columns = [
     { prop: 'Documento' },
@@ -23,7 +24,12 @@ export class ExamsPageComponent implements OnInit {
   constructor(public examsService: ExamsService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    let courseID = window.location.pathname.substr(8,1);
+    let pos = window.location.pathname.lastIndexOf('/');
+    this.courseID = window.location.pathname.substr(pos+1);
+    this.load();
+  }
+
+  load(){
     this.examsService.fill()
       .subscribe(
         (result) => {
