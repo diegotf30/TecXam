@@ -31,7 +31,7 @@ class AnswersController < ApplicationController
 
   def answer_params
     params
-      .permit(:name, :variables)
+      .permit(:name)
       .merge(user: User.first, question: question) # CHANGE
   end
 
