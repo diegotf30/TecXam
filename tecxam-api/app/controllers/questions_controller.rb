@@ -7,12 +7,6 @@ class QuestionsController < ApplicationController
     json_response(@questions)
   end
 
-  def show
-  end
-
-  def edit
-  end
-
   def create
     @question = Question.create(question_params)
     exam.add_question(@question) unless exam.nil?
@@ -43,7 +37,6 @@ class QuestionsController < ApplicationController
 
   def question_params
     params
-      .require(:question)
       .permit(:name, :tag)
       .merge(user: User.first) # CHANGE
   end

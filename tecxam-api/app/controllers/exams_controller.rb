@@ -15,9 +15,6 @@ class ExamsController < ApplicationController
     @exam.update(exam_params)
   end
 
-  def edit
-  end
-
   def destroy
     @exam.destroy
   end
@@ -30,7 +27,6 @@ class ExamsController < ApplicationController
 
   def exam_params
     params
-      .require(:exam)
       .permit(:name, :is_random)
       .merge(course: Course.second) # CHANGE
   end

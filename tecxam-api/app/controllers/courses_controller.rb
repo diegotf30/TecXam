@@ -15,9 +15,6 @@ class CoursesController < ApplicationController
     @course.update(course_params)
   end
 
-  def edit
-  end
-
   def destroy
     @course.destroy
   end
@@ -30,7 +27,6 @@ class CoursesController < ApplicationController
 
   def course_params
     params
-      .require(:course)
       .permit(:name, :acronym, :description)
       .merge(user: User.first) # CHANGE
   end

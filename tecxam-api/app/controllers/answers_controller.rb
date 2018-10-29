@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
   after_action :render_json, except: [:index]
 
   def index
-    @answers = Answer.where(user: User.first) # CHANGE
+    @answers = Answer.where(question: question) # CHANGE
     json_response(@answers)
   end
 
@@ -13,9 +13,6 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params)
-  end
-
-  def edit
   end
 
   def destroy
@@ -34,7 +31,6 @@ class AnswersController < ApplicationController
 
   def answer_params
     params
-      .require(:answer)
       .permit(:name, :variables)
       .merge(user: User.first, question: question) # CHANGE
   end
