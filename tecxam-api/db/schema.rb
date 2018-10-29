@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_29_183454) do
+ActiveRecord::Schema.define(version: 2018_10_29_214515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,11 @@ ActiveRecord::Schema.define(version: 2018_10_29_183454) do
     t.bigint "question_id", null: false
     t.index ["exam_id", "question_id"], name: "index_exams_questions_on_exam_id_and_question_id"
     t.index ["question_id", "exam_id"], name: "index_exams_questions_on_question_id_and_exam_id"
+  end
+
+  create_table "jwt_blacklist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.index ["jti"], name: "index_jwt_blacklist_on_jti"
   end
 
   create_table "questions", force: :cascade do |t|
