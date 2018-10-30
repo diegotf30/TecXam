@@ -25,6 +25,9 @@
       </ngx-datatable>
     </div>
   </div>
+  <div class="row" style="justify-content: space-between" *ngIf="selected.length >= 1">
+    <button type="button" class="btn btn-primary btn-block btn-save" name="button" style="border: 2px white !important">Guardar pregunta</button>
+  </div>
 
   <div class="row" style="justify-content: space-between">
     <div class="card card-signin col-sm-12 col-md-6 col-lg-5" *ngIf="selected.length >= 1">
@@ -41,12 +44,11 @@
             </select>
           </div> -->
 
-          <div class="form-label-group">
+          <!-- <div class="form-label-group">
             <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
             value="{{this.selected[0].name}}">
-            <!-- #name="ngModel" name="name" ngModel > -->
             <label for="inputName">Título de la pregunta</label>
-          </div>
+          </div> -->
 
           <div class="form-label-group">
             <textarea id="inputName" class="form-control" required
