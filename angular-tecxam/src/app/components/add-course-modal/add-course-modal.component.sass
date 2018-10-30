@@ -38,11 +38,15 @@ div#addExam
 .form-label-group input
   border-radius: 2rem
 
+.form-label-group textarea
+  border-radius: 2rem
+
 .form-group select
   border-radius: 2rem
 
 .form-label-group>input,
 .form-label-group>label,
+.form-label-group>textarea,
 .form-group>select
   padding: var(--input-padding-y) var(--input-padding-x)
 
@@ -80,6 +84,16 @@ div#addExam
   padding-bottom: calc(var(--input-padding-y) / 3)
 
 .form-label-group input:not(:placeholder-shown)~label
+  padding-top: calc(var(--input-padding-y) / 3)
+  padding-bottom: calc(var(--input-padding-y) / 3)
+  font-size: 12px
+  color: #777
+
+.form-label-group textarea:not(:placeholder-shown)
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3))
+  padding-bottom: calc(var(--input-padding-y) / 3)
+
+.form-label-group textarea:not(:placeholder-shown)~label
   padding-top: calc(var(--input-padding-y) / 3)
   padding-bottom: calc(var(--input-padding-y) / 3)
   font-size: 12px
