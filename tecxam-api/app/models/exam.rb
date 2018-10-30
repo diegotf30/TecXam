@@ -5,4 +5,8 @@ class Exam < ApplicationRecord
   def add_question(q)
     questions << q
   end
+
+  def remove_question(q)
+    questions.delete(q)
+  end
 end

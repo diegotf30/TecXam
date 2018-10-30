@@ -1,23 +1,35 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:update, :destroy, :show, :edit]
-  after_action :render_json, except: [:index, :tags]
+  before_action :set_question, only: [:update, :destroy]
 
   def index
-    @questions = Question.where(user: User.first) # CHANGE
+    @questions = Question.where(user: current_user) # CHANGE
     json_response(@questions)
   end
 
   def create
-    @question = Question.create(question_params)
-    exam.add_question(@question) unless exam.nil?
+    @question = Question.new(question_params)
+
+    if @question.save
+      render json: @question, status: :ok
+    else
+      validation_error(@question)
+    end
   end
 
   def update
-    @question.update(question_params)
+    if @question.update(question_params)
+      render json: @question, status: :ok
+    else
+      validation_error(@question)
+    end
   end
 
   def destroy
-    @question.destroy
+    if @question.destroy
+      render json: @question, status: :ok
+    else
+      validation_error(@question)
+    end
   end
 
   def tags
@@ -27,21 +39,14 @@ class QuestionsController < ApplicationController
 
   private
 
-  def exam
-    @exam ||= Exam.find(params[:exam_id])
-  end
-
   def set_question
     @question = Question.find(params[:id])
   end
 
   def question_params
     params
-      .permit(:name, :tag)
+      .require(:question)
+      .permit(:name, :tags)
       .merge(user: User.first) # CHANGE
-  end
-
-  def render_json
-    json_response(@question)
   end
 end

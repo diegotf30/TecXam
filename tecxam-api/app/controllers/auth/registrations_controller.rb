@@ -3,8 +3,11 @@ class Auth::RegistrationsController < Devise::RegistrationsController
 
   def create
     build_resource(sign_up_params)
-
-    resource.save
-    json_response(resource)
+    if resource.save
+      sign_up(resource_name, resource)
+      render json: resource, status: :ok
+    else
+      validation_error(resource)
+    end
   end
 end

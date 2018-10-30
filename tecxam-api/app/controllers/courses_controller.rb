@@ -1,22 +1,35 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:update, :destroy, :edit]
-  after_action :render_json, except: [:index]
+  before_action :set_course, only: [:update, :destroy]
 
   def index
-    @courses = Course.where(user: User.first) # CHANGE
+    @courses = Course.where(user: current_user)
     json_response(@courses)
   end
 
   def create
-    @course = Course.create(course_params)
+    @course = Course.new(course_params)
+
+    if @course.save
+      render json: @course, status: :ok
+    else
+      validation_error(@course)
+    end
   end
 
   def update
-    @course.update(course_params)
+    if @course.update(course_params)
+      render json: @course, status: :ok
+    else
+      validation_error(@course)
+    end
   end
 
   def destroy
-    @course.destroy
+    if @course.destroy
+      render json: @course, status: :ok
+    else
+      validation_error(@course)
+    end
   end
 
   private
@@ -27,8 +40,9 @@ class CoursesController < ApplicationController
 
   def course_params
     params
+      .require(:course)
       .permit(:name, :acronym, :description)
-      .merge(user: User.first) # CHANGE
+      .merge(user: current_user)
   end
 
   def render_json

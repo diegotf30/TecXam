@@ -1,22 +1,35 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:update, :destroy, :edit]
-  after_action :render_json, except: [:index]
 
   def index
-    @answers = Answer.where(question: question) # CHANGE
+    @answers = Answer.where(question: question)
     json_response(@answers)
   end
 
   def create
-    @answer = Answer.create(answer_params)
+    @answer = Answer.new(answer_params)
+
+    if @answer.save
+      render json: @answer, status: :ok
+    else
+      validation_error(@answer)
+    end
   end
 
   def update
-    @answer.update(answer_params)
+    if @answer.update(answer_params)
+      render json: @answer, status: :ok
+    else
+      validation_error(@answer)
+    end
   end
 
   def destroy
-    @answer.destroy
+    if @answer.destroy
+      render json: @answer, status: :ok
+    else
+      validation_error(@answer)
+    end
   end
 
   private
@@ -31,11 +44,8 @@ class AnswersController < ApplicationController
 
   def answer_params
     params
+      .require(:answer)
       .permit(:name)
-      .merge(user: User.first, question: question) # CHANGE
-  end
-
-  def render_json
-    json_response(@answer)
+      .merge(user: User.first, question: question)
   end
 end
