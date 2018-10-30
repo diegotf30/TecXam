@@ -12,23 +12,10 @@ export class EditExamComponent implements OnInit {
   openvar: boolean = false;
   courseID: string;
 
-  rows = [
-    // { Nombre: 'Pregunta 1' },
-    // { Nombre: 'Pregunta 2' },
-    // { Nombre: 'Pregunta 3' },
-    // { Nombre: 'Preguna 4' },
-    // { Nombre: 'Preguna 5' },
-    // { Nombre: 'Preguna 6' },
-    // { Nombre: 'Preguna 7' },
-    // { Nombre: 'Preguna 8' },
-    // { Nombre: 'Preguna 9' },
-    // { Nombre: 'Preguna 10' },
-    // { Nombre: 'Preguna 11' },
-    // { Nombre: 'Preguna N' },
-  ];
+  rows = [];
 
   columns = [
-    { prop: 'Nombre' },
+    { prop: 'name' },
   ];
 
   selected = [];
@@ -49,14 +36,13 @@ export class EditExamComponent implements OnInit {
         (result) => {
           this.rows = [];
           console.log(result);
-          // for(var i in result){
-          //   let row = { acronym: result[i].acronym, name: result[i].name,
-          //               description: result[i].description, created_at: result[i].created_at,
-          //               updated_at: result[i].updated_at, user_id: result[i].user_id,
-          //               id: result[i].id};
-          //   this.rows.push(row);
-          // }
-          // this.rows = [...this.rows];
+          for(var i in result){
+            let row = { id: result[i].id, name: result[i].name,
+                        tags: result[i].tags, created_at: result[i].created_at,
+                        updated_at: result[i].updated_at, user_id: result[i].user_id };
+            this.rows.push(row);
+          }
+          this.rows = [...this.rows];
         },
         (error) => {
           console.error(error);

@@ -92,8 +92,13 @@ export class MainPageComponent implements OnInit {
     this.modalService.open(AddCourseModalComponent,
                           { centered: true, windowClass: 'add-modal' }
                           ).result.then((result) => {
-      let course = { acronym: result.acronym, name: result.name,
-                  description: result.description };
+      let course = {
+        course: {
+          acronym: result.acronym,
+          name: result.name,
+          description: result.description
+        }
+      };
       this.add(course);
     }, (reason) => {
       console.log('Closed');
