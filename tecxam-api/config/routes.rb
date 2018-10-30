@@ -26,4 +26,6 @@ Rails.application.routes.draw do
   end
 
   get 'tags', to: 'questions#tags'
+
+  default_url_options :host => "example.com"
 end
