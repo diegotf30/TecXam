@@ -8,10 +8,12 @@ import { LogoutService } from 'src/app/services/logout.service';
   styleUrls: ['./navbar.component.sass']
 })
 export class NavbarComponent implements OnInit {
+  user: string;
 
   constructor(private logoutService: LogoutService, private router : Router) { }
 
   ngOnInit() {
+    this.user = localStorage.getItem('email');
   }
 
   logout(){
