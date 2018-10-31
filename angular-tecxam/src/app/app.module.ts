@@ -38,6 +38,7 @@ import { NextButtonComponent } from './components/next-button/next-button.compon
 import { AddCourseModalComponent } from './components/add-course-modal/add-course-modal.component';
 import { AddExamModalComponent } from './components/add-exam-modal/add-exam-modal.component';
 import { EditExamComponent } from './components/_edit-exam/edit-exam.component';
+import { NotFoundPageComponent } from './components/_not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { EditExamComponent } from './components/_edit-exam/edit-exam.component';
     NextButtonComponent,
     AddCourseModalComponent,
     AddExamModalComponent,
-    EditExamComponent
+    EditExamComponent,
+    NotFoundPageComponent
   ],
   imports: [
     BrowserModule,
