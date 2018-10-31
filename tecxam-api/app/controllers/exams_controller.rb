@@ -1,5 +1,6 @@
 class ExamsController < ApplicationController
   before_action :set_exam, only: [:update, :destroy, :add_question]
+  before_action :require_permission, only: [:update, :destroy, :add_question]
 
   def index
     @exams = Exam.where(course: params[:course_id])
@@ -53,5 +54,9 @@ class ExamsController < ApplicationController
       .require(:exam)
       .permit(:name, :is_random)
       .merge(course: params[:course_id])
+  end
+
+  def require_permission
+    block_unless_owner(@exam)
   end
 end

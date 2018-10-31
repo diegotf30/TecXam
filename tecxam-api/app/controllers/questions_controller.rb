@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:update, :destroy]
+  before_action :require_permission, only: [:update, :destroy]
 
   def index
     @questions = Question.where(user: current_user) # CHANGE
@@ -48,5 +49,9 @@ class QuestionsController < ApplicationController
       .require(:question)
       .permit(:name, :tags)
       .merge(user: User.first) # CHANGE
+  end
+
+  def require_permission
+    block_unless_owner(@question)
   end
 end
