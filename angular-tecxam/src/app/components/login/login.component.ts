@@ -22,12 +22,19 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(f: NgForm){
-    if(this.service.login(f)){
-      this.success.emit(true);
-    }
-    else{
-      this.success.emit(false);
-    }
+    let postBody = { user: {email: f.value.user, password: f.value.password}}
+    this.service.login(postBody)
+      .subscribe(
+        (result) => {
+          localStorage.setItem('email', f.value.user);
+          localStorage.setItem('authorization', result.headers.get('authorization'));
+          this.success.emit(true);
+        },
+        (error) => {
+          console.error(error);
+          this.success.emit(false);
+        }
+      );
   }
 
   // validateEmail(email) {

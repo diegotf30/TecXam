@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng6-toastr/ng2-toastr';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'login-page',
@@ -12,13 +13,16 @@ export class LoginPageComponent implements OnInit {
   loading: boolean;
   register: boolean;
 
-  constructor(private router : Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private service: LoginService, private router : Router, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
     this.loading = false;
     this.register = false;
+    if(this.service.isLogged()){
+      this.router.navigateByUrl('');
+    }
   }
 
   onChange(){

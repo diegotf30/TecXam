@@ -12,16 +12,10 @@ export class LoginService {
   constructor(public base: BaseService) { }
 
   login(postBody: any) {
-    if(postBody.value.user == user && postBody.value.password == password){
-      localStorage.setItem('user', user);
-      localStorage.setItem('password', password);
-      return true;
-    }
-    return false;
-    // return this.base.post('association/registration', postBody);
+    return this.base.postResponse('login', postBody);
   }
 
   isLogged(){
-    return localStorage.getItem('user') != null;
+    return localStorage.getItem('authorization') != null;
   }
 }
