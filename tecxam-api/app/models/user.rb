@@ -21,6 +21,6 @@ class User < ApplicationRecord
   end
 
   def tags
-    questions.pluck(:tags).flatten
+    questions.pluck(:tags).uniq.flatten
   end
 end
