@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:update, :destroy, :edit]
-  before_action :require_permission, only: [:update, :destroy]
+  before_action :require_ownership, only: [:update, :destroy]
 
   def index
     @answers = Answer.where(question: question)
@@ -47,10 +47,10 @@ class AnswersController < ApplicationController
     params
       .require(:answer)
       .permit(:name)
-      .merge(user: User.first, question: question)
+      .merge(question: question)
   end
 
-  def require_permission
+  def require_ownership
     block_unless_owner(@answer)
   end
 end

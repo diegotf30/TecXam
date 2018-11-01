@@ -1,6 +1,6 @@
 class ExamsController < ApplicationController
   before_action :set_exam, only: [:update, :destroy, :add_question]
-  before_action :require_permission, only: [:update, :destroy]
+  before_action :require_ownership, only: [:update, :destroy]
 
   def index
     @exams = Exam.where(course: course)
@@ -50,7 +50,7 @@ class ExamsController < ApplicationController
       .merge(course: course)
   end
 
-  def require_permission
+  def require_ownership
     block_unless_owner(@exam)
   end
 end

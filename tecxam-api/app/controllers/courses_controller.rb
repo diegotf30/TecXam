@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:update, :destroy]
-  before_action :require_permission, only: [:update, :destroy]
+  before_action :require_ownership, only: [:update, :destroy]
 
   def index
     @courses = Course.where(user: current_user)
@@ -50,7 +50,7 @@ class CoursesController < ApplicationController
     json_response(@course)
   end
 
-  def require_permission
+  def require_ownership
     block_unless_owner(@course)
   end
 end

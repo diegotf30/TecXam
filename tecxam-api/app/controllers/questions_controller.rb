@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:update, :destroy]
-  before_action :require_permission, only: [:update, :destroy]
+  before_action :require_ownership, only: [:update, :destroy]
 
   def index
     @questions = Question.where(user: current_user)
@@ -34,8 +34,8 @@ class QuestionsController < ApplicationController
   end
 
   def tags
-    @tags = User.first.tags
-    json_response(@tags)
+    @tags = current_user.tags
+    render json: @tags, status: :ok
   end
 
   private
@@ -47,11 +47,11 @@ class QuestionsController < ApplicationController
   def question_params
     params
       .require(:question)
-      .permit(:name, :tags)
-      .merge(user: User.first) # CHANGE
+      .permit(:name, tags: [])
+      .merge(user: current_user)
   end
 
-  def require_permission
+  def require_ownership
     block_unless_owner(@question)
   end
 end
