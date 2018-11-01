@@ -8,8 +8,8 @@ user = User.first
 p '* - USER CREATED'
 
 courses = Course.create([
-  {name: 'Base de Datos', acronym: 'TC123456', user: user},
-  {name: 'AMSS', acronym: 'FC00125', user: user},
+  {name: 'Base de Datos', acronym: 'TC1234', user: user},
+  {name: 'AMSS', acronym: 'FC0012', user: user},
   {name: 'FIS', acronym: 'TC1222', user: user}
 ])
 p '* - COURSES CREATED'
@@ -46,7 +46,7 @@ p '* - ANSWERS CREATED'
 
 # Populate exams
 exams.each do |e|
-  e.questions |= questions
+  e.add_question(questions)
 end
 p '* - EXAMS POPULATED WITH QUESTIONS'
 

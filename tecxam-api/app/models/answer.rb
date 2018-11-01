@@ -2,6 +2,10 @@ class Answer < ApplicationRecord
   belongs_to :question
   before_save :assure_whitespace, :define_variables
 
+  def user
+    question.user
+  end
+
   private
 
   def assure_whitespace

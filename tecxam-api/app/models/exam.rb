@@ -9,4 +9,8 @@ class Exam < ApplicationRecord
   def remove_question(q)
     questions.delete(q)
   end
+
+  def user
+    course.user
+  end
 end

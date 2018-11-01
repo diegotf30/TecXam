@@ -13,4 +13,15 @@ describe Question do
     it { is_expected.to have_many(:answers) }
     it { is_expected.to have_and_belong_to_many(:exams) }
   end
+
+  describe '#add_tag' do
+    it 'should append tag to question and belonging user' do
+      question = create :question
+
+      question.add_tag('new tag')
+
+      expect(question.tags.length).to eq(1)
+      expect(question.user.tags).to eq(['new tag'])
+    end
+  end
 end

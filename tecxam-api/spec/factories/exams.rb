@@ -14,7 +14,7 @@ FactoryBot.define do
 
     trait :with_questions do
       after(:create) do |exam, evaluator|
-        questions = create_list :question, evaluator.number_of_questions
+        questions = create_list :question, evaluator.number_of_questions, user: exam.user
 
         exam.add_question(questions)
       end

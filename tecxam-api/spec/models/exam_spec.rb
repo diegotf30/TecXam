@@ -34,4 +34,13 @@ describe Exam do
       expect(exam.questions.count).to eq(2)
     end
   end
+
+  describe '#user' do
+    it 'should return the course owner' do
+      course = create :course
+      exam = create :exam, course: course
+
+      expect(exam.user).to eq(course.user)
+    end
+  end
 end

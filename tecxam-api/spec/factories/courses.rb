@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :course do
     user
     name  { Faker::Name.name }
-    acronym  { Faker::String.random(6) }
+    acronym  { Faker::Lorem.characters(6) }
     description { Faker::Lorem.paragraph }
 
     transient do
