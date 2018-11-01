@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :require_permission, only: [:update, :destroy]
 
   def index
-    @questions = Question.where(user: current_user) # CHANGE
+    @questions = Question.where(user: current_user)
     json_response(@questions)
   end
 

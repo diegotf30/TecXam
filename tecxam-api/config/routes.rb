@@ -13,13 +13,18 @@ Rails.application.routes.draw do
 
   root to: 'courses#index'
 
-  resources :users, only: [:show, :update, :destroy]
-  resources :courses
+  resources :users, only: [:show, :index]
 
-  resources :exams, only: [:index, :create, :destroy, :update] do
-    resources :questions, only: [:index, :update]
-    post 'add_question', to: 'exams#add_question'
+  resources :courses, only: [:index, :create, :destroy, :update] do
+    resources :exams, only: [:index, :create, :destroy, :update]
+
+    scope module: :exams do
+      resources :exams, only: [] do
+        resources :questions, only: [:index, :create, :destroy, :update]
+      end
+    end
   end
+
 
   resources :questions do
     resources :answers

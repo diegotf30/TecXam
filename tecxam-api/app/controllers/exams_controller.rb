@@ -1,9 +1,9 @@
 class ExamsController < ApplicationController
   before_action :set_exam, only: [:update, :destroy, :add_question]
-  before_action :require_permission, only: [:update, :destroy, :add_question]
+  before_action :require_permission, only: [:update, :destroy]
 
   def index
-    @exams = Exam.where(course: params[:course_id])
+    @exams = Exam.where(course: course)
     json_response(@exams)
   end
 
@@ -33,17 +33,11 @@ class ExamsController < ApplicationController
     end
   end
 
-  def add_question
-    @question = Question.find(params[:question_id])
-
-    if @exam.add_question(@question)
-      render json: @question, status: :ok
-    else
-      validation_error(@exam)
-    end
-  end
-
   private
+
+  def course
+    @course ||= Course.find(params[:course_id])
+  end
 
   def set_exam
     @exam = Exam.find(params[:id])
@@ -53,7 +47,7 @@ class ExamsController < ApplicationController
     params
       .require(:exam)
       .permit(:name, :is_random)
-      .merge(course: params[:course_id])
+      .merge(course: course)
   end
 
   def require_permission

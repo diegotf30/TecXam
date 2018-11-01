@@ -1,5 +1,8 @@
 module Exams
   class QuestionsController < ApplicationController
+    before_action :set_question, only: [:update, :destroy]
+    before_action :require_permission, only: [:update, :destroy]
+
     def index
       json_response(exam.questions)
     end
@@ -37,11 +40,19 @@ module Exams
       @exam ||= Exam.find(params[:exam_id])
     end
 
+    def set_question
+      @question = Question.find(params[:id])
+    end
+
     def question_params
       params
         .require(:question)
         .permit(:name, :tags)
-        .merge(user: User.first) # CHANGE
+        .merge(user: current_user)
+    end
+
+    def require_permission
+      block_unless_owner(@question)
     end
   end
 end
