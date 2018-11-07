@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :index]
 
   resources :courses, only: [:index, :create, :destroy, :update] do
-    resources :exams, only: [:index, :create, :destroy, :update]
+    resources :exams, only: [:index, :create, :destroy, :update] do
+      get 'export'
+    end
 
     scope module: :exams do
       resources :exams, only: [] do

@@ -1,6 +1,6 @@
 class ExamsController < ApplicationController
-  before_action :set_exam, only: [:update, :destroy, :add_question]
-  before_action :require_ownership, only: [:update, :destroy]
+  before_action :set_exam, only: [:update, :destroy, :add_question, :export]
+  before_action :require_ownership, only: [:update, :destroy, :export]
 
   def index
     @exams = Exam.where(course: course)
@@ -33,6 +33,14 @@ class ExamsController < ApplicationController
     end
   end
 
+  def export
+    if @exam.export
+      send_file 'tmp/exam.pdf'
+    else
+      validation_error(@exam)
+    end
+  end
+
   private
 
   def course
@@ -40,7 +48,7 @@ class ExamsController < ApplicationController
   end
 
   def set_exam
-    @exam = Exam.find(params[:id])
+    @exam = Exam.find(params[:id] || params[:exam_id])
   end
 
   def exam_params

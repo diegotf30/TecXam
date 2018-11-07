@@ -24,10 +24,10 @@ class Exam < ApplicationRecord
 
   def export
     require 'rake'
-
     load File.join(Rails.root, 'lib', 'tasks', 'exams.rake')
     Rake::Task['exams:json'].invoke(id)
     Rake::Task['exams:pdf'].invoke
+    true
   end
 
   private
