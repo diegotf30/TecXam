@@ -25,10 +25,6 @@
       </ngx-datatable>
     </div>
   </div>
-  <div class="row" style="justify-content: space-between" *ngIf="selected.length >= 1">
-    <button type="button" class="btn btn-primary btn-block btn-save" name="button" style="border: 2px white !important">Guardar pregunta</button>
-  </div>
-
   <div class="row" style="justify-content: space-between">
     <div class="card card-signin col-sm-12 col-md-6 col-lg-5" *ngIf="selected.length >= 1">
       <div class="card-body">
@@ -155,6 +151,10 @@
         </form>
       </div>
     </div>
+  </div>
+
+  <div class="row" style="justify-content: space-between" *ngIf="selected.length >= 1">
+    <button type="button" class="btn btn-primary btn-block btn-save" name="button" style="border: 2px white !important">Guardar pregunta</button>
   </div>
 
 </div>

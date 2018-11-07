@@ -18,7 +18,7 @@ const routes: Routes = [
      component: LoginPageComponent
   },
   {
-     path: 'course/edit/:id',
+     path: 'courses/:id/exams/:eid/questions',
      component: EditExamComponent,
      canActivate: [AuthGuard]
   },

@@ -11,6 +11,7 @@ export class EditExamComponent implements OnInit {
   variables: number;
   openvar: boolean = false;
   courseID: string;
+  examID: string;
 
   rows = [];
 
@@ -26,12 +27,14 @@ export class EditExamComponent implements OnInit {
   constructor(public questionsService: QuestionsService, private _location: Location) { }
 
   ngOnInit() {
-    this.courseID = window.location.pathname.substr(13);
+    let ids = window.location.pathname.match(/\d+/g);
+    this.courseID = ids[0];
+    this.examID = ids[1];
     this.load();
   }
 
   load(){
-    this.questionsService.fill(this.courseID)
+    this.questionsService.fill(this.courseID, this.examID)
       .subscribe(
         (result) => {
           this.rows = [];
