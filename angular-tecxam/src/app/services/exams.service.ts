@@ -11,4 +11,12 @@ export class ExamsService {
   fill(id: string){
     return this.base.get(`courses/${id}/exams`);
   }
+
+  add(id:string, postBody: any){
+    return this.base.post(`courses/${id}/exams`, postBody);
+  }
+
+  delete(cid: string, eid: string){
+    return this.base.delete(`courses/${cid}/exams/${eid}`, null);
+  }
 }

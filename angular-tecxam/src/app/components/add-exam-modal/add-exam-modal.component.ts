@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { ToastsManager } from 'ng6-toastr/ng2-toastr';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'add-exam-modal',
@@ -13,6 +14,32 @@ export class AddExamModalComponent implements OnInit {
   upload: boolean = false;
   file: File = null;
   fileName = 'Seleccionar archivo...';
+  public validators = [this.startsWithAt, this.endsWith$];
+
+  private startsWithAt(control: FormControl) {
+        if (control.value.charAt(0) !== '@') {
+            return {
+                'startsWithAt@': true
+            };
+        }
+
+        return null;
+    }
+
+    private endsWith$(control: FormControl) {
+        if (control.value.charAt(control.value.length - 1) !== '$') {
+            return {
+                'endsWith$': true
+            };
+        }
+
+        return null;
+    }
+
+    public errorMessages = {
+          'startsWithAt@': 'Your items need to start with "@"',
+          'endsWith$': 'Your items need to end with "$"'
+      };
 
   constructor(private modal: NgbActiveModal, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);

@@ -9,6 +9,22 @@
           <label for="inputName">Nombre del documento</label>
         </div>
 
+        <div class="form-label-group">
+          <input type="number" id="inputTime" class="form-control" placeholder="Time" required
+          min="0" max="180" value="0"
+          #time="ngModel" name="time" ngModel>
+          <label for="inputTime">Duración esperada (Minutos)</label>
+        </div>
+
+        <!-- <tag-input [(ngModel)]='items' name="items" theme='bootstrap'
+          [errorMessages]="errorMessages" style="margin-bottom: 10px"></tag-input> -->
+
+        <div class="form-label-group">
+          <input type="text" id="inputTags" class="form-control" placeholder="Tags" required
+          #tags="ngModel" name="tags" ngModel>
+          <label for="inputTags">Ingresa los tags * (Opcional)</label>
+        </div>
+
         <div class="form-group">
           <!-- <label for="selectType">Tipo de documento</label> -->
           <select class="form-control selectpicker" id="selectType" (change)="onChange($event.target)">
@@ -30,10 +46,11 @@
         </div>
         <div class="form-label-group">
 
-          <textarea class="form-control" id="textAreaNotes" rows="3" placeholder="Notas adicionales"></textarea>
+          <textarea class="form-control" id="textAreaNotes" rows="3" placeholder="Notas adicionales"
+          #description="ngModel" name="description" ngModel></textarea>
           <!-- <label for="textAreaNotes">Notas adicionales</label> -->
         </div>
-        <button class="btn btn-lg btn-primary btn-block text-uppercase">Agregar</button>
+        <button class="btn btn-lg btn-primary btn-block text-uppercase">Agregar documento</button>
       </form>
     </div>
   </div>

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { FormsModule }        from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }        from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //
 // Extras
@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ToastModule } from 'ng6-toastr/ng2-toastr';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { TagInputModule } from 'ngx-chips';
 //
 // Utility / Services
 //
@@ -63,11 +64,13 @@ import { NotFoundPageComponent } from './components/_not-found-page/not-found-pa
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastModule.forRoot(),
     NgbModule,
     AngularFontAwesomeModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    TagInputModule
   ],
   providers: [
     BaseService,
