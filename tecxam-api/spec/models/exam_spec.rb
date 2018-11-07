@@ -2,6 +2,9 @@ require "spec_helper"
 
 describe Exam do
   it { is_expected.to respond_to :name }
+  it { is_expected.to respond_to :date }
+  it { is_expected.to respond_to :time_limit }
+  it { is_expected.to respond_to :description }
   it { is_expected.to respond_to :random_questions }
 
   context "database" do
@@ -53,6 +56,15 @@ describe Exam do
     end
   end
 
+  describe '#export' do
+    it 'exports exam to pdf' do
+      exam = create :exam, :with_questions
+      exam.export
+
+      expect(File.file?('tmp/exam.pdf')).to eq(true)
+    end
+  end
+
   describe '#add_random_questions' do
     it 'adds questions with specified tags' do
       question = create :question, tags: ['amss']
@@ -72,7 +84,7 @@ describe Exam do
     end
 
     it 'only adds question with existing tags' do
-      question = create :question, tags: []
+      create :question, tags: []
       exam = create :exam, random_questions: { amss: 1 }
 
       expect(exam.questions.count).to eq(0)

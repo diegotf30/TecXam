@@ -71,6 +71,7 @@ GEM
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     database_cleaner (1.7.0)
+    date (1.0.0)
     devise (4.5.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -138,7 +139,9 @@ GEM
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
+    pandoc-ruby (2.0.2)
     pg (1.1.3)
+    polyglot (0.3.5)
     prickle (0.1.0)
       capybara
     public_suffix (3.0.3)
@@ -201,6 +204,9 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     ruby_dep (1.5.0)
+    rulex (0.1.8)
+      pandoc-ruby
+      treetop
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
     sinatra (2.0.4)
@@ -225,6 +231,8 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    treetop (1.6.10)
+      polyglot (~> 0.3)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uniform_notifier (1.12.1)
@@ -252,6 +260,7 @@ DEPENDENCIES
   capybara
   capybara-webkit
   database_cleaner
+  date
   devise-jwt
   dotenv
   dotenv-rails
@@ -268,6 +277,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.2.1)
   rspec-rails
+  rulex
   shoulda-matchers (~> 3.1.0)
   sinatra
   spring

@@ -22,6 +22,14 @@ class Exam < ApplicationRecord
     questions.delete_all
   end
 
+  def export
+    require 'rake'
+
+    load File.join(Rails.root, 'lib', 'tasks', 'exams.rake')
+    Rake::Task['exams:json'].invoke(id)
+    Rake::Task['exams:pdf'].invoke
+  end
+
   private
 
   def add_random_questions

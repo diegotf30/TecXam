@@ -44,9 +44,9 @@ p '* - ANSWERS CREATED'
 exams = []
 (0...1).each do |i|
   exams |= Exam.create([
-    {name: '1er parcial', course: Course.all[i]},
-    {name: '2o parcial', course: Course.all[i]},
-    {name: '3er parcial', course: Course.all[i]}]
+    {name: '1er parcial', course: Course.all[i], date: '11/12/19', description: 'suerte, dummies'},
+    {name: '2o parcial', course: Course.all[i], date: '26/02/22', description: 'soy una descripcion', time_limit: 30},
+    {name: '3er parcial', course: Course.all[i], date: '30/08/20', description: 'lmao ya valió', time_limit: 180}]
   )
 end
 
