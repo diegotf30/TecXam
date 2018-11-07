@@ -13,12 +13,19 @@ courses = Course.create([
   {name: 'FIS', acronym: 'TC1222', user: user}
 ])
 p '* - COURSES CREATED'
-
+# Multiple choice
 questions = Question.create([
-  {name: 'de donde es enrique?', user: user, tags: ['bases']},
-  {name: 'Por que samuel usa expansores?', user: user, tags: ['amss']},
-  {name: 'como bajo tanto peso jaime', user: user, tags: ['nutricion']},
-  {name: 'xq no puedo dormir', user: user, tags: ['psicologia', '???']}
+  {name: 'de donde es enrique?', user: user, tags: ['bases'], points: 20, category: 'radio'},
+  {name: 'Por que samuel usa expansores?', user: user, tags: ['amss'], points: 80},
+  {name: 'como bajo tanto peso jaime', user: user, tags: ['nutricion'], points: 30, category: 'checkbox'},
+  {name: 'xq no puedo dormir', user: user, tags: ['psicologia', '???'], points: 100}
+])
+# Draw, write and essay
+questions |= Question.create([
+  {name: 'que es un ERD?', user: user, tags: ['bases'], points: 10, category: 'paragraph'},
+  {name: 'Como se llama el profesor del curso?', user: user, tags: ['bases'], points: 30, category: 'essay'},
+  {name: 'haz un diagrama secuencia', user: user, tags: ['amss'], points: 10, category: 'big_textbox'},
+  {name: 'haz un SRS', user: user, tags: ['amss'], points: 90, category: 'essay'},
 ])
 p '* - QUESTIONS CREATED'
 
@@ -43,7 +50,8 @@ exams = []
   )
 end
 
-Exam.create(name: 'pop quiz', course: Course.last, random_questions: { amss: 1, bases: 1 })
+# Randomized exam
+Exam.create(name: 'pop quiz', course: Course.last, random_questions: { amss: 2, bases: 2 })
 
 p '* - EXAMS CREATED'
 

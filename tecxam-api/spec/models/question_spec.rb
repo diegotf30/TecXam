@@ -3,6 +3,8 @@ require "spec_helper"
 describe Question do
   it { is_expected.to respond_to :name }
   it { is_expected.to respond_to :tags }
+  it { is_expected.to respond_to :points }
+  it { is_expected.to respond_to :category }
 
   context "database" do
     it { is_expected.to have_db_index(:user_id) }
