@@ -54,6 +54,28 @@ describe 'Exams API' do
     end
   end
 
+  it 'returns exam in PDF format' do
+    course = create :course
+    exam = create :exam, course: course
+
+    get "/courses/#{course.id}/exams/#{exam.id}/export", headers: auth_headers(course.user)
+
+    expect(response.status).to eq 200
+    expect(response.headers['Content-Type']).to eq 'application/pdf'
+  end
+
+  it 'adds question to exam' do
+    course = create :course
+    exam = create :exam, course: course
+    question = create :question
+
+    post "/courses/#{course.id}/exams/#{exam.id}/add/#{question.id}", headers: auth_headers(course.user)
+
+    expect(response.status).to eq 200
+    expect(json['name']).to eq question.name
+    expect(exam.questions.count).to eq 1
+  end
+
   def exam_params
     {
       exam: {

@@ -1,6 +1,6 @@
 module Exams
   class QuestionsController < ApplicationController
-    before_action :set_question, only: [:update, :destroy, :add]
+    before_action :set_question, only: [:update, :destroy]
     before_action :require_ownership, only: [:update, :destroy]
 
     def index
@@ -28,14 +28,6 @@ module Exams
 
     def destroy
       if exam.remove_question(@question)
-        render json: @question, status: :ok
-      else
-        validation_error(@question)
-      end
-    end
-
-    def add
-      if exam.add_question(@question)
         render json: @question, status: :ok
       else
         validation_error(@question)

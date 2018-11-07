@@ -1,5 +1,5 @@
 class ExamsController < ApplicationController
-  before_action :set_exam, only: [:update, :destroy, :add_question, :export]
+  before_action :set_exam, only: [:update, :destroy, :export, :add]
   before_action :require_ownership, only: [:update, :destroy, :export]
 
   def index
@@ -41,10 +41,22 @@ class ExamsController < ApplicationController
     end
   end
 
+  def add
+    if @exam.add_question(question)
+      render json: question, status: :ok
+    else
+      validation_error(question)
+    end
+  end
+
   private
 
   def course
     @course ||= Course.find(params[:course_id])
+  end
+
+  def question
+    @question ||= Question.find(params[:question_id])
   end
 
   def set_exam

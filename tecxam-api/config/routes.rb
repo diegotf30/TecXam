@@ -18,13 +18,12 @@ Rails.application.routes.draw do
   resources :courses, only: [:index, :create, :destroy, :update] do
     resources :exams, only: [:index, :create, :destroy, :update] do
       get 'export'
+      post 'add/:question_id', to: 'exams#add'
     end
 
     scope module: :exams do
       resources :exams, only: [] do
-        resources :questions, only: [:index, :create, :destroy, :update] do
-          post 'add'
-        end
+        resources :questions, only: [:index, :create, :destroy, :update]
       end
     end
   end
