@@ -37,6 +37,7 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
 import { NextButtonComponent } from './components/next-button/next-button.component';
 import { AddCourseModalComponent } from './components/add-course-modal/add-course-modal.component';
 import { AddExamModalComponent } from './components/add-exam-modal/add-exam-modal.component';
+import { AddQuestionModalComponent } from './components/add-question-modal/add-question-modal.component';
 import { EditExamComponent } from './components/_edit-exam/edit-exam.component';
 import { NotFoundPageComponent } from './components/_not-found-page/not-found-page.component';
 
@@ -53,6 +54,7 @@ import { NotFoundPageComponent } from './components/_not-found-page/not-found-pa
     NextButtonComponent,
     AddCourseModalComponent,
     AddExamModalComponent,
+    AddQuestionModalComponent,
     EditExamComponent,
     NotFoundPageComponent
   ],
@@ -74,7 +76,8 @@ import { NotFoundPageComponent } from './components/_not-found-page/not-found-pa
   bootstrap: [AppComponent],
   entryComponents: [
     AddCourseModalComponent,
-    AddExamModalComponent
+    AddExamModalComponent,
+    AddQuestionModalComponent
   ]
 })
 export class AppModule { }
