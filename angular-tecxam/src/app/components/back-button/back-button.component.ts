@@ -12,6 +12,7 @@ export class BackButtonComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.link = '';
   }
 
 }

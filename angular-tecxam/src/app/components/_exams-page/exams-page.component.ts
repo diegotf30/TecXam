@@ -10,6 +10,7 @@ import { ExamsService } from 'src/app/services/exams.service';
 })
 export class ExamsPageComponent implements OnInit {
   courseID: string;
+  backLink: string;
   rows = [];
   columns = [
     { prop: 'Documento' },
@@ -25,6 +26,7 @@ export class ExamsPageComponent implements OnInit {
 
   ngOnInit() {
     this.courseID = window.location.pathname.substr(9).match(/\d+/)[0];
+    this.backLink = '';
     this.load();
   }
 
@@ -105,12 +107,12 @@ export class ExamsPageComponent implements OnInit {
           time_limit: result.time
         }
       };
-
-      if(result.tags.length > 0){
-        console.log('aqui toy');
+      let tags = result.tags.split(',');
+      for(let t in tags){
+        let temp = tags[t].split(':');
+        exam.exam.random_questions[temp[0]] = temp[1];
       }
-
-      // this.add(exam);
+      this.add(exam);
     }, (reason) => {
       console.log('Closed');
     });;  //size: 'sm',

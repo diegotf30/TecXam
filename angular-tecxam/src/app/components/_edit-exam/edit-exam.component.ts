@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { QuestionsService } from 'src/app/services/questions.service';
+import { AnswersService } from 'src/app/services/answers.service';
 
 @Component({
   selector: 'edit-exam',
@@ -9,11 +10,13 @@ import { QuestionsService } from 'src/app/services/questions.service';
 })
 export class EditExamComponent implements OnInit {
   variables: number;
+  checkAnswers: boolean = false;
   openvar: boolean = false;
   courseID: string;
   examID: string;
 
   rows = [];
+  rows2 = [];
 
   columns = [
     { prop: 'name' },
@@ -24,7 +27,7 @@ export class EditExamComponent implements OnInit {
 
   temp = [];
 
-  constructor(public questionsService: QuestionsService, private _location: Location) { }
+  constructor(public questionsService: QuestionsService, public answersService: AnswersService, private _location: Location) { }
 
   ngOnInit() {
     let ids = window.location.pathname.match(/\d+/g);
@@ -42,7 +45,8 @@ export class EditExamComponent implements OnInit {
           for(var i in result){
             let row = { id: result[i].id, name: result[i].name,
                         tags: result[i].tags, created_at: result[i].created_at,
-                        updated_at: result[i].updated_at, user_id: result[i].user_id };
+                        updated_at: result[i].updated_at, user_id: result[i].user_id,
+                        category: result[i].category };
             this.rows.push(row);
           }
           this.rows = [...this.rows];
@@ -53,10 +57,35 @@ export class EditExamComponent implements OnInit {
       );
   }
 
+  loadAnswers(id: any){
+    this.answersService.fill(id)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.rows2 = [];
+          for(var i in result){
+            let row = { id: result[i].id, name: result[i].name,
+                        question_id: result[i].question_id, created_at: result[i].created_at,
+                        updated_at: result[i].updated_at };
+            this.rows2.push(row);
+          }
+          this.rows2 = [...this.rows2];
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
   onSelect({ selected }) {
-    // console.log('Select Event', selected, this.selected);
-    if(selected != null){
-      console.log(selected.length);
+    if(selected[0] != null){
+      if(selected[0].category == 'multiple_choice' || selected[0].category == 'checkbox' || selected[0].category == 'radio'){
+        this.checkAnswers = true;
+      }
+      else{
+        this.checkAnswers = false;
+      }
+      this.loadAnswers(selected[0].id);
     }
   }
 
@@ -73,7 +102,7 @@ export class EditExamComponent implements OnInit {
     this.variables = e.value;
   }
 
-  test(){
+  openVariables(){
     this.openvar = true;
   }
 
