@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_021741) do
+ActiveRecord::Schema.define(version: 2018_11_06_225308) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
@@ -36,11 +37,12 @@ ActiveRecord::Schema.define(version: 2018_10_30_021741) do
 
   create_table "exams", force: :cascade do |t|
     t.string "name"
-    t.boolean "is_random"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "course_id"
+    t.hstore "random_questions"
     t.index ["course_id"], name: "index_exams_on_course_id"
+    t.index ["random_questions"], name: "index_exams_on_random_questions", using: :gin
   end
 
   create_table "exams_questions", id: false, force: :cascade do |t|

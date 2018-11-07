@@ -19,7 +19,7 @@ describe 'Exams API' do
     expect(response.status).to eq 200
     expect(json).to match_json_schema(:exam)
     expect(json['name']).to eq 'Mi examen :)'
-    expect(json['is_random']).to eq false
+    expect(json['random_questions'].count).to eq 1
   end
 
   it 'updates exam details' do
@@ -30,7 +30,7 @@ describe 'Exams API' do
 
     expect(response.status).to eq 200
     expect(json['name']).to eq 'Mi examen :)'
-    expect(json['is_random']).to eq false
+    expect(json['random_questions'].count).to eq 1
   end
 
   context 'exam deletion' do
@@ -58,7 +58,9 @@ describe 'Exams API' do
     {
       exam: {
         name: 'Mi examen :)',
-        is_random: false
+        random_questions: {
+          bases: 20,
+        }
       }
     }.to_json
   end

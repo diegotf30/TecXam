@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Exam do
   it { is_expected.to respond_to :name }
-  it { is_expected.to respond_to :is_random }
+  it { is_expected.to respond_to :random_questions }
 
   context "database" do
     it { is_expected.to have_db_index(:course_id) }
@@ -41,6 +41,41 @@ describe Exam do
       exam = create :exam, course: course
 
       expect(exam.user).to eq(course.user)
+    end
+  end
+
+  describe '#clean_questions' do
+    it 'removes all questions from exam' do
+      exam = create :exam, :with_questions
+      exam.clean_questions
+
+      expect(exam.questions.count).to eq(0)
+    end
+  end
+
+  describe '#add_random_questions' do
+    it 'adds questions with specified tags' do
+      question = create :question, tags: ['amss']
+      exam = create :exam, random_questions: { amss: 1 }
+
+      expect(exam.questions.count).to eq(1)
+      expect(exam.questions.first).to eq(question)
+    end
+
+    it 'removes existing questions if new options selected' do
+      question = create :question, tags: ['amss']
+      exam = create :exam, :with_questions, number_of_questions: 3
+      exam.update(random_questions: { amss: 1 })
+
+      expect(exam.questions.count).to eq(1)
+      expect(exam.questions.first).to eq(question)
+    end
+
+    it 'only adds question with existing tags' do
+      question = create :question, tags: []
+      exam = create :exam, random_questions: { amss: 1 }
+
+      expect(exam.questions.count).to eq(0)
     end
   end
 end

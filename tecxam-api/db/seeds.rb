@@ -14,16 +14,6 @@ courses = Course.create([
 ])
 p '* - COURSES CREATED'
 
-exams = []
-(0...2).each do |i|
-  exams |= Exam.create([
-    {name: '1er parcial', is_random: true, course: Course.all[i]},
-    {name: '2o parcial', is_random: true, course: Course.all[i]},
-    {name: '3er parcial', is_random: false, course: Course.all[i]}]
-  )
-end
-p '* - EXAMS CREATED'
-
 questions = Question.create([
   {name: 'de donde es enrique?', user: user, tags: ['bases']},
   {name: 'Por que samuel usa expansores?', user: user, tags: ['amss']},
@@ -43,6 +33,19 @@ Answer.create([
   {name: 'idk', question: Question.fourth}
 ])
 p '* - ANSWERS CREATED'
+
+exams = []
+(0...1).each do |i|
+  exams |= Exam.create([
+    {name: '1er parcial', course: Course.all[i]},
+    {name: '2o parcial', course: Course.all[i]},
+    {name: '3er parcial', course: Course.all[i]}]
+  )
+end
+
+Exam.create(name: 'pop quiz', course: Course.last, random_questions: { amss: 1, bases: 1 })
+
+p '* - EXAMS CREATED'
 
 # Populate exams
 exams.each do |e|
