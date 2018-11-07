@@ -62,10 +62,10 @@ export class MainPageComponent implements OnInit {
 
   onSelect({ selected }) {
     // console.log('Select Event', selected, this.selected);
-
     this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
-    console.log(this.selected);
+    for(let s in selected){
+      this.selected.push(selected[s].id);
+    }
   }
 
   onActivate(event) {
@@ -86,6 +86,24 @@ export class MainPageComponent implements OnInit {
 
   onDetailToggle(event) {
     // console.log('Detail Toggled', event);
+  }
+
+  onDelete(){
+    for(let s in this.selected){
+      this.deleteCourse(this.selected[s]);
+    }
+  }
+
+  deleteCourse(id: number){
+    this.courseService.delete(id)
+      .subscribe(
+        (result) => {
+          this.load();
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   open(){

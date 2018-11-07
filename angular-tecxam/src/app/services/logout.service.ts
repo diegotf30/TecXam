@@ -9,8 +9,8 @@ export class LogoutService {
   constructor(public base: BaseService) { }
 
   logout(){
-    localStorage.removeItem('user');
-    localStorage.removeItem('password');
+    localStorage.removeItem('email');
+    localStorage.removeItem('authorization');
     // return this.base.post('association/registration', postBody);
   }
 }

@@ -96,12 +96,34 @@ export class ExamsPageComponent implements OnInit {
 
   open(){
     this.modalService.open(AddExamModalComponent, { centered: true, windowClass: 'add-modal' }).result.then((result) => {
-      let row = { Type: result.type, Nombre: result.name, NotasAdicionales: result.notes};
-      this.rows.push(row);
-      this.rows = [...this.rows];
+      this.add(result);
+      // let row = { Type: result.type, Nombre: result.name, NotasAdicionales: result.notes};
+      // this.rows.push(row);
+      // this.rows = [...this.rows];
     }, (reason) => {
       console.log('Closed');
     });;  //size: 'sm',
+  }
+
+  add(postBody: any){
+    console.log(postBody);
+    // this.examsService.fill()
+    //   .subscribe(
+    //     (result) => {
+    //       this.rows = [];
+    //       // console.log(result);
+    //       for(var i in result){
+    //         let row = { name: result[i].name, created_at: result[i].created_at,
+    //                     uploaded_at: result[i].updated_at, course_id: result[i].course_id,
+    //                     id: result[i].id, is_random: result[i].is_random, type: 'Examen'};
+    //         this.rows.push(row);
+    //       }
+    //       this.rows = [...this.rows];
+    //     },
+    //     (error) => {
+    //       console.error(error);
+    //     }
+    //   );
   }
 
 }

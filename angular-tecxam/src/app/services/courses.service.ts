@@ -13,6 +13,11 @@ export class CoursesService {
   }
 
   add(postBody: any){
+    console.log(postBody);
     return this.base.post('courses', postBody);
+  }
+
+  delete(id: any){
+    return this.base.delete(`courses/${id}`, null);
   }
 }
