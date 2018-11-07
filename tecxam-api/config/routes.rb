@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
     scope module: :exams do
       resources :exams, only: [] do
-        resources :questions, only: [:index, :create, :destroy, :update]
+        resources :questions, only: [:index, :create, :destroy, :update] do
+          post 'add'
+        end
       end
     end
   end
