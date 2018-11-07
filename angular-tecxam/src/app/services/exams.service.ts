@@ -8,7 +8,7 @@ export class ExamsService {
 
   constructor(public base: BaseService) { }
 
-  fill(){
-    return this.base.get('exams');
+  fill(id: string){
+    return this.base.get(`courses/${id}/exams`);
   }
 }

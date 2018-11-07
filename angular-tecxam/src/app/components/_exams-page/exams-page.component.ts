@@ -24,13 +24,12 @@ export class ExamsPageComponent implements OnInit {
   constructor(public examsService: ExamsService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    let pos = window.location.pathname.lastIndexOf('/');
-    this.courseID = window.location.pathname.substr(pos+1);
+    this.courseID = window.location.pathname.substr(9).match(/\d+/)[0];
     this.load();
   }
 
   load(){
-    this.examsService.fill()
+    this.examsService.fill(this.courseID)
       .subscribe(
         (result) => {
           this.rows = [];
