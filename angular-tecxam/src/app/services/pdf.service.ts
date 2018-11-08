@@ -4,11 +4,11 @@ import { BaseService } from './base/base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionsService {
+export class PdfService {
 
   constructor(public base: BaseService) { }
 
-  fill(cid: string, eid: string){
-    return this.base.get(`courses/${cid}/exams/${eid}/questions`);
+  get(cid: string, eid: string){
+    return this.base.getResponse(`courses/${cid}/exams/${eid}/export`);
   }
 }

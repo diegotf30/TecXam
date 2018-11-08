@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddExamModalComponent } from '../add-exam-modal/add-exam-modal.component';
 import { ExamsService } from 'src/app/services/exams.service';
+import { PdfService } from 'src/app/services/pdf.service';
 
 @Component({
   selector: 'exams-page',
@@ -22,7 +23,7 @@ export class ExamsPageComponent implements OnInit {
 
   @ViewChild('table') table: any;
 
-  constructor(public examsService: ExamsService, private modalService: NgbModal) { }
+  constructor(public examsService: ExamsService, public pdfService: PdfService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.courseID = window.location.pathname.substr(9).match(/\d+/)[0];
@@ -142,6 +143,25 @@ export class ExamsPageComponent implements OnInit {
       .subscribe(
         (result) => {
           this.load();
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  getPDF(id: any){
+    this.pdfService.get(this.courseID, id)
+      .subscribe(
+        (result) => {
+          var fileURL = URL.createObjectURL(result.body);
+          let downloadLink = document.createElement('a');
+          let fileName = 'examen.pdf';
+          downloadLink.href = fileURL;
+          downloadLink.download = fileName;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
         },
         (error) => {
           console.error(error);

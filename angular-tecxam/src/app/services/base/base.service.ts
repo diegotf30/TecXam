@@ -34,6 +34,15 @@ export class BaseService {
     return this._http.post(environment.apiEndpoint + url, body, {observe: 'response'});
   }
 
+  getResponse(url: string) {
+    const auth = localStorage.getItem('authorization');
+    let headers = new HttpHeaders({
+      'Authorization':  auth
+    });
+    let options = { headers: headers };
+    return this._http.get(environment.apiEndpoint + url, { observe: 'response', headers: headers, responseType:'blob' });
+  }
+
   // put(url: string, body: any) {
   //   const token = this.tokenExtractor.getToken() as string;
   //   if (token) {

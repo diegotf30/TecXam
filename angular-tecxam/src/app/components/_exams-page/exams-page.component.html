@@ -58,7 +58,7 @@
         <a routerLink="/courses/{{courseID}}/exams/{{row.id}}/questions"><fa name="edit" size="lg" animation="" style="margin-right: 10px" *ngIf="row.type != 'Otro'"></fa></a>
         <!-- <fa name="edit" size="lg" animation="" class="btn-edit" *ngIf="row.type != 'Otro'" routerLink="/course/edit/{{courseID}}"></fa> -->
         <div class="separator" *ngIf="row.type == 'Otro'"></div>
-        <a  class="table-link" href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank" download><fa name="download" size="lg" animation=""></fa></a>
+        <a  class="table-link" (click)="getPDF(row.id)" target="_blank" download><fa name="download" size="lg" animation=""></fa></a>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>
