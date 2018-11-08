@@ -20,4 +20,22 @@ describe Answer do
       expect(answer.user).to eq(question.user)
     end
   end
+
+  describe '#evaluate' do
+    it 'returns evaluated answer with random variable values'  do
+      answer = create :answer, :with_variables
+
+      result = answer.evaluate
+
+      expect(result).to be_a_kind_of(Numeric)
+    end
+
+    it 'returns answer with replaced vars if expression cant be evaluated'  do
+      answer = create :answer, name: 'Napoleón murió en var', variables: { var: [1821] }
+
+      result = answer.evaluate
+
+      expect(result).to eq('Napoleón murió en 1821')
+    end
+  end
 end

@@ -19,8 +19,8 @@ describe 'Answers API' do
 
     expect(response.status).to eq 200
     expect(json).to match_json_schema(:answer)
-    expect(json['name']).to eq 'Tu nombre es #x'
-    expect(json['variables']).to eq ['x']
+    expect(json['name']).to eq 'Tu nombre es x'
+    expect(json['variables']).to eq 'x' => '["Jaime"]'
   end
 
   it 'updates answer details' do
@@ -31,8 +31,8 @@ describe 'Answers API' do
     patch "/questions/#{question.id}/answers/#{answer.id}", params: answer_params, headers: auth_headers(user)
 
     expect(response.status).to eq 200
-    expect(json['name']).to eq 'Tu nombre es #x'
-    expect(json['variables']).to eq ['x']
+    expect(json['name']).to eq 'Tu nombre es x'
+    expect(json['variables']).to eq 'x' => '["Jaime"]'
   end
 
   context 'answer deletion' do
@@ -60,7 +60,10 @@ describe 'Answers API' do
   def answer_params
     {
       answer: {
-        name: 'Tu nombre es #x',
+        name: 'Tu nombre es x',
+        variables: {
+          x: ['Jaime']
+        }
       }
     }.to_json
   end

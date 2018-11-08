@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_082750) do
+ActiveRecord::Schema.define(version: 2018_11_09_035120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -18,11 +18,13 @@ ActiveRecord::Schema.define(version: 2018_11_07_082750) do
 
   create_table "answers", force: :cascade do |t|
     t.string "name"
-    t.text "variables", default: [], array: true
     t.bigint "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.hstore "variables", default: {}
+    t.string "parsed_name", default: ""
     t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["variables"], name: "index_answers_on_variables", using: :gin
   end
 
   create_table "courses", force: :cascade do |t|

@@ -31,12 +31,12 @@ p '* - QUESTIONS CREATED'
 
 Answer.create([
   {name: 'yucatan', question: Question.first},
-  {name: 'es de #x', question: Question.first},
-  {name: 'because #var ate #var2', question: Question.second},
+  {name: 'es de x', vars: { x: [1,2,3] }, question: Question.first},
+  {name: 'because var var2 var3', vars: { var: [7], var2: [8], var3: [9] }, question: Question.second},
   {name: 'sepa \#SamuelEsRaro', question: Question.second},
-  {name: 'porque solo comia #variable-muy-muy-larga calorias', question: Question.third},
+  {name: 'porque solo comia variable-muy-muy-larga calorias', vars: { 'variable-muy-muy-larga': [1000, 250, 500] }, question: Question.third},
   {name: 'es una trampa, verdaderamente no ha bajado de peso', question: Question.third},
-  {name: 'porque #x tenia muchas #y variables #z #m #a xd #e', question: Question.third},
+  {name: 'porque x tenia muchas y variables z m xd', vars: { x: [1], y: [2,3], z: [10, 15, 3], m: [0] } ,question: Question.third},
   {name: 'idk', question: Question.fourth}
 ])
 p '* - ANSWERS CREATED'

@@ -1,19 +1,38 @@
 class Answer < ApplicationRecord
   belongs_to :question
-  before_save :assure_whitespace, :define_variables
+  before_save :parse
+
+  alias_attribute :vars, :variables
+
+  OPERATIONS = { 'sin' => 'Math.sin', 'cos' => 'Math.cos', 'tan' => 'Math.tan', '\^' => '**', 'mod' => '%' }
 
   def user
     question.user
   end
 
-  private
-
-  def assure_whitespace
-    self.name = name.split.join(' ')
+  def evaluate
+    begin
+      replace_variables(parsed_name)
+      return eval(parsed_name).round(3)
+    rescue Exception
+      replace_variables(name)
+      return name
+    end
   end
 
-  # Gets words starting with '#' and ignores real hashtags (starting with '\#')
-  def define_variables
-    self.variables = name.scan(/[^\\#]#([\w]*)/).flatten
+  private
+
+  def parse
+    self.parsed_name = name
+
+    OPERATIONS.each do |op, ruby_op|
+      self.parsed_name.gsub!(/\b(#{op}|#{op.upcase})\b/, ruby_op)
+    end
+  end
+
+  def replace_variables(str)
+    vars.each do |var, values|
+      str.gsub!(/\b(#{var})\b/, eval(values).sample.to_s)
+    end
   end
 end
