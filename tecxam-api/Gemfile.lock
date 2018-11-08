@@ -270,6 +270,7 @@ DEPENDENCIES
   json-schema
   json_matchers
   listen (>= 3.0.5, < 3.2)
+  loofah
   pg (>= 0.18, < 2.0)
   prickle
   puma (~> 3.11)

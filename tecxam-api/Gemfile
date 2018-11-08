@@ -17,6 +17,9 @@ gem 'active_type'
 gem 'jbuilder'
 # For ENV vars
 gem 'dotenv'
+# For exporting exams to PDF
+gem 'date'
+gem 'rulex'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -26,8 +29,8 @@ gem 'rack-cors'
 
 gem 'pundit'
 
-gem 'date'
-gem 'rulex'
+gem 'loofah'
+
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
