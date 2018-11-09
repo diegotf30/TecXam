@@ -55,7 +55,8 @@ describe 'Courses API' do
     {
       course: {
         name: 'Mi curso',
-        acronym: 'CU1234'
+        acronym: 'CU1234',
+        description: 'En linea'
       }
     }.to_json
   end

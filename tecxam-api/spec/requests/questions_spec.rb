@@ -55,6 +55,8 @@ describe 'Questions API' do
     {
       question: {
         name: 'Como me llamo?',
+        points: 20,
+        category: 'paragraph',
         tags: ['Psicologia']
       }
     }.to_json

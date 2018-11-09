@@ -80,6 +80,9 @@ describe 'Exams API' do
     {
       exam: {
         name: 'Mi examen :)',
+        description: 'mio y solo mio >:(',
+        date: '12/12/19',
+        time_limit: 30,
         random_questions: {
           bases: 20,
         }

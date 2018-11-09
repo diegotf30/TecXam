@@ -66,7 +66,7 @@ class ExamsController < ApplicationController
   def exam_params
     params
       .require(:exam)
-      .permit(:name, random_questions: {})
+      .permit(:name, :description, :date, :time_limit, random_questions: {})
       .merge(course: course)
   end
 

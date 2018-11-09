@@ -1,5 +1,7 @@
 {
-	"name": "Cuento pesa el agua?",
+	"name": "Cuanto pesa el agua?",
+	"points": 20,
+	"category": "essay",
 	"tags": [
 		"Química",
 		"Biología",

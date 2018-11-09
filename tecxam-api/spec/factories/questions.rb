@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :question do
     user
     name  { Faker::Lorem.question }
+    points { Faker::Number.number(2) }
+    category "multiple_choice"
     tags []
 
     transient do

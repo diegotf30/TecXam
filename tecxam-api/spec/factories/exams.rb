@@ -2,6 +2,9 @@ FactoryBot.define do
   factory :exam do
     course
     name  { Faker::Name.name }
+    description { Faker::Lorem.paragraph }
+    time_limit { Faker::Number.number(2) }
+    date ""
     random_questions {}
 
     transient do

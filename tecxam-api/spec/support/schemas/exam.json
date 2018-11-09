@@ -1,5 +1,8 @@
 {
-	"name": "mi examen",
+	"name": "segundo parcial",
+	"description": "acumulativo!",
+	"date": "12/08/19",
+	"time_limit": 90,
 	"random_questions": {
 		"bases": 20,
 		"rescate": 3
