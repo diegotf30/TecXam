@@ -10,6 +10,9 @@ export class AnswersService {
 
   fill(id: string){
     return this.base.get(`questions/${id}/answers`);
-    ;
+  }
+
+  add(id: string, postBody: any){
+    return this.base.post(`questions/${id}/answers`, postBody);
   }
 }

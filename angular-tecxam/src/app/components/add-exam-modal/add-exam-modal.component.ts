@@ -66,6 +66,7 @@ export class AddExamModalComponent implements OnInit {
   onSubmit(f: NgForm){
     if(this.type && f.value.name){
       f.value.type = this.type;
+      f.value.tags = f.value.tags.replace(' ', '');
       this.modal.close(f.value);
     }
     else{

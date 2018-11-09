@@ -39,6 +39,7 @@ import { NextButtonComponent } from './components/next-button/next-button.compon
 import { AddCourseModalComponent } from './components/add-course-modal/add-course-modal.component';
 import { AddExamModalComponent } from './components/add-exam-modal/add-exam-modal.component';
 import { AddQuestionModalComponent } from './components/add-question-modal/add-question-modal.component';
+import { AddAnswerModalComponent } from './components/add-answer-modal/add-answer-modal.component';
 import { EditExamComponent } from './components/_edit-exam/edit-exam.component';
 import { NotFoundPageComponent } from './components/_not-found-page/not-found-page.component';
 
@@ -56,6 +57,7 @@ import { NotFoundPageComponent } from './components/_not-found-page/not-found-pa
     AddCourseModalComponent,
     AddExamModalComponent,
     AddQuestionModalComponent,
+    AddAnswerModalComponent,
     EditExamComponent,
     NotFoundPageComponent
   ],
@@ -80,7 +82,8 @@ import { NotFoundPageComponent } from './components/_not-found-page/not-found-pa
   entryComponents: [
     AddCourseModalComponent,
     AddExamModalComponent,
-    AddQuestionModalComponent
+    AddQuestionModalComponent,
+    AddAnswerModalComponent
   ]
 })
 export class AppModule { }

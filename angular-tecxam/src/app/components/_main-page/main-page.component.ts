@@ -120,6 +120,6 @@ export class MainPageComponent implements OnInit {
       this.add(course);
     }, (reason) => {
       console.log('Closed');
-    });;  //size: 'sm',
+    });  //size: 'sm',
   }
 }

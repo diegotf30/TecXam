@@ -1,27 +1,41 @@
 <div id="addQuestion" class="">
   <div class="card card-signin my-5">
     <div class="card-body">
-      <h5 class="card-title text-center">Agregar Documento</h5>
+      <h5 class="card-title text-center">Agregar Pregunta</h5>
       <form class="form-signin" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
 
         <div class="form-label-group">
-          <input type="text" id="inputSiglas" class="form-control" placeholder="Siglas" required
-          #acronym="ngModel" name="acronym" ngModel>
-          <label for="inputSiglas">Siglas</label>
+          <textarea class="form-control" id="textName" rows="3" placeholder="Pregunta"
+          #bane="ngModel" name="name" ngModel></textarea>
+          <label for="textName">Pregunta</label>
         </div>
 
         <div class="form-label-group">
-          <input type="text" id="inputName" class="form-control" placeholder="Nombre del curso" required
-          #name="ngModel" name="name" ngModel>
-          <label for="inputName">Nombre del curso</label>
+          <input type="number" id="inputPoints" class="form-control" placeholder="Puntos" required
+          #points="ngModel" name="points" value="0" min="0" max="100" ngModel>
+          <label for="inputPoints">Puntos</label>
+        </div>
+
+        <div class="form-group">
+          <!-- <label for="selectType">Tipo de documento</label> -->
+          <select class="form-control selectpicker" id="selectType" (change)="onChange($event.target)">
+            <option selected disabled>Categoría</option>
+            <option>Opción mutliple</option>
+            <option>Checkbox</option>
+            <option>Radio</option>
+            <option>Caja de Texto corto</option>
+            <option>Caja de Texto largo</option>
+            <option>Párrafo</option>
+            <option>Ensayo</option>
+          </select>
         </div>
 
         <div class="form-label-group">
-
-          <textarea class="form-control" id="textAreaNotes" rows="3" placeholder="Notas adicionales"
-          #description="ngModel" name="description" ngModel></textarea>
-          <!-- <label for="textAreaNotes">Notas adicionales</label> -->
+          <input type="text" id="inputTags" class="form-control" placeholder="Tags" required
+          #tags="ngModel" name="tags" ngModel>
+          <label for="inputTags">Ingresa los tags * (Opcional)</label>
         </div>
+
         <button class="btn btn-lg btn-primary btn-block text-uppercase">Agregar</button>
       </form>
     </div>

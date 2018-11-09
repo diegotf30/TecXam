@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { QuestionsService } from 'src/app/services/questions.service';
 import { AnswersService } from 'src/app/services/answers.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddQuestionModalComponent } from '../add-question-modal/add-question-modal.component';
+import { AddAnswerModalComponent } from '../add-answer-modal/add-answer-modal.component';
 
 @Component({
   selector: 'edit-exam',
@@ -11,7 +14,6 @@ import { AnswersService } from 'src/app/services/answers.service';
 export class EditExamComponent implements OnInit {
   variables: number;
   checkAnswers: boolean = false;
-  openvar: boolean = false;
   courseID: string;
   examID: string;
 
@@ -23,11 +25,12 @@ export class EditExamComponent implements OnInit {
   ];
 
   selected = [];
+  selectedAns = [];
   question: boolean = false;
 
   temp = [];
 
-  constructor(public questionsService: QuestionsService, public answersService: AnswersService, private _location: Location) { }
+  constructor(public questionsService: QuestionsService, public answersService: AnswersService, private _location: Location,  private modalService: NgbModal) { }
 
   ngOnInit() {
     let ids = window.location.pathname.match(/\d+/g);
@@ -100,8 +103,73 @@ export class EditExamComponent implements OnInit {
     this.variables = e.value;
   }
 
-  openVariables(){
-    this.openvar = true;
+  open(){
+    this.modalService.open(
+        AddQuestionModalComponent,
+        { centered: true, windowClass: 'add-modal' }
+        ).result.then((result) => {
+          let question =  {
+                            'question': {
+                            	'name': result.name,
+                            	'points': result.points,
+                            	'category': result.category,
+                            	'tags': null
+                            }
+                          }
+          let tags = result.tags.split(',');
+          question.question.tags = tags;
+      this.add(question);
+
+    }, (reason) => {
+      console.log('Closed');
+    });  //size: 'sm',
+  }
+
+  add(postBody: any){
+    this.questionsService.add(this.courseID, this.examID, postBody)
+      .subscribe(
+        (result) => {
+          this.load();
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  openAns(){
+    this.modalService.open(
+        AddAnswerModalComponent,
+        { centered: true, windowClass: 'add-modal' }
+        ).result.then((result) => {
+          console.log(result);
+          let answer =  {
+                            'answer': {
+                            	'name': result.name,
+                            	'variables': {}
+                            }
+                          }
+          let vars = result.variables;
+          for(let v in vars){
+            let temp = vars[v].values.split(',');
+            answer.answer.variables[vars[v].var] = temp;
+          }
+          this.addAns(answer);
+    }, (reason) => {
+      console.log('Closed');
+    });  //size: 'sm',
+  }
+
+  addAns(postBody: any){
+    this.answersService.add(this.selected[0].id, postBody)
+      .subscribe(
+        (result) => {
+          this.loadAnswers(this.selected[0].id);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   test2(){

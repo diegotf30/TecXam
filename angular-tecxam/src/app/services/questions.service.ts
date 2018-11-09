@@ -11,4 +11,8 @@ export class QuestionsService {
   fill(cid: string, eid: string){
     return this.base.get(`courses/${cid}/exams/${eid}/questions`);
   }
+
+  add(cid: string, eid: string, postBody: any){
+    return this.base.post(`courses/${cid}/exams/${eid}/questions`, postBody);
+  }
 }
