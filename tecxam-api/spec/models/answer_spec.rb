@@ -38,4 +38,15 @@ describe Answer do
       expect(result).to eq('Napoleón murió en 1821')
     end
   end
+
+  context 'private' do
+    describe '#parse' do
+      it 'should prepare answer for ruby eval()' do
+        answer = create :answer, :with_variables
+
+        expect(answer.name.include? '^').to eq(true)
+        expect(answer.parsed_name.include? '**').to eq(true)
+      end
+    end
+  end
 end

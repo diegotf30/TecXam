@@ -4,7 +4,7 @@ class Answer < ApplicationRecord
 
   alias_attribute :vars, :variables
 
-  OPERATIONS = { 'sin' => 'Math.sin', 'cos' => 'Math.cos', 'tan' => 'Math.tan', '\^' => '**', 'mod' => '%' }
+  OPERATIONS = { 'sin' => 'Math.sin', 'cos' => 'Math.cos', 'tan' => 'Math.tan', 'mod' => '%' }
 
   def user
     question.user
@@ -25,6 +25,7 @@ class Answer < ApplicationRecord
   def parse
     self.parsed_name = name
 
+    self.parsed_name.gsub!(/(\^)/, '**') # Need special regex, because it's not a word
     OPERATIONS.each do |op, ruby_op|
       self.parsed_name.gsub!(/\b(#{op}|#{op.upcase})\b/, ruby_op)
     end

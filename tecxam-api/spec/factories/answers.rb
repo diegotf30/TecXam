@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :answer do
     question
     name  { Faker::Number.number(3) }
+    parsed_name ""
     variables {{}}
 
     transient do
@@ -9,14 +10,12 @@ FactoryBot.define do
     end
 
     trait :with_variables do
-      after(:create) do |answer, evaluator|
-        ops = ['+', '-', '*', '^', '/']
-
-        vars = Faker::Lorem.characters(evaluator.number_of_variables).split('')
+      before(:create) do |answer, evaluator|
+        vars = Faker::Lorem.words(evaluator.number_of_variables)
 
         vars.each do |var|
-          answer.variables[var] = Array.new(4) { rand(1...9) }.to_s
-          answer.name << " #{ops.sample} #{var}"
+          answer.variables[var] = Array.new(3) { rand(1...9) }.to_s
+          answer.name << " ^ #{var}"
         end
       end
     end
