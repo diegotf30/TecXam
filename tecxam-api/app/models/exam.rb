@@ -23,10 +23,8 @@ class Exam < ApplicationRecord
   end
 
   def export
-    require 'rake'
-    load File.join(Rails.root, 'lib', 'tasks', 'exams.rake')
-    Rake::Task['exams:json'].invoke(id)
-    Rake::Task['exams:pdf'].invoke
+    export_to_json
+    generate_pdf    
     true
   end
 
@@ -39,5 +37,34 @@ class Exam < ApplicationRecord
     random_questions.each do |tag, amount|
       add_question(Question.where_tag(tag).sample(amount.to_i))
     end
+  end
+
+  def export_to_json
+    exam_data = {
+      course_name: course.name,
+      exam_name: name,
+      exam_date: date,
+      exam_description: description,
+      time_limit: time_limit,
+      questions: exam_questions
+    }
+    File.write('tmp/exam.json', JSON.pretty_generate(exam_data))
+  end
+
+  def exam_questions
+    questions.map do |q|
+      {
+        name: q.name,
+        points: q.points,
+        category: q.category,
+        answers: q.answers.map { |a| a.name }.to_a
+      }
+    end
+  end
+
+  def generate_pdf
+    system('rulex lib/latex/exam.rex > tmp/exam.tex')
+    system('pdflatex -output-directory tmp tmp/exam.tex > /dev/null')
+    system('pdflatex -output-directory tmp tmp/exam.tex > /dev/null')
   end
 end
