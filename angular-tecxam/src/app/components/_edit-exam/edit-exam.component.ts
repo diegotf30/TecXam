@@ -41,7 +41,6 @@ export class EditExamComponent implements OnInit {
       .subscribe(
         (result) => {
           this.rows = [];
-          console.log(result);
           for(var i in result){
             let row = { id: result[i].id, name: result[i].name,
                         tags: result[i].tags, created_at: result[i].created_at,
@@ -61,7 +60,6 @@ export class EditExamComponent implements OnInit {
     this.answersService.fill(id)
       .subscribe(
         (result) => {
-          console.log(result);
           this.rows2 = [];
           for(var i in result){
             let row = { id: result[i].id, name: result[i].name,
