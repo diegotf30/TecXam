@@ -13,7 +13,7 @@ class Answer < ApplicationRecord
   def evaluate
     begin
       replace_variables(parsed_name)
-      return eval(parsed_name).round(3)
+      return eval(parsed_name).round(3).to_s
     rescue Exception
       replace_variables(name)
       return name

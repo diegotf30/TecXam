@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_09_035120) do
+ActiveRecord::Schema.define(version: 2018_11_10_191619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2018_11_09_035120) do
     t.datetime "updated_at", null: false
     t.hstore "variables", default: {}
     t.string "parsed_name", default: ""
+    t.boolean "correct", default: false
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["variables"], name: "index_answers_on_variables", using: :gin
   end
@@ -42,7 +43,7 @@ ActiveRecord::Schema.define(version: 2018_11_09_035120) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "course_id"
-    t.hstore "random_questions"
+    t.hstore "random_questions", default: {}
     t.text "description", default: ""
     t.string "date", default: ""
     t.integer "time_limit", default: 90

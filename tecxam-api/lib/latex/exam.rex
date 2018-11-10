@@ -4,7 +4,11 @@ require 'json'
 def single_column(category, answers)
   raw "\\begin{#{category}}\n"
     answers.each do |answer|
-      choice answer
+      if answer['correct']
+        CorrectChoice answer['value']
+      else
+        choice answer['value']
+      end
     end
   raw "\\end{#{category}}\n"
 end
@@ -20,6 +24,24 @@ def question(category, answers)
   end
 end
 
+def box(size, answer)
+  raw "\\begin{solutionorbox}[#{size}]\n"
+    raw answer || "Seccion revisada por el profesor."
+  raw "\\end{solutionorbox}\n"
+end
+
+def paragraph(answer)
+  raw "\\begin{solutionordottedlines}[2in]\n"
+    raw answer || "Seccion revisada por el profesor."
+  raw "\\end{solutionordottedlines}\n"
+end
+
+def essay(answer)
+  raw "\\begin{solutionorlines}[64em]\n"
+    raw answer || "Seccion revisada por el profesor."
+  raw "\\end{solutionorlines}\n"
+end
+
 def read_exam_json
   file = File.read('tmp/exam.json')
   return JSON.parse(file)
@@ -30,11 +52,16 @@ json = read_exam_json
 nonstopmode
 documentclass 'lib/latex/exam'
 
+if json['answer_key']
+  printanswers
+end
+
 <##
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb}
 \usepackage{multicol}
+\usepackage{color}
 
 ##>
 
@@ -50,6 +77,7 @@ newcommand '\\timelimit', "#{json['time_limit']} Minutos"
 \firstpageheader{}{}{}
 \runningheader{\class}{\examnum\ - Page \thepage\ of \numpages}{\examdate}
 \runningheadrule
+\CorrectChoiceEmphasis{\color{red}\bfseries}
 
 ##>
 
@@ -88,29 +116,32 @@ Tabla para Calificar (para uso exclusivo docente)\\
   questions do
     raw "\n"
     json['questions'].each do |question|
+      answers = question['answers']
+
       if question['category'] == 'checkbox'
         raw "{\n"
         checkboxchar '$\Box$'
       end
+
       raw "\\question[#{question['points']}] #{question['name']}\n"
       addpoints
 
       case question['category']
         when 'multiple_choice'
-          question('choices', question['answers'])
+          question('choices', answers)
         when 'checkbox'
-          question('checkboxes', question['answers'])
+          question('checkboxes', answers)
           raw "}\n"
         when 'radio'
-          question('checkboxes', question['answers'])
+          question('checkboxes', answers)
         when 'small_textbox'
-          makeemptybox '1in'
+          box('1in', answers.first)
         when 'big_textbox'
-          makeemptybox '2in'
+          box('2in', answers.first)
         when 'paragraph'
-          fillwithdottedlines '12em'
+          paragraph(answers.first)
         when 'essay'
-          fillwithlines '64em'
+          essay(answers.first)
       end
       raw "\n"
     end

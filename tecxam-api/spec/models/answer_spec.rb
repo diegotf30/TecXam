@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe Answer do
   it { is_expected.to respond_to :name }
+  it { is_expected.to respond_to :correct }
   it { is_expected.to respond_to :variables }
 
   context "database" do

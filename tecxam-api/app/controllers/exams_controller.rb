@@ -33,6 +33,14 @@ class ExamsController < ApplicationController
     end
   end
 
+  def add
+    if @exam.add_question(question)
+      render json: question, status: :ok
+    else
+      validation_error(question)
+    end
+  end
+
   def export
     if @exam.export
       send_file 'tmp/exam.pdf'
@@ -41,11 +49,11 @@ class ExamsController < ApplicationController
     end
   end
 
-  def add
-    if @exam.add_question(question)
-      render json: question, status: :ok
+  def answer_key
+    if @exam.export(answer_key: true)
+      send_file 'tmp/exam.pdf'
     else
-      validation_error(question)
+      validation_error(@exam)
     end
   end
 

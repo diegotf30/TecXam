@@ -22,8 +22,8 @@ class Exam < ApplicationRecord
     questions.delete_all
   end
 
-  def export
-    export_to_json
+  def export(answer_key: false)
+    export_to_json(answer_key)
     generate_pdf    
     true
   end
@@ -31,7 +31,7 @@ class Exam < ApplicationRecord
   private
 
   def add_random_questions
-    return if random_questions.nil?
+    return unless random_questions.any?
 
     clean_questions
     random_questions.each do |tag, amount|
@@ -39,8 +39,9 @@ class Exam < ApplicationRecord
     end
   end
 
-  def export_to_json
+  def export_to_json(answer_key)
     exam_data = {
+      answer_key: answer_key,
       course_name: course.name,
       exam_name: name,
       exam_date: date,
@@ -57,7 +58,12 @@ class Exam < ApplicationRecord
         name: q.name,
         points: q.points,
         category: q.category,
-        answers: q.answers.map { |a| a.name }.to_a
+        answers: q.answers.map do |a|
+          {
+            value: a.evaluate,
+            correct: a.correct
+          }
+        end
       }
     end
   end
