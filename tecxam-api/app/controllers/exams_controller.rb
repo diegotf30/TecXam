@@ -1,5 +1,5 @@
 class ExamsController < ApplicationController
-  before_action :set_exam, only: [:update, :destroy, :export, :add]
+  before_action :set_exam, only: [:update, :destroy, :export, :add, :answer_key]
   before_action :require_ownership, only: [:update, :destroy, :export]
 
   def index
