@@ -1,11 +1,11 @@
 <div id="addExam" class="">
   <div class="card card-signin my-5">
     <div class="card-body">
-      <h5 class="card-title text-center">Agregar Documento</h5>
+      <h5 class="card-title text-center">Agregar Curso</h5>
       <form class="form-signin" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
 
         <div class="form-label-group">
-          <input type="text" id="inputSiglas" class="form-control" placeholder="Siglas" required
+          <input style="text-transform: uppercase;" type="text" id="inputSiglas" class="form-control" placeholder="Siglas" required
           #acronym="ngModel" name="acronym" ngModel>
           <label for="inputSiglas">Siglas</label>
         </div>

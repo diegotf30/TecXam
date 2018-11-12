@@ -18,10 +18,16 @@ export class AddCourseModalComponent implements OnInit {
   }
 
   onSubmit(f: NgForm){
-    if(f.value.acronym && f.value.name){
+    let siglas = f.value.acronym.match(/[a-zA-Z]{2}\d{4}/);
+    console.log(siglas);
+    if(f.value.name && siglas){
+      f.value.name = f.value.name.toUpperCase();
       this.modal.close(f.value);
     }
     else{
+      if(!siglas){
+        this.showError('Las siglas deben ser 2 letras, seguidas de 4 números');
+      }
       if(!f.value.acronym){
         this.showError('Agrega las siglas!');
       }
