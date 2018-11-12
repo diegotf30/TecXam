@@ -26,19 +26,19 @@ end
 
 def box(size, answer)
   raw "\\begin{solutionorbox}[#{size}]\n"
-    raw answer || "Seccion revisada por el profesor."
+    raw answer&.dig('value') || "Seccion revisada por el profesor."
   raw "\\end{solutionorbox}\n"
 end
 
 def paragraph(answer)
   raw "\\begin{solutionordottedlines}[2in]\n"
-    raw answer || "Seccion revisada por el profesor."
+    raw answer&.dig('value') || "Seccion revisada por el profesor."
   raw "\\end{solutionordottedlines}\n"
 end
 
 def essay(answer)
   raw "\\begin{solutionorlines}[64em]\n"
-    raw answer || "Seccion revisada por el profesor."
+    raw answer&.dig('value') || "Seccion revisada por el profesor."
   raw "\\end{solutionorlines}\n"
 end
 
