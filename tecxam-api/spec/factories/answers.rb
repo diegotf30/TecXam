@@ -15,7 +15,7 @@ FactoryBot.define do
 
         vars.each do |var|
           answer.variables[var] = Array.new(3) { rand(1...9) }.to_s
-          answer.name << " ^ #{var}"
+          answer.name << " mod #{var}"
         end
       end
     end

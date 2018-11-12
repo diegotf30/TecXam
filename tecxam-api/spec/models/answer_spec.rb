@@ -23,12 +23,12 @@ describe Answer do
   end
 
   describe '#evaluate' do
-    it 'returns evaluated answer with random variable values'  do
+    it 'returns answer evaluated with random variable values'  do
       answer = create :answer, :with_variables
 
       result = answer.evaluate
 
-      expect(result).to be_a_kind_of(Numeric)
+      expect(result).to be_a_kind_of(String)
     end
 
     it 'returns answer with replaced vars if expression cant be evaluated'  do
@@ -45,8 +45,8 @@ describe Answer do
       it 'should prepare answer for ruby eval()' do
         answer = create :answer, :with_variables
 
-        expect(answer.name.include? '^').to eq(true)
-        expect(answer.parsed_name.include? '**').to eq(true)
+        expect(answer.name.include? 'mod').to eq(true)
+        expect(answer.parsed_name.include? '%').to eq(true)
       end
     end
   end

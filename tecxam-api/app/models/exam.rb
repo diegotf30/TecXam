@@ -31,7 +31,7 @@ class Exam < ApplicationRecord
   private
 
   def add_random_questions
-    return unless random_questions.any?
+    return if random_questions.nil?
 
     clean_questions
     random_questions.each do |tag, amount|
