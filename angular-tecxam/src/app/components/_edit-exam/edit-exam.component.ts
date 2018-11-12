@@ -130,6 +130,7 @@ export class EditExamComponent implements OnInit {
       .subscribe(
         (result) => {
           this.load();
+          this.openAns2(result);
         },
         (error) => {
           console.error(error);
@@ -142,7 +143,6 @@ export class EditExamComponent implements OnInit {
         AddAnswerModalComponent,
         { centered: true, windowClass: 'add-modal' }
         ).result.then((result) => {
-          console.log(result);
           let answer =  {
                             'answer': {
                             	'name': result.name,
@@ -172,8 +172,51 @@ export class EditExamComponent implements OnInit {
       );
   }
 
+  openAns2(res: any){
+    let id = res.id;
+    this.modalService.open(
+        AddAnswerModalComponent,
+        { centered: true, windowClass: 'add-modal' }
+        ).result.then((result) => {
+          let answer =  {
+                            'answer': {
+                            	'name': result.name,
+                            	'variables': {}
+                            }
+                          }
+          let vars = result.variables;
+          for(let v in vars){
+            let temp = vars[v].values.split(',');
+            answer.answer.variables[vars[v].var] = temp;
+          }
+          this.addAns2(id, answer);
+    }, (reason) => {
+      console.log('Closed');
+    });  //size: 'sm',
+  }
+
+  addAns2(id: any, postBody: any){
+    this.answersService.add(id, postBody)
+      .subscribe(
+        (result) => {
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
   test2(){
     this._location.back();
   }
+}
 
+export interface Question {
+    id: any;
+    category: any;
+    created_at: number;
+    points: any;
+    tags: any;
+    updated_at: any;
+    user_id: any;
 }
