@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div class="card card-signin col-sm-12 col-md-6 col-lg-5" *ngIf="selected.length >= 1 && checkAnswers">
+    <div class="card card-signin col-sm-12 col-md-6 col-lg-5" *ngIf="selected.length >= 1">
       <h5 class="card-title text-center" style="margin-top: 33px; margin-bottom: ;">Lista de preguntas</h5>
       <ngx-datatable
         #table2
@@ -83,8 +83,8 @@
 
       <div class="container">
         <div class="row">
-          <button class="btn btn-primary btn-add" (click)="openAns()">Agregar Respuesta <fa name="plus-circle" class="icons"></fa></button>
-          <button class="btn btn-primary btn-delete" (click)="onDelete()" *ngIf="selectedAns.length > 0">Borrar <fa name="minus-circle" class="icons"></fa></button>
+          <button *ngIf="checkAnswers || (!checkAnswers && rows2.length < 1)" class="btn btn-primary btn-add" (click)="openAns()">Agregar Respuesta <fa name="plus-circle" class="icons"></fa></button>
+          <button class="btn btn-primary btn-delete" (click)="onDeleteAns()" *ngIf="selectedAns.length > 0">Borrar <fa name="minus-circle" class="icons"></fa></button>
         </div>
       </div>
     </div>
