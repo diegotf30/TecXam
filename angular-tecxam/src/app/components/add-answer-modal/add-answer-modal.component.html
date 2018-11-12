@@ -10,6 +10,12 @@
           <label for="textName">Respuesta</label>
         </div>
 
+        <div class="container">
+          <div class="row">
+            <span style="margin-top: 3px;">Respuesta correcta</span> <ui-switch style="margin-left: 13px;"color="#ff508e" (change)="onChange($event)"></ui-switch>
+          </div>
+        </div>
+
         <div class="row" *ngFor="let v of variables; let i = index">
           <div class="form-label-group col-3">
             <input type="text" id="inputVar{{i}}" class="form-control" placeholder="Name address" required

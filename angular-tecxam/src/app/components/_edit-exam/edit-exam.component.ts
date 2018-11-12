@@ -22,6 +22,12 @@ export class EditExamComponent implements OnInit {
 
   columns = [
     { prop: 'name' },
+    { prop: 'points' },
+  ];
+
+  columns2 = [
+    { prop: 'name' },
+    { prop: 'correct' },
   ];
 
   selected = [];
@@ -48,7 +54,7 @@ export class EditExamComponent implements OnInit {
             let row = { id: result[i].id, name: result[i].name,
                         tags: result[i].tags, created_at: result[i].created_at,
                         updated_at: result[i].updated_at, user_id: result[i].user_id,
-                        category: result[i].category };
+                        category: result[i].category, points: result[i].points };
             this.rows.push(row);
           }
           this.rows = [...this.rows];
@@ -64,10 +70,11 @@ export class EditExamComponent implements OnInit {
       .subscribe(
         (result) => {
           this.rows2 = [];
+          console.log(result); // borrar
           for(var i in result){
             let row = { id: result[i].id, name: result[i].name,
                         question_id: result[i].question_id, created_at: result[i].created_at,
-                        updated_at: result[i].updated_at };
+                        updated_at: result[i].updated_at, correct: result[i].correct };
             this.rows2.push(row);
           }
           this.rows2 = [...this.rows2];
@@ -146,7 +153,8 @@ export class EditExamComponent implements OnInit {
           let answer =  {
                             'answer': {
                             	'name': result.name,
-                            	'variables': {}
+                            	'variables': {},
+                              'correct': result.correct
                             }
                           }
           let vars = result.variables;

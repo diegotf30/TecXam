@@ -14,7 +14,7 @@
         [columnMode]="'force'"
         [rows]="rows"
         [columns]="columns"
-        [headerHeight]="0"
+        [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
         [selected]="selected"
@@ -61,7 +61,8 @@
         [scrollbarV]="true"
         [columnMode]="'force'"
         [rows]="rows2"
-        [headerHeight]="0"
+        [columns]="columns2"
+        [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
         [selected]="selectedAns"
@@ -70,6 +71,12 @@
         <ngx-datatable-column prop="name">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <a  class="table-link">{{row.name}}</a>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column prop="correct" [width]="75" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <a  style="display: flex; justify-content: center" class="table-link" *ngIf="row.correct == true"> <fa style="color: #ff508e; font-size: 20px;" class="i-correct" name="check-circle" class="icons"></fa></a>
+            <a  style="display: flex; justify-content: center" class="table-link" *ngIf="row.correct != true"> <fa style="font-size: 20px;" name="times-circle" class="icons"></fa></a>
           </ng-template>
         </ngx-datatable-column>
       </ngx-datatable>

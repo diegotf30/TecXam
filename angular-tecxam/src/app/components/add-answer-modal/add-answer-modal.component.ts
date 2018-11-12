@@ -12,7 +12,7 @@ export class AddAnswerModalComponent implements OnInit {
   category: string = null;
   varNumber = 0;
   variables = []
-  hola = 'asdad';
+  correct: boolean = false;
 
   constructor(private modal: NgbActiveModal, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -30,8 +30,8 @@ export class AddAnswerModalComponent implements OnInit {
   }
 
   onSubmit(f: NgForm){
-    console.log('entro');
     if(f.value.name && this.varNumber < 1){
+      f.value.correct = this.correct;
       this.modal.close(f.value);
     }
     else if(f.value.name && this.varNumber >= 1){
@@ -70,6 +70,10 @@ export class AddAnswerModalComponent implements OnInit {
 
   showError(msg: string) {
     this.toastr.error(msg, 'Oops!');
+  }
+
+  onChange(e){
+    this.correct = e;
   }
 
 }

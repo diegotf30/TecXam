@@ -16,7 +16,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ToastModule } from 'ng6-toastr/ng2-toastr';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { TagInputModule } from 'ngx-chips';
+import { TagInputModule } from 'ngx-chips'; // Still not used
+import { UiSwitchModule } from 'ngx-toggle-switch';
 //
 // Utility / Services
 //
@@ -72,7 +73,8 @@ import { NotFoundPageComponent } from './components/_not-found-page/not-found-pa
     NgbModule,
     AngularFontAwesomeModule,
     NgxDatatableModule,
-    TagInputModule
+    TagInputModule, // Still not used
+    UiSwitchModule
   ],
   providers: [
     BaseService,
