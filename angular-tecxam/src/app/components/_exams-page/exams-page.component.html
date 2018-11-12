@@ -59,7 +59,7 @@
         <!-- <fa name="edit" size="lg" animation="" class="btn-edit" *ngIf="row.type != 'Otro'" routerLink="/course/edit/{{courseID}}"></fa> -->
         <div class="separator" *ngIf="row.type == 'Otro'"></div>
         <a  (click)="getPDF(row.id)" target="_blank" download><fa class="i-download" name="book" size="lg" animation="" style="margin-right: 10px"></fa></a>
-        <a  (click)="getPDF(row.id)" target="_blank" download><fa class="i-download" name="tasks" size="lg" animation=""></fa></a>
+        <a  (click)="getPDFAns(row.id)" target="_blank" download><fa class="i-download" name="tasks" size="lg" animation=""></fa></a>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>

@@ -11,4 +11,8 @@ export class PdfService {
   get(cid: string, eid: string){
     return this.base.getResponse(`courses/${cid}/exams/${eid}/export`);
   }
+
+  getAns(cid: string, eid: string){
+    return this.base.getResponse(`courses/${cid}/exams/${eid}/answer_key`);
+  }
 }

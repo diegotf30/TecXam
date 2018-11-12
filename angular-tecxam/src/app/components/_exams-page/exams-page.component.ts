@@ -169,4 +169,23 @@ export class ExamsPageComponent implements OnInit {
       );
   }
 
+  getPDFAns(id: any){
+    this.pdfService.getAns(this.courseID, id)
+      .subscribe(
+        (result) => {
+          var fileURL = URL.createObjectURL(result.body);
+          let downloadLink = document.createElement('a');
+          let fileName = 'examen_answers.pdf';
+          downloadLink.href = fileURL;
+          downloadLink.download = fileName;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
 }
