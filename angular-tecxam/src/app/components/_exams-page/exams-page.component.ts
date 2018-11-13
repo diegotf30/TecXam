@@ -57,7 +57,6 @@ export class ExamsPageComponent implements OnInit {
     for(let s in selected){
       this.selected.push(selected[s].id);
     }
-    console.log(this.selected);
   }
 
   onActivate(event) {

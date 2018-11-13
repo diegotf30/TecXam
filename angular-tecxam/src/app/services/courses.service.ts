@@ -19,4 +19,8 @@ export class CoursesService {
   delete(id: any){
     return this.base.delete(`courses/${id}`, null);
   }
+
+  update(id: any, postBody: any){
+    return this.base.patch(`courses/${id}`, postBody);
+  }
 }

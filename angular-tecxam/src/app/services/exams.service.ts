@@ -19,4 +19,8 @@ export class ExamsService {
   delete(cid: string, eid: string){
     return this.base.delete(`courses/${cid}/exams/${eid}`, null);
   }
+
+  get(cid: string, eid: string){
+    return this.base.get(`courses/${cid}/exams/${eid}/`);
+  }
 }

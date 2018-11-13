@@ -54,213 +54,43 @@
     </ngx-datatable-column>
     <ngx-datatable-column prop="name">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <a  class="table-link">{{row.name}}</a>
+        <a  class="table-link">{{row.name}}</a> <button *ngIf="selected.length == 1 && row.id == selected" class="btn btn-primary btn-add btn-sm" style="margin: 0px 0px 0px 10px !important;" (click)="openEdit()">Editar<fa name="plus-circle" class="icons"></fa></button>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>
 
   <button class="btn btn-primary btn-add" (click)="open()">Agregar curso<fa name="plus-circle" class="icons"></fa></button>
-  <button class="btn btn-primary btn-delete" (click)="onDelete()" *ngIf="selected.length > 0">Borrar <fa name="minus-circle" class="icons"></fa></button>
+  <button class="btn btn-primary btn-delete" (click)="onDelete()" *ngIf="selected.length > 0 && !edit">Borrar <fa name="minus-circle" class="icons"></fa></button>
 
-  <!-- <div class='selected-column'>
-        <h4>Selections <small>({{selected?.length}})</small></h4>
-        <ul>
-          <li *ngFor='let sel of selected'>
-            {{sel.acronym}}
-          </li>
-          <li *ngIf="!selected?.length">No Selections</li>
-        </ul>
-      </div> -->
+  <div class="row" *ngIf="edit && selected.length == 1">
+    <div class="card card-signin col-sm-12 col-md-6 col-lg-5">
+      <div class="card-body">
+        <h5 class="card-title text-center">Editar Curso</h5>
+        <form class="form-question" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
 
+          <div class="form-label-group">
+            <input type="text" id="inputAcronymTemp" class="form-control" placeholder="Acronym" required
+            [(ngModel)]="courseEdit.acronym" #acronymTemp="ngModel" name="acronymTemp" >
+            <label for="inputAcronymTemp">Siglas</label>
+          </div>
 
+          <div class="form-label-group">
+            <input type="text" id="inputNameTemp" class="form-control" placeholder="Name" required
+            [(ngModel)]="courseEdit.name" #nameTemp="ngModel" name="nameTemp" >
+            <label for="inputNameTemp">Nombre</label>
+          </div>
 
-  <!-- <ngx-datatable
-        class="material"
-        [rows]="rows"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="'auto'">
-        <ngx-datatable-column name="acronym">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <span [innerHTML]="row['acronym']"></span>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="nanme">
-        <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-          </ng-template>
-          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <span [innerHTML]="row['nanme']"></span>
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable> -->
+          <div class="form-label-group">
+            <textarea id="inputDescriptionTemp" class="form-control" required
+            rows="5" cols="80" [(ngModel)]="courseEdit.description" #descriptionTemp="ngModel" name="descriptionTemp"></textarea>
+            <label for="inputDescriptionTemp">Descripción</label>
+          </div>
 
-
-
-
-
-  <!-- <div class="row">
-    <div class="col-sm-9 col-md-5 col-lg-3 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Sign In</h5>
-          <form class="form-signin">
-            <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-              <label for="inputEmail">Email address</label>
-            </div>
-
-            <div class="form-label-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-              <label for="inputPassword">Password</label>
-            </div>
-
-            <div class="custom-control custom-checkbox mb-3">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Remember password</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-            <hr class="my-4">
-            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-          </form>
-        </div>
+          <div class="row" style="justify-content: space-between" *ngIf="selected.length >= 1">
+            <button (click)="update()" type="button" class="btn btn-primary btn-block btn-save" name="button" style="border: 2px white !important">Actualizar Curso</button>
+          </div>
+        </form>
       </div>
     </div>
-    <div class="col-sm-9 col-md-5 col-lg-3 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Sign In</h5>
-          <form class="form-signin">
-            <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-              <label for="inputEmail">Email address</label>
-            </div>
-
-            <div class="form-label-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-              <label for="inputPassword">Password</label>
-            </div>
-
-            <div class="custom-control custom-checkbox mb-3">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Remember password</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-            <hr class="my-4">
-            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-9 col-md-5 col-lg-3 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Sign In</h5>
-          <form class="form-signin">
-            <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-              <label for="inputEmail">Email address</label>
-            </div>
-
-            <div class="form-label-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-              <label for="inputPassword">Password</label>
-            </div>
-
-            <div class="custom-control custom-checkbox mb-3">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Remember password</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-            <hr class="my-4">
-            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-9 col-md-5 col-lg-3 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Sign In</h5>
-          <form class="form-signin">
-            <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-              <label for="inputEmail">Email address</label>
-            </div>
-
-            <div class="form-label-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-              <label for="inputPassword">Password</label>
-            </div>
-
-            <div class="custom-control custom-checkbox mb-3">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Remember password</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-            <hr class="my-4">
-            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-9 col-md-5 col-lg-3 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Sign In</h5>
-          <form class="form-signin">
-            <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-              <label for="inputEmail">Email address</label>
-            </div>
-
-            <div class="form-label-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-              <label for="inputPassword">Password</label>
-            </div>
-
-            <div class="custom-control custom-checkbox mb-3">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Remember password</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-            <hr class="my-4">
-            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-9 col-md-5 col-lg-3 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Sign In</h5>
-          <form class="form-signin">
-            <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-              <label for="inputEmail">Email address</label>
-            </div>
-
-            <div class="form-label-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-              <label for="inputPassword">Password</label>
-            </div>
-
-            <div class="custom-control custom-checkbox mb-3">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Remember password</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-            <hr class="my-4">
-            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> -->
+  </div>
 </div>

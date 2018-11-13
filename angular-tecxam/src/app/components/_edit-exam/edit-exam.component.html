@@ -2,6 +2,37 @@
 <div class="container" style="position: relative">
   <back-button [link]="'courses/1/exams'" [title]="'Cursos'"></back-button><h1 class="page-title">Preguntas del examen</h1>
 </div>
+<div class="row">
+  <div class="card card-signin col-sm-12 col-md-6 col-lg-5">
+    <div class="card-body">
+      <h5 class="card-title text-center">Editar Curso</h5>
+      <form class="form-question" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
+
+        <!-- <div class="form-label-group">
+          <input type="text" id="inputNameTemp" class="form-control" placeholder="Name" required
+          [(ngModel)]="examEdit.name" #nameTemp="ngModel" name="nameTemp" >
+          <label for="inputNameTemp">Nombre</label>
+        </div> -->
+
+        <!-- <div class="form-label-group">
+          <textarea id="inputDescriptionTemp" class="form-control" required
+          rows="5" cols="80" [(ngModel)]="examEdit.description" #descriptionTemp="ngModel" name="descriptionTemp"></textarea>
+          <label for="inputDescriptionTemp">Descripción</label>
+        </div>
+
+        <div class="form-label-group">
+          <input type="text" id="inputDateTemp" class="form-control" placeholder="Date" required
+          [(ngModel)]="examEdit.date" #dateTemp="ngModel" name="dateTemp" >
+          <label for="inputDateTemp">Fecha</label>
+        </div> -->
+
+        <div class="row" style="justify-content: space-between">
+          <button (click)="update()" type="button" class="btn btn-primary btn-block btn-save" name="button" style="border: 2px white !important">Actualizar Curso</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <div id="addExam" class="container" style="display: flex; flex-direction: column">
   <div class="row" style="">
     <div class="card card-signin col-12">

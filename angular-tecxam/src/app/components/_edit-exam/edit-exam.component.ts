@@ -12,6 +12,8 @@ import { AddAnswerModalComponent } from '../add-answer-modal/add-answer-modal.co
   styleUrls: ['./edit-exam.component.sass']
 })
 export class EditExamComponent implements OnInit {
+  examEditable: any = null;
+  courseEdit: any;
   variables: number;
   checkAnswers: boolean = false;
   courseID: string;

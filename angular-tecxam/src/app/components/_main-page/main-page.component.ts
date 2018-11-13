@@ -9,7 +9,10 @@ import { CoursesService } from 'src/app/services/courses.service';
   styleUrls: ['./main-page.component.sass']
 })
 export class MainPageComponent implements OnInit {
+  edit = false;
   rows = [];
+  courseEdit: any;
+  courseEditID: any;
 
   columns = [
     { prop: 'acronym' },
@@ -17,8 +20,6 @@ export class MainPageComponent implements OnInit {
   ];
 
   selected = [];
-
-  temp = [];
 
   @ViewChild('table') table: any;
 
@@ -36,7 +37,7 @@ export class MainPageComponent implements OnInit {
           for(var i in result){
             let row = { acronym: result[i].acronym, name: result[i].name,
                         description: result[i].description, created_at: result[i].created_at,
-                        updated_at: result[i].updated_at, user_id: result[i].user_id,
+                        courseEditd_at: result[i].courseEditd_at, user_id: result[i].user_id,
                         id: result[i].id};
             this.rows.push(row);
           }
@@ -61,11 +62,15 @@ export class MainPageComponent implements OnInit {
   }
 
   onSelect({ selected }) {
-    // console.log('Select Event', selected, this.selected);
     this.selected.splice(0, this.selected.length);
     for(let s in selected){
       this.selected.push(selected[s].id);
     }
+    if(this.selected.length > 1 || this.selected.length < 1){
+      this.courseEdit = null;
+      this.edit = false;
+    }
+    console.log('Select Event', selected, this.selected);
   }
 
   onActivate(event) {
@@ -85,6 +90,7 @@ export class MainPageComponent implements OnInit {
   }
 
   onDetailToggle(event) {
+    console.log(this.selected)
     // console.log('Detail Toggled', event);
   }
 
@@ -121,5 +127,41 @@ export class MainPageComponent implements OnInit {
     }, (reason) => {
       console.log('Closed');
     });  //size: 'sm',
+  }
+
+  checkSelection(id: any){
+    if(this.selected.length == 1 && this.selected == id){
+      console.log(this.selected);
+      return true;
+    }
+    return false;
+  }
+
+  openEdit(){
+    this.edit = true;
+    for(let i in this.rows){
+      if(this.rows[i].id == this.selected){
+        // this.courseEdit = JSON.parse(JSON.stringify(this.rows[i]));;
+        this.courseEdit = { acronym: this.rows[i].acronym, name: this.rows[i].name,
+                    description: this.rows[i].description };
+        this.courseEditID = this.rows[i].id;
+      }
+    }
+    console.log(this.courseEdit);
+  }
+
+  update(){
+    let course = { course: this.courseEdit };
+    this.courseService.update(this.courseEditID, course)
+      .subscribe(
+        (result) => {
+          this.rows = [];
+          // this.load();
+          window.location.reload();
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 }
