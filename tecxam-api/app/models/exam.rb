@@ -1,9 +1,8 @@
 class Exam < ApplicationRecord
-  store_accessor :random_questions
-
   belongs_to :course
   has_and_belongs_to_many :questions
 
+  store_accessor :random_questions
   before_save :add_random_questions
 
   def add_question(q)
@@ -24,7 +23,7 @@ class Exam < ApplicationRecord
 
   def export(answer_key: false)
     export_to_json(answer_key)
-    generate_pdf    
+    generate_pdf
     true
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_10_191619) do
+ActiveRecord::Schema.define(version: 2018_11_14_003658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -18,12 +18,12 @@ ActiveRecord::Schema.define(version: 2018_11_10_191619) do
 
   create_table "answers", force: :cascade do |t|
     t.string "name"
-    t.bigint "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.hstore "variables", default: {}
     t.string "parsed_name", default: ""
     t.boolean "correct", default: false
+    t.bigint "question_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["variables"], name: "index_answers_on_variables", using: :gin
   end
@@ -93,7 +93,6 @@ ActiveRecord::Schema.define(version: 2018_11_10_191619) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "answers", "questions"
   add_foreign_key "courses", "users"
   add_foreign_key "questions", "users"
 end
