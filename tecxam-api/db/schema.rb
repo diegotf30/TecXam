@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_003658) do
+ActiveRecord::Schema.define(version: 2018_11_14_215941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2018_11_14_003658) do
     t.string "parsed_name", default: ""
     t.boolean "correct", default: false
     t.bigint "question_id"
+    t.hstore "last_chosen_variables", default: {}
+    t.index ["last_chosen_variables"], name: "index_answers_on_last_chosen_variables", using: :gin
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["variables"], name: "index_answers_on_variables", using: :gin
   end

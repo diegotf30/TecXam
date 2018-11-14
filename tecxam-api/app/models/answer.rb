@@ -33,7 +33,15 @@ class Answer < ApplicationRecord
 
   def replace_variables(str)
     vars.each do |var, values|
-      str.gsub!(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, eval(values).sample.to_s)
+      random_choice = choose_and_save_var(var, values)
+      str.gsub!(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, random_choice.to_s)
     end
+  end
+
+  def choose_and_save_var(var, values)
+    random_value = eval(values).sample
+    self.last_chosen_variables[var] = random_value
+    save
+    return random_value
   end
 end
