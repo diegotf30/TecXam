@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  // apiEndpoint: 'https://shrouded-cove-16169.herokuapp.com/',
-  // baseEndpoint: 'https://shrouded-cove-16169.herokuapp.com',
-  apiEndpoint: 'http://localhost:5000/',
-  baseEndpoint: 'http://localhost:5000'
+  apiEndpoint: 'https://shrouded-cove-16169.herokuapp.com/',
+  baseEndpoint: 'https://shrouded-cove-16169.herokuapp.com',
+  // apiEndpoint: 'http://localhost:5000/',
+  // baseEndpoint: 'http://localhost:5000'
 };
 
 /*
