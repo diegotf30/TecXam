@@ -33,7 +33,6 @@ export class ExamsPageComponent implements OnInit {
     this.examsService.fill(this.courseID)
       .subscribe(
         (result) => {
-          console.log(result);
           this.rows = [];
           for(var i in result){
             let row = { name: result[i].name, created_at: result[i].created_at,

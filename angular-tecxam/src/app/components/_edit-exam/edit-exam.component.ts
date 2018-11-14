@@ -291,19 +291,8 @@ export class EditExamComponent implements OnInit {
         AddAnswerModalComponent,
         { centered: true, windowClass: 'add-modal' }
         ).result.then((result) => {
-          let answer =  {
-                            'answer': {
-                            	'name': result.name,
-                            	'variables': {},
-                              'correct': result.correct
-                            }
-                          };
-          let vars = result.variables;
-          for(let v in vars){
-            let temp = vars[v].values.split(',');
-            answer.answer.variables[vars[v].var] = temp;
-          }
-          this.addAns(answer);
+      let answer = { answer: result };
+      this.addAns(answer);
     }, (reason) => {
       console.log('Closed');
     });
@@ -327,17 +316,7 @@ export class EditExamComponent implements OnInit {
         AddAnswerModalComponent,
         { centered: true, windowClass: 'add-modal' }
         ).result.then((result) => {
-          let answer =  {
-                            'answer': {
-                            	'name': result.name,
-                            	'variables': {}
-                            }
-                          };
-          let vars = result.variables;
-          for(let v in vars){
-            let temp = vars[v].values.split(',');
-            answer.answer.variables[vars[v].var] = temp;
-          }
+          let answer = { answer: result };
           this.addAns2(id, answer);
     }, (reason) => {
       console.log('Closed');

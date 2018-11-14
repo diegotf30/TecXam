@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
 import { ToastsManager } from 'ng6-toastr/ng2-toastr';
 
 @Component({
@@ -10,9 +9,12 @@ import { ToastsManager } from 'ng6-toastr/ng2-toastr';
 })
 export class AddAnswerModalComponent implements OnInit {
   category: string = null;
-  varNumber = 0;
-  variables = []
-  correct: boolean = false;
+  variables = [];
+  answerEdit = {
+    name: null,
+    correct: false,
+    variables: {}
+  };
 
   constructor(private modal: NgbActiveModal, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -22,58 +24,46 @@ export class AddAnswerModalComponent implements OnInit {
   }
 
   onChangeVar(index, value){
-    this.variables[index].var = value;
+    this.variables[index][0] = value;
   }
 
   onChangeValue(index, value){
-    this.variables[index].values = value;
+    this.variables[index][1] = value;
+    console.log(this.variables[index]);
   }
 
-  onSubmit(f: NgForm){
-    if(f.value.name && this.varNumber < 1){
-      f.value.correct = this.correct;
-      this.modal.close(f.value);
-    }
-    else if(f.value.name && this.varNumber >= 1){
-      let error = false;
-      for(let i in this.variables){
-        if(!this.variables[i].var){
-          error = true;
+  onSubmit(){
+    let miss = false;
+    if(this.variables.length > 0){
+      for(let v in this.variables){
+        if(this.variables[v][0] && this.variables[v][1]){
+          this.answerEdit.variables[this.variables[v][0]] = this.variables[v][1];
         }
-        if(!this.variables[i].values){
-          error = true;
+        else{
+          miss = true;
         }
       }
-      if(error){
-        this.showError('Completa los campos!');
+    }
+    if(miss){
+      this.showError('Llena los campos de variables');
+    }
+    else{
+      if(this.answerEdit.name){
+        this.modal.close(this.answerEdit);
       }
       else{
-        f.value.variables = this.variables;
-        this.modal.close(f.value);
+        this.showError('Ingresa la respuesta!');
       }
     }
-    // else{
-    //   if(!f.value.name){
-    //     this.showError('Ingresa la pregunta!');
-    //   }
-    //   if(!this.category){
-    //     this.showError('Selecciona una categoría!');
-    //   }
-    // }
   }
 
   addVar(){
-    this.varNumber = this.varNumber + 1;
-    this.variables.push({'var':'', 'values':''});
+    this.variables.push([null, null]);
   }
 
 
   showError(msg: string) {
     this.toastr.error(msg, 'Oops!');
-  }
-
-  onChange(e){
-    this.correct = e;
   }
 
 }
