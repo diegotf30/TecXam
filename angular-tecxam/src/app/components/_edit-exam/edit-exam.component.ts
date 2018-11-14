@@ -155,7 +155,8 @@ export class EditExamComponent implements OnInit {
       question: {
         name: this.questionEdit.name,
         points: this.questionEdit.points,
-        tags: this.questionEdit.tags
+        tags: this.questionEdit.tags,
+        category: this.questionEdit.category
       }
     }
     this.questionsService.update(this.courseID, this.examID, this.questionEdit.id, question)
@@ -370,6 +371,30 @@ export class EditExamComponent implements OnInit {
       target: 'destination'
     };
     this._scrollToService.scrollTo(config);
+  }
+
+  onChange(e){
+    if(e.value == 'Opción mutliple'){
+      this.questionEdit.category = 'multiple_choice';
+    }
+    else if(e.value == 'Checkbox'){
+      this.questionEdit.category = 'checkbox';
+    }
+    else if(e.value == 'Radio'){
+      this.questionEdit.category = 'radio';
+    }
+    else if(e.value == 'Caja de Texto corto'){
+      this.questionEdit.category = 'small_textbox';
+    }
+    else if(e.value == 'Caja de Texto largo'){
+      this.questionEdit.category = 'big_textbox';
+    }
+    else if(e.value == 'Párrafo'){
+      this.questionEdit.category = 'paragraph';
+    }
+    else if(e.value == 'Ensayo'){
+      this.questionEdit.category = 'essay';
+    }
   }
 
   showSuccess(msg: string) {

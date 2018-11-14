@@ -1,5 +1,5 @@
 <navbar></navbar>
-<back-button [link]="''" [title]="'Exámenes'"></back-button>
+<back-button [link]="''" [title]="'Regresar a Exámenes'"></back-button>
 <div class="container" style="position: relative">
   <h1 class="page-title">Examen - <span>{{examName}}</span></h1>
 </div>
@@ -96,9 +96,27 @@
             [(ngModel)]="questionEdit.points" #pointss="ngModel" name="pointss"  value="0" min="0" max="100" ngModel>
             <label for="inputPoints">Puntos</label>
           </div>
+
           <div class="form-label-group">
             <tag-input [separatorKeyCodes]="[188, 13]" [placeholder]="'+ Tag'" [secondaryPlaceholder]="'Tags *'" [modelAsStrings]="true" [theme]="'foundation-theme'"
             [(ngModel)]="questionEdit.tags" #tags="ngModel" name="tags" ngModel></tag-input>
+          </div>
+          <div class="form-label-group">
+            <input type="text" id="inputCat" class="form-control" placeholder="Categoria" required
+            [(ngModel)]="questionEdit.category" #cat="ngModel" name="cat" disabled>
+            <label for="inputCat">Categoría</label>
+          </div>
+          <div class="form-group">
+            <select class="form-control selectpicker" id="selectType" (change)="onChange($event.target)">
+              <option selected disabled>Cambiar tipo</option>
+              <option>Opción mutliple</option>
+              <option>Checkbox</option>
+              <option>Radio</option>
+              <option>Caja de Texto corto</option>
+              <option>Caja de Texto largo</option>
+              <option>Párrafo</option>
+              <option>Ensayo</option>
+            </select>
           </div>
 
         </form>
