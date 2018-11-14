@@ -132,6 +132,7 @@ export class ExamsPageComponent implements OnInit {
   }
 
   getPDF(id: any){
+    this.showInfo('Ya estamos haciendo el examen para ti...');
     this.pdfService.get(this.courseID, id)
       .subscribe(
         (result) => {
@@ -153,6 +154,7 @@ export class ExamsPageComponent implements OnInit {
   }
 
   getPDFAns(id: any){
+    this.showInfo('Ya estamos haciendo la hoja de respuestas para ti...');
     this.pdfService.getAns(this.courseID, id)
       .subscribe(
         (result) => {
@@ -182,6 +184,10 @@ export class ExamsPageComponent implements OnInit {
 
   showSuccess(msg: string) {
     this.toastr.success(msg, 'Whoo!');
+  }
+
+  showInfo(msg: string) {
+    this.toastr.info(msg, 'Hey!');
   }
 
   showError(msg: string) {
