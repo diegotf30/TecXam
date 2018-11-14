@@ -38,7 +38,7 @@ export class ExamsPageComponent implements OnInit {
           for(var i in result){
             let row = { name: result[i].name, created_at: result[i].created_at,
                         uploaded_at: result[i].updated_at, course_id: result[i].course_id,
-                        id: result[i].id, is_random: result[i].is_random, type: 'Examen'};
+                        id: result[i].id, random_questions: result[i].random_questions, type: 'Examen'};
             this.rows.push(row);
           }
           this.rows = [...this.rows];
@@ -154,6 +154,13 @@ export class ExamsPageComponent implements OnInit {
           console.error(error);
         }
       );
+  }
+
+  isRandom(tags: any){
+    if(Object.keys(tags).length > 0){
+      return true;
+    }
+    return false;
   }
 
 }
