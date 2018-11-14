@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
 import { ToastsManager } from 'ng6-toastr/ng2-toastr';
 
 @Component({
@@ -13,6 +12,14 @@ export class AddExamModalComponent implements OnInit {
   upload: boolean = false;
   file: File = null;
   fileName = 'Seleccionar archivo...';
+  examEdit = {
+    name: null,
+    date: null,
+    time_limit: null,
+    description: null,
+    random_questions: {}
+  }
+  random_questions = [];
 
   constructor(private modal: NgbActiveModal, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -36,17 +43,19 @@ export class AddExamModalComponent implements OnInit {
     this.fileName = image.item(0).name;
   }
 
-  onSubmit(f: NgForm){
-    if(this.type && f.value.name){
-      f.value.type = this.type;
-      f.value.tags = f.value.tags.replace(' ', '');
-      this.modal.close(f.value);
+  onSubmit(){
+    if(this.type && this.examEdit.name){
+      for(let r in this.random_questions){
+        let temp = this.random_questions[r].split(':');
+        this.examEdit.random_questions[temp[0]] = temp[1];
+      }
+      this.modal.close(this.examEdit);
     }
     else{
       if(!this.type){
         this.showError('Selecciona el tipo de documento');
       }
-      if(!f.value.name){
+      if(!this.examEdit.name){
         this.showError('Dale un nombre!');
       }
     }

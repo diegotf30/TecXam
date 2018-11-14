@@ -2,31 +2,39 @@
   <div class="card card-signin my-5">
     <div class="card-body">
       <h5 class="card-title text-center">Agregar Documento</h5>
-      <form class="form-signin" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
+      <form class="form-signin" #f="ngForm" validate>
+
+
         <div class="form-label-group">
-          <input type="text" id="inputName" class="form-control" placeholder="Name address" required autofocus
-          #name="ngModel" name="name" ngModel>
-          <label for="inputName">Nombre del documento</label>
+          <input type="text" id="inputNameEx" class="form-control" placeholder="Name" required autofocus
+          [(ngModel)]="examEdit.name" #nameEx="ngModel" name="nameEx" >
+          <label for="inputNameEx">Nombre *</label>
         </div>
 
         <div class="form-label-group">
-          <input type="number" id="inputTime" class="form-control" placeholder="Time" required
-          min="0" max="180" value="0"
-          #time="ngModel" name="time" ngModel>
-          <label for="inputTime">Duración esperada (Minutos)</label>
+          <input type="text" id="inputDateEx" class="form-control" placeholder="Date" required
+          [(ngModel)]="examEdit.date" #dateEx="ngModel" name="dateEx" >
+          <label for="inputDateEx">Fecha</label>
         </div>
 
-        <!-- <tag-input [(ngModel)]='items' name="items" theme='bootstrap'
-          [errorMessages]="errorMessages" style="margin-bottom: 10px"></tag-input> -->
+        <div class="form-label-group">
+          <input type="number" id="inputDurationEx" class="form-control" placeholder="Duración" required
+          [(ngModel)]="examEdit.time_limit" #durationEx="ngModel" name="durationEx" min="0" max="500" ngModel>
+          <label for="inputDurationEx">Duración</label>
+        </div>
 
         <div class="form-label-group">
-          <input type="text" id="inputTags" class="form-control" placeholder="Tags" required
-          #tags="ngModel" name="tags" ngModel>
-          <label for="inputTags">Ingresa los tags * (Opcional)</label>
+          <textarea id="inputName" class="form-control" required
+          rows="2" cols="80" [(ngModel)]="examEdit.description" #descriptionEx="ngModel" name="descriptionEx"></textarea>
+          <label for="inputName">Descripción</label>
+        </div>
+
+        <div class="form-label-group">
+          <tag-input  [placeholder]="'+ Tag'" [secondaryPlaceholder]="'Tags *'" [modelAsStrings]="true" [theme]="'bootstrap'"
+          [(ngModel)]="random_questions" #tags="ngModel" name="tags" ngModel></tag-input>
         </div>
 
         <div class="form-group">
-          <!-- <label for="selectType">Tipo de documento</label> -->
           <select class="form-control selectpicker" id="selectType" (change)="onChange($event.target)">
             <option selected disabled>Tipo de documento</option>
             <option>Examen</option>
@@ -34,7 +42,7 @@
             <option>Otro</option>
           </select>
         </div>
-        <div class="input-icons col-12 file-input" *ngIf="upload">
+        <!-- <div class="input-icons col-12 file-input" *ngIf="upload">
             <label class="btn btn-lg btn-primary btn-block form-control">
                 {{fileName}}
                 <input #image (change)="handleBannerInput($event.target.files)"
@@ -43,14 +51,10 @@
                 type="file" style="display: none;">
             </label>
             <fa name="image" class="icons"></fa>
-        </div>
-        <div class="form-label-group">
+        </div> -->
 
-          <textarea class="form-control" id="textAreaNotes" rows="3" placeholder="Notas adicionales"
-          #description="ngModel" name="description" ngModel></textarea>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block text-uppercase">Agregar documento</button>
       </form>
+      <button (click)="onSubmit()" class="btn btn-lg btn-primary btn-block">Agregar documento</button>
     </div>
   </div>
 </div>
