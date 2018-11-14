@@ -70,28 +70,10 @@ export class MainPageComponent implements OnInit {
       this.courseEdit = null;
       this.edit = false;
     }
-    console.log('Select Event', selected, this.selected);
-  }
-
-  onActivate(event) {
-    // var obj = this.rows.some((val) => {
-    // 	return Object.values(val).includes('TC0001');
-    // });
-    // var index = this.rows.findIndex(x => x.Siglas=="TC00000");
-
-    // var filtered = this.rows.filter(x => x.Siglas != "TC00000");
-
-    // console.log('Activate Event', event);
   }
 
   toggleExpandRow(row) {
-    // console.log('Toggled Expand Row!', row);
     this.table.rowDetail.toggleExpandRow(row);
-  }
-
-  onDetailToggle(event) {
-    console.log(this.selected)
-    // console.log('Detail Toggled', event);
   }
 
   onDelete(){
@@ -126,7 +108,7 @@ export class MainPageComponent implements OnInit {
       this.add(course);
     }, (reason) => {
       console.log('Closed');
-    });  //size: 'sm',
+    });
   }
 
   checkSelection(id: any){
@@ -141,13 +123,11 @@ export class MainPageComponent implements OnInit {
     this.edit = true;
     for(let i in this.rows){
       if(this.rows[i].id == this.selected){
-        // this.courseEdit = JSON.parse(JSON.stringify(this.rows[i]));;
         this.courseEdit = { acronym: this.rows[i].acronym, name: this.rows[i].name,
                     description: this.rows[i].description };
         this.courseEditID = this.rows[i].id;
       }
     }
-    console.log(this.courseEdit);
   }
 
   update(){
@@ -155,8 +135,6 @@ export class MainPageComponent implements OnInit {
     this.courseService.update(this.courseEditID, course)
       .subscribe(
         (result) => {
-          this.rows = [];
-          // this.load();
           window.location.reload();
         },
         (error) => {

@@ -16,8 +16,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ToastModule } from 'ng6-toastr/ng2-toastr';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { TagInputModule } from 'ngx-chips'; // Still not used
+import { TagInputModule } from 'ngx-chips';
 import { UiSwitchModule } from 'ngx-toggle-switch';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 //
 // Utility / Services
 //
@@ -73,8 +74,9 @@ import { NotFoundPageComponent } from './components/_not-found-page/not-found-pa
     NgbModule,
     AngularFontAwesomeModule,
     NgxDatatableModule,
-    TagInputModule, // Still not used
-    UiSwitchModule
+    TagInputModule,
+    UiSwitchModule,
+    ScrollToModule.forRoot()
   ],
   providers: [
     BaseService,

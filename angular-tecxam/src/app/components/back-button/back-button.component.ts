@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'back-button',
@@ -9,10 +10,14 @@ export class BackButtonComponent implements OnInit {
   @Input() link: string;
   @Input() title: string;
 
-  constructor() { }
+  constructor(private _location: Location) { }
 
   ngOnInit() {
     this.link = '';
+  }
+
+  back(){
+    this._location.back();
   }
 
 }

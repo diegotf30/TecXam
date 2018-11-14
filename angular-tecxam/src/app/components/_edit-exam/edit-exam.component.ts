@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { ExamsService } from 'src/app/services/exams.service';
 import { QuestionsService } from 'src/app/services/questions.service';
 import { AnswersService } from 'src/app/services/answers.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddQuestionModalComponent } from '../add-question-modal/add-question-modal.component';
 import { AddAnswerModalComponent } from '../add-answer-modal/add-answer-modal.component';
+import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
   selector: 'edit-exam',
@@ -12,10 +14,14 @@ import { AddAnswerModalComponent } from '../add-answer-modal/add-answer-modal.co
   styleUrls: ['./edit-exam.component.sass']
 })
 export class EditExamComponent implements OnInit {
-  examEditable: any = null;
   courseEdit: any;
-  variables: number;
+  questionEdit: any;
+  editQuestion: boolean = false;
+  answerEdit: any;
+  editAnswer: boolean = false;
+  variables = [];
   checkAnswers: boolean = false;
+
   courseID: string;
   examID: string;
 
@@ -34,17 +40,31 @@ export class EditExamComponent implements OnInit {
 
   selected = [];
   selectedAns = [];
-  question: boolean = false;
 
   temp = [];
 
-  constructor(public questionsService: QuestionsService, public answersService: AnswersService, private _location: Location,  private modalService: NgbModal) { }
+  constructor(public examService: ExamsService, public questionsService: QuestionsService,
+              public answersService: AnswersService, private _location: Location,
+              private modalService: NgbModal, private _scrollToService: ScrollToService) { }
 
   ngOnInit() {
     let ids = window.location.pathname.match(/\d+/g);
     this.courseID = ids[0];
     this.examID = ids[1];
+    // this.loadExam();
     this.load();
+  }
+
+  loadExam(){
+    this.examService.get(this.courseID, this.examID)
+      .subscribe(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   load(){
@@ -67,16 +87,16 @@ export class EditExamComponent implements OnInit {
       );
   }
 
-  loadAnswers(id: any){
+  loadAnswers(id: string){
     this.answersService.fill(id)
       .subscribe(
         (result) => {
           this.rows2 = [];
-          console.log(result); // borrar
           for(var i in result){
             let row = { id: result[i].id, name: result[i].name,
                         question_id: result[i].question_id, created_at: result[i].created_at,
-                        updated_at: result[i].updated_at, correct: result[i].correct };
+                        updated_at: result[i].updated_at, correct: result[i].correct,
+                        variables: result[i].variables };
             this.rows2.push(row);
           }
           this.rows2 = [...this.rows2];
@@ -87,8 +107,82 @@ export class EditExamComponent implements OnInit {
       );
   }
 
+  updateQuestion(){
+    let question = {
+      question: {
+        name: this.questionEdit.name,
+        points: this.questionEdit.points,
+        tags: this.questionEdit.tags
+      }
+    }
+    this.questionsService.update(this.courseID, this.examID, this.questionEdit.id, question)
+      .subscribe(
+        (result) => {
+          this.questionEdit = null;
+          this.editQuestion = false;
+          this.load();
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  updateAnswer(){
+    let answer = {
+      answer: {
+        name: this.answerEdit.name,
+        correct: this.answerEdit.correct,
+        variables: {}
+      }
+    };
+    for(let v in this.variables){
+      answer.answer.variables[this.variables[v][0]] = this.variables[v][1];
+    }
+    this.answersService.update(this.questionEdit.id, this.answerEdit.id, answer)
+      .subscribe(
+        (result) => {
+          this.answerEdit = null;
+          this.editAnswer = false;
+          this.loadAnswers(this.questionEdit.id);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  onDelete(){
+    this.questionsService.delete(this.courseID, this.examID, this.questionEdit.id)
+        .subscribe(
+          (result) => {
+            this.editQuestion = false;
+            this.load();
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+  }
+
+  onDeleteAns(){
+    this.answersService.delete(this.questionEdit.id, this.answerEdit.id)
+        .subscribe(
+          (result) => {
+            this.editAnswer = false;
+            this.loadAnswers(this.questionEdit.id);
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+  }
+
   onSelect({ selected }) {
     if(selected[0] != null){
+      this.questionEdit = JSON.parse(JSON.stringify(selected[0]));
+      this.editQuestion = true;
+      this.editAnswer = false;
       if(selected[0].category == 'multiple_choice' || selected[0].category == 'checkbox' || selected[0].category == 'radio'){
         this.checkAnswers = true;
       }
@@ -96,6 +190,30 @@ export class EditExamComponent implements OnInit {
         this.checkAnswers = false;
       }
       this.loadAnswers(selected[0].id);
+      this.triggerScrollTo();
+    }
+    else{
+      this.editAnswer = false;
+      this.editQuestion = false;
+    }
+  }
+
+  onSelectAnswer({ selected }) {
+    if(selected[0] != null){
+      this.answerEdit =JSON.parse(JSON.stringify(selected[0]));
+      console.log(this.answerEdit);
+      this.editAnswer = true;
+      this.variables = [];
+      for (let [key, value] of Object.entries(this.answerEdit.variables)) {
+        let vals = String(value).replace(/[[\]" ]+/g, '').split(',');
+        console.log(vals);
+        this.variables.push([key, vals]);
+      }
+      console.log(this.variables);
+      this.triggerScrollTo();
+    }
+    else{
+      this.editAnswer = false;
     }
   }
 
@@ -103,13 +221,17 @@ export class EditExamComponent implements OnInit {
      return this.selected.indexOf(row) === -1;
   }
 
-  onActivate(event) {
-    // console.log('Activate Event', event);
+  onChangeVar(index, value){
+    this.variables[index][0] = value;
   }
 
-  onChangeVar(e){
-    console.log(e.value);
-    this.variables = e.value;
+  onChangeValue(index, value){
+    this.variables[index][1] = value;
+    console.log(this.variables[index]);
+  }
+
+  addVar(){
+    this.variables.push([null, null]);
   }
 
   open(){
@@ -124,14 +246,14 @@ export class EditExamComponent implements OnInit {
                             	'category': result.category,
                             	'tags': null
                             }
-                          }
+                          };
           let tags = result.tags.split(',');
           question.question.tags = tags;
       this.add(question);
 
     }, (reason) => {
       console.log('Closed');
-    });  //size: 'sm',
+    });
   }
 
   add(postBody: any){
@@ -158,7 +280,7 @@ export class EditExamComponent implements OnInit {
                             	'variables': {},
                               'correct': result.correct
                             }
-                          }
+                          };
           let vars = result.variables;
           for(let v in vars){
             let temp = vars[v].values.split(',');
@@ -167,7 +289,7 @@ export class EditExamComponent implements OnInit {
           this.addAns(answer);
     }, (reason) => {
       console.log('Closed');
-    });  //size: 'sm',
+    });
   }
 
   addAns(postBody: any){
@@ -193,7 +315,7 @@ export class EditExamComponent implements OnInit {
                             	'name': result.name,
                             	'variables': {}
                             }
-                          }
+                          };
           let vars = result.variables;
           for(let v in vars){
             let temp = vars[v].values.split(',');
@@ -202,10 +324,10 @@ export class EditExamComponent implements OnInit {
           this.addAns2(id, answer);
     }, (reason) => {
       console.log('Closed');
-    });  //size: 'sm',
+    });
   }
 
-  addAns2(id: any, postBody: any){
+  addAns2(id: string, postBody: any){
     this.answersService.add(id, postBody)
       .subscribe(
         (result) => {
@@ -216,17 +338,10 @@ export class EditExamComponent implements OnInit {
       );
   }
 
-  test2(){
-    this._location.back();
+  triggerScrollTo(){
+    const config: ScrollToConfigOptions = {
+      target: 'destination'
+    };
+    this._scrollToService.scrollTo(config);
   }
-}
-
-export interface Question {
-    id: any;
-    category: any;
-    created_at: number;
-    points: any;
-    tags: any;
-    updated_at: any;
-    user_id: any;
 }

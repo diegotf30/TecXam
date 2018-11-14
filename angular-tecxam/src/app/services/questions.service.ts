@@ -15,4 +15,12 @@ export class QuestionsService {
   add(cid: string, eid: string, postBody: any){
     return this.base.post(`courses/${cid}/exams/${eid}/questions`, postBody);
   }
+
+  delete(cid: string, eid: string, qid: string){
+    return this.base.delete(`courses/${cid}/exams/${eid}/questions/${qid}`, null);
+  }
+
+  update(cid: string, eid: string, qid: string, postBody: any){
+    return this.base.patch(`courses/${cid}/exams/${eid}/questions/${qid}`, postBody);
+  }
 }

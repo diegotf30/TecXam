@@ -11,13 +11,9 @@
     [footerHeight]="50"
     [rowHeight]="'auto'"
     [selectionType]="'checkbox'"
-    (activate)="onActivate($event)"
     (select)='onSelect($event)'
     [groupRowsBy]="'type'"
     [groupExpansionDefault]="true">
-
-
-
     <!-- Group Header Template -->
         <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader (toggle)="onDetailToggle($event)">
           <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
@@ -56,7 +52,6 @@
       [canAutoResize]="false">
       <ng-template let-row="row" let-group="group" ngx-datatable-cell-template>
         <a routerLink="/courses/{{courseID}}/exams/{{row.id}}/questions"><fa class="i-edit" name="edit" size="lg" animation="" style="margin-right: 10px;" *ngIf="row.type != 'Otro'"></fa></a>
-        <!-- <fa name="edit" size="lg" animation="" class="btn-edit" *ngIf="row.type != 'Otro'" routerLink="/course/edit/{{courseID}}"></fa> -->
         <div class="separator" *ngIf="row.type == 'Otro'"></div>
         <a  (click)="getPDF(row.id)" target="_blank" download><fa class="i-download" name="book" size="lg" animation="" style="margin-right: 10px"></fa></a>
         <a  (click)="getPDFAns(row.id)" target="_blank" download><fa class="i-download" name="tasks" size="lg" animation=""></fa></a>
