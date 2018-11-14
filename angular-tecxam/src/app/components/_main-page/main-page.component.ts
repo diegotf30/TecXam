@@ -151,12 +151,4 @@ export class MainPageComponent implements OnInit {
         }
       );
   }
-
-  showSuccess(msg: string) {
-    this.toastr.success(msg, 'Whoo!');
-  }
-
-  showError(msg: string) {
-    this.toastr.error(msg, 'Oops!');
-  }
 }
