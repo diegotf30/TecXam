@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { ExamsService } from 'src/app/services/exams.service';
 import { QuestionsService } from 'src/app/services/questions.service';
 import { AnswersService } from 'src/app/services/answers.service';
@@ -15,6 +14,7 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 })
 export class EditExamComponent implements OnInit {
   courseEdit: any;
+  examEdit: any;
   questionEdit: any;
   editQuestion: boolean = false;
   answerEdit: any;
@@ -23,6 +23,7 @@ export class EditExamComponent implements OnInit {
   checkAnswers: boolean = false;
 
   courseID: string;
+  examName: string;
   examID: string;
 
   rows = [];
@@ -44,14 +45,14 @@ export class EditExamComponent implements OnInit {
   temp = [];
 
   constructor(public examService: ExamsService, public questionsService: QuestionsService,
-              public answersService: AnswersService, private _location: Location,
+              public answersService: AnswersService,
               private modalService: NgbModal, private _scrollToService: ScrollToService) { }
 
   ngOnInit() {
     let ids = window.location.pathname.match(/\d+/g);
     this.courseID = ids[0];
     this.examID = ids[1];
-    // this.loadExam();
+    this.loadExam();
     this.load();
   }
 
@@ -60,6 +61,8 @@ export class EditExamComponent implements OnInit {
       .subscribe(
         (result) => {
           console.log(result);
+          this.examName = result.name;
+          this.examEdit = JSON.parse(JSON.stringify(result));
         },
         (error) => {
           console.error(error);
@@ -100,6 +103,30 @@ export class EditExamComponent implements OnInit {
             this.rows2.push(row);
           }
           this.rows2 = [...this.rows2];
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  updateExam(){
+    let exam = {
+      exam: {
+        name: this.examEdit.name,
+        date: this.examEdit.date,
+        time_limit: this.examEdit.time_limit,
+        description: this.examEdit.description,
+      }
+    }
+    this.examService.update(this.courseID, this.examID, exam)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          window.location.reload();
+          // this.questionEdit = null;
+          // this.editQuestion = false;
+          // this.load();
         },
         (error) => {
           console.error(error);

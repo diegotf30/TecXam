@@ -20,6 +20,10 @@ export class ExamsService {
     return this.base.delete(`courses/${cid}/exams/${eid}`, null);
   }
 
+  update(cid: string, eid: string, postBody: any){
+    return this.base.patch(`courses/${cid}/exams/${eid}`, postBody);
+  }
+
   get(cid: string, eid: string){
     return this.base.get(`courses/${cid}/exams/${eid}/`);
   }

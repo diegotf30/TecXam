@@ -1,39 +1,57 @@
 <navbar></navbar>
 <div class="container" style="position: relative">
-  <back-button [link]="''" [title]="'Exámenes'"></back-button><h1 class="page-title">Preguntas del examen</h1>
-</div>
-<div class="row">
-  <div class="card card-signin col-sm-12 col-md-6 col-lg-5">
-    <div class="card-body">
-      <h5 class="card-title text-center">Editar Curso</h5>
-      <form class="form-question" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
-
-        <!-- <div class="form-label-group">
-          <input type="text" id="inputNameTemp" class="form-control" placeholder="Name" required
-          [(ngModel)]="examEdit.name" #nameTemp="ngModel" name="nameTemp" >
-          <label for="inputNameTemp">Nombre</label>
-        </div> -->
-
-        <!-- <div class="form-label-group">
-          <textarea id="inputDescriptionTemp" class="form-control" required
-          rows="5" cols="80" [(ngModel)]="examEdit.description" #descriptionTemp="ngModel" name="descriptionTemp"></textarea>
-          <label for="inputDescriptionTemp">Descripción</label>
-        </div>
-
-        <div class="form-label-group">
-          <input type="text" id="inputDateTemp" class="form-control" placeholder="Date" required
-          [(ngModel)]="examEdit.date" #dateTemp="ngModel" name="dateTemp" >
-          <label for="inputDateTemp">Fecha</label>
-        </div> -->
-
-        <div class="row" style="justify-content: space-between">
-          <button (click)="update()" type="button" class="btn btn-primary btn-block btn-save" name="button" style="border: 2px white !important">Actualizar Curso</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <back-button [link]="''" [title]="'Exámenes'"></back-button><h1 class="page-title">Examen - <span>{{examName}}</span></h1>
 </div>
 <div id="addExam" class="container" style="display: flex; flex-direction: column">
+  <div class="row"  style="justify-content: center" *ngIf="examEdit">
+    <div class="card card-signin col-sm-12 col-md-10 col-lg-8">
+      <div class="card-body">
+        <h5 class="card-title text-center">Datos examen</h5>
+        <form class="form-question" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
+
+          <div class="form-label-group">
+            <input type="text" id="inputNameEx" class="form-control" placeholder="Name" required
+            [(ngModel)]="examEdit.name" #nameEx="ngModel" name="nameEx" >
+            <label for="inputNameEx">Nombre</label>
+          </div>
+
+          <div class="form-label-group">
+            <input type="text" id="inputDateEx" class="form-control" placeholder="Date" required
+            [(ngModel)]="examEdit.date" #dateEx="ngModel" name="dateEx" >
+            <label for="inputDateEx">Fecha</label>
+          </div>
+
+          <div class="form-label-group">
+            <input type="number" id="inputDurationEx" class="form-control" placeholder="Duración" required
+            [(ngModel)]="examEdit.time_limit" #durationEx="ngModel" name="durationEx" min="0" max="500" ngModel>
+            <label for="inputDurationEx">Duración</label>
+          </div>
+
+          <div class="form-label-group">
+            <textarea id="inputName" class="form-control" required
+            rows="2" cols="80" [(ngModel)]="examEdit.description" #descriptionEx="ngModel" name="descriptionEx"></textarea>
+            <label for="inputName">Descripción</label>
+          </div>
+
+          <!-- <div class="form-label-group">
+            <textarea id="inputDescriptionTemp" class="form-control" required
+            rows="2" cols="80" [(ngModel)]="examEdit.description" #descriptionTemp="ngModel" name="descriptionTemp"></textarea>
+            <label for="inputDescriptionTemp">Descripción</label>
+          </div>
+
+          <div class="form-label-group">
+            <input type="text" id="inputDateTemp" class="form-control" placeholder="Date" required
+            [(ngModel)]="examEdit.date" #dateTemp="ngModel" name="dateTemp" >
+            <label for="inputDateTemp">Fecha</label>
+          </div> -->
+
+          <div class="row" style="justify-content: space-between">
+            <button (click)="updateExam()" type="button" class="btn btn-primary btn-block btn-save" name="button" style="border: 2px white !important">Actualizar examen</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <div class="row" style="">
     <div class="card card-signin col-12">
       <h5 class="card-title text-center" style="margin-top: 33px; margin-bottom: ;">Lista de preguntas</h5>
@@ -80,7 +98,7 @@
 
           <div class="form-label-group">
             <textarea id="inputName" class="form-control" required
-            rows="5" cols="80" [(ngModel)]="questionEdit.name" #description="ngModel" name="name"></textarea>
+            rows="2" cols="80" [(ngModel)]="questionEdit.name" #description="ngModel" name="description"></textarea>
             <label for="inputName">Pregunta</label>
           </div>
           <div class="form-label-group">
@@ -142,7 +160,7 @@
         <form class="form-signin" #f="ngForm" (ngSubmit)="onSubmit(f)" validate>
 
           <div class="form-label-group">
-            <textarea class="form-control" id="textNameAns" rows="3" placeholder="Respuesta"
+            <textarea class="form-control" id="textNameAns" rows="2" placeholder="Respuesta"
             [(ngModel)]="answerEdit.name" #nameAns="ngModel" name="nameAns" ngModel></textarea>
             <label for="textNameAns">Respuesta</label>
           </div>

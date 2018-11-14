@@ -19,9 +19,8 @@ export class AddCourseModalComponent implements OnInit {
 
   onSubmit(f: NgForm){
     let siglas = f.value.acronym.match(/[a-zA-Z]{2}\d{4}/);
-    console.log(siglas);
     if(f.value.name && siglas){
-      f.value.name = f.value.name.toUpperCase();
+      f.value.acronym = f.value.acronym.toUpperCase();
       this.modal.close(f.value);
     }
     else{
