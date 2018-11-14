@@ -60,7 +60,6 @@ export class EditExamComponent implements OnInit {
     this.examService.get(this.courseID, this.examID)
       .subscribe(
         (result) => {
-          console.log(result);
           this.examName = result.name;
           this.examEdit = JSON.parse(JSON.stringify(result));
         },
@@ -266,16 +265,7 @@ export class EditExamComponent implements OnInit {
         AddQuestionModalComponent,
         { centered: true, windowClass: 'add-modal' }
         ).result.then((result) => {
-          let question =  {
-                            'question': {
-                            	'name': result.name,
-                            	'points': result.points,
-                            	'category': result.category,
-                            	'tags': null
-                            }
-                          };
-          let tags = result.tags.split(',');
-          question.question.tags = tags;
+      let question = { question: result };
       this.add(question);
 
     }, (reason) => {
