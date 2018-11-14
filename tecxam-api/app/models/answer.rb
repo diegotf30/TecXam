@@ -20,6 +20,16 @@ class Answer < ApplicationRecord
     end
   end
 
+  def evaluate_last_export
+    begin
+      replace_last_chosen(parsed_name)
+      return eval(parsed_name).round(3).to_s
+    rescue Exception
+      replace_last_chosen(name)
+      return name
+    end
+  end
+
   private
 
   def parse
@@ -36,12 +46,19 @@ class Answer < ApplicationRecord
       random_choice = choose_and_save_var(var, values)
       str.gsub!(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, random_choice.to_s)
     end
+    save
   end
+
 
   def choose_and_save_var(var, values)
     random_value = eval(values).sample
     self.last_chosen_variables[var] = random_value
-    save
     return random_value
+  end
+
+  def replace_last_chosen(str)
+    last_chosen_variables.each do |var, value|
+      str.gsub!(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, value.to_s)
+    end
   end
 end

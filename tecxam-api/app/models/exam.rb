@@ -46,20 +46,20 @@ class Exam < ApplicationRecord
       exam_date: date,
       exam_description: description,
       time_limit: time_limit,
-      questions: exam_questions
+      questions: exam_questions(answer_key)
     }
     File.write('tmp/exam.json', JSON.pretty_generate(exam_data))
   end
 
-  def exam_questions
+  def exam_questions(answer_key)
     questions.map do |q|
       {
         name: q.name,
         points: q.points,
         category: q.category,
-        answers: q.answers.map do |a|
+        answers: q.answers.order(:created_at).map do |a|
           {
-            value: a.evaluate,
+            value: answer_key ? a.evaluate_last_export : a.evaluate,
             correct: a.correct
           }
         end
