@@ -1,10 +1,14 @@
 class ExamsController < ApplicationController
-  before_action :set_exam, only: [:update, :destroy, :export, :add, :answer_key]
+  before_action :set_exam, only: [:update, :destroy, :show, :export, :add, :answer_key]
   before_action :require_ownership, only: [:update, :destroy, :export]
 
   def index
     @exams = Exam.where(course: course)
     json_response(@exams)
+  end
+
+  def show
+    json_response(@exam)
   end
 
   def create

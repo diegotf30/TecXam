@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :index]
 
   resources :courses, only: [:index, :create, :destroy, :update] do
-    resources :exams, only: [:index, :create, :destroy, :update] do
+    resources :exams, only: [:index, :create, :destroy, :update, :show] do
       get 'export'
       get 'answer_key'
       post 'add/:question_id', to: 'exams#add'
