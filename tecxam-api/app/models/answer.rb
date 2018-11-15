@@ -10,15 +10,11 @@ class Answer < ApplicationRecord
     question.user
   end
 
-  def evaluate(answer_key)
+  def evaluate(answer_key: false)
     begin
-      str = parsed_name
-      replace_variables(answer_key, str)
-      return eval(str).round(3).to_s
+      return eval(replace_variables(answer_key, parsed_name)).round(3).to_s
     rescue Exception
-      str = name
-      replace_variables(answer_key, str)
-      return str
+      return replace_variables(answer_key, name)
     end
   end
 
@@ -35,15 +31,15 @@ class Answer < ApplicationRecord
 
   def replace_variables(answer_key, str)
     (answer_key ? last_chosen_variables : vars).each do |var, values|
-      random_choice = answer_key ? values : choose_and_save_var(var, values)
-      str.gsub!(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, random_choice.to_s)
+      random_choice = answer_key ? values : choose_and_save_variable(var, values)
+      str = str.gsub(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, random_choice.to_s)
     end
     save
+
+    return str
   end
 
-  def choose_and_save_var(var, values)
-    random_value = eval(values).sample
-    self.last_chosen_variables[var] = random_value
-    return random_value
+  def choose_and_save_variable(var, values)
+    self.last_chosen_variables[var] = eval(values).sample
   end
 end
