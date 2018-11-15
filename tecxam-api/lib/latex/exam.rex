@@ -26,20 +26,25 @@ end
 
 def box(size, answer)
   raw "\\begin{solutionorbox}[#{size}]\n"
-    raw answer&.dig('value') || "Seccion revisada por el profesor."
+    raw answer&.dig('value') || "Seccion revisada por el profesor.\n"
   raw "\\end{solutionorbox}\n"
 end
 
 def paragraph(answer)
   raw "\\begin{solutionordottedlines}[2in]\n"
-    raw answer&.dig('value') || "Seccion revisada por el profesor."
+    raw answer&.dig('value') || "Seccion revisada por el profesor.\n"
   raw "\\end{solutionordottedlines}\n"
 end
 
 def essay(answer)
-  raw "\\begin{solutionorlines}[64em]\n"
-    raw answer&.dig('value') || "Seccion revisada por el profesor."
-  raw "\\end{solutionorlines}\n"
+  raw "\\ifprintanswers\n"
+    raw "\\begin{solutionorlines}[2in]\n"
+      raw answer&.dig('value') || "Seccion revisada por el profesor.\n"
+    raw "\\end{solutionorlines}\n"
+  raw "\\else\n"
+    fillwithlines '\fill'
+    newpage
+  raw "\\fi\n"
 end
 
 def read_exam_json
@@ -121,6 +126,8 @@ Tabla para Calificar (para uso exclusivo docente)\\
       if question['category'] == 'checkbox'
         raw "{\n"
         checkboxchar '$\Box$'
+      elsif question['category'] == 'essay' && !json['answer_key']
+        newpage
       end
 
       raw "\\question[#{question['points']}] #{question['name']}\n"
