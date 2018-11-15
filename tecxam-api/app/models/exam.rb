@@ -59,7 +59,7 @@ class Exam < ApplicationRecord
         category: q.category,
         answers: q.answers.order(:created_at).map do |a|
           {
-            value: answer_key ? a.evaluate_last_export : a.evaluate,
+            value: a.evaluate(answer_key),
             correct: a.correct
           }
         end
