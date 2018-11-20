@@ -1,13 +1,21 @@
+require File.expand_path('../config/environment', __FILE__)
 require './lib/season'
-require 'json'
+
+def eval(answer)
+  return answer&.evaluate(answer_key: true)
+end
+
+def print_answers?
+  return ARGV.dig(2) == 'print_answers'
+end
 
 def single_column(category, answers)
   raw "\\begin{#{category}}\n"
-    answers.each do |answer|
-      if answer['correct']
-        CorrectChoice answer['value']
+    answers.each do |a|
+      if a.correct
+        CorrectChoice eval(a)
       else
-        choice answer['value']
+        choice eval(a)
       end
     end
   raw "\\end{#{category}}\n"
@@ -26,20 +34,20 @@ end
 
 def box(size, answer)
   raw "\\begin{solutionorbox}[#{size}]\n"
-    raw answer&.dig('value') || "Seccion revisada por el profesor.\n"
+    raw eval(answer) || "Seccion revisada por el profesor.\n"
   raw "\\end{solutionorbox}\n"
 end
 
 def paragraph(answer)
   raw "\\begin{solutionordottedlines}[2in]\n"
-    raw answer&.dig('value') || "Seccion revisada por el profesor.\n"
+    raw eval(answer) || "Seccion revisada por el profesor.\n"
   raw "\\end{solutionordottedlines}\n"
 end
 
 def essay(answer)
   raw "\\ifprintanswers\n"
     raw "\\begin{solutionorlines}[2in]\n"
-      raw answer&.dig('value') || "Seccion revisada por el profesor.\n"
+      raw eval(answer) || "Seccion revisada por el profesor.\n"
     raw "\\end{solutionorlines}\n"
   raw "\\else\n"
     fillwithlines '\fill'
@@ -47,19 +55,12 @@ def essay(answer)
   raw "\\fi\n"
 end
 
-def read_exam_json
-  file = File.read('tmp/exam.json')
-  return JSON.parse(file)
-end
-
-json = read_exam_json
+exam = Exam.find_by(id: ARGV[1])
 
 nonstopmode
 documentclass 'lib/latex/exam'
 
-if json['answer_key']
-  printanswers
-end
+printanswers if print_answers?
 
 <##
 \usepackage[utf8]{inputenc}
@@ -70,12 +71,11 @@ end
 
 ##>
 
-newcommand '\\class', json['course_name']
+newcommand '\\class', exam.course.name
 newcommand '\\term', "#{Date.today.season} #{Date.today.year}"
-newcommand '\\examnum', json['exam_name'].split.map(&:capitalize).join(' ')
-newcommand '\\examdate', json['exam_date']
-newcommand '\\timelimit', "#{json['time_limit']} Minutos"
-
+newcommand '\\examnum', exam.name.split.map(&:capitalize).join(' ')
+newcommand '\\examdate', exam.date
+newcommand '\\timelimit', "#{exam.time_limit} Minutos"
 
 <##
 \pagestyle{head}
@@ -104,8 +104,7 @@ La máxima calificación es \numpoints.
 
 ##>
 
-  raw json['exam_description']
-  raw '\n'
+  raw "#{exam.description}\n"
 
 <##
 \begin{center}
@@ -120,20 +119,20 @@ Tabla para Calificar (para uso exclusivo docente)\\
 ##>
   questions do
     raw "\n"
-    json['questions'].each do |question|
-      answers = question['answers']
+    exam.questions.each do |question|
+      answers = question.answers.order(:created_at)
 
-      if question['category'] == 'checkbox'
+      if question.category == 'checkbox'
         raw "{\n"
         checkboxchar '$\Box$'
-      elsif question['category'] == 'essay' && !json['answer_key']
+      elsif question.category == 'essay' && !print_answers?
         newpage
       end
 
-      raw "\\question[#{question['points']}] #{question['name']}\n"
+      raw "\\question[#{question.points}] #{question.name}\n"
       addpoints
 
-      case question['category']
+      case question.category
         when 'multiple_choice'
           question('choices', answers)
         when 'checkbox'

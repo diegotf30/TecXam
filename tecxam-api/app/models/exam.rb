@@ -22,7 +22,7 @@ class Exam < ApplicationRecord
   end
 
   def export(answer_key: false)
-    export_to_json(answer_key)
+    generate_latex(answer_key ? 'print_answers' : '')
     generate_pdf
     true
   end
@@ -38,37 +38,11 @@ class Exam < ApplicationRecord
     end
   end
 
-  def export_to_json(answer_key)
-    exam_data = {
-      answer_key: answer_key,
-      course_name: course.name,
-      exam_name: name,
-      exam_date: date,
-      exam_description: description,
-      time_limit: time_limit,
-      questions: exam_questions(answer_key)
-    }
-    File.write('tmp/exam.json', JSON.pretty_generate(exam_data))
-  end
-
-  def exam_questions(answer_key)
-    questions.map do |q|
-      {
-        name: q.name,
-        points: q.points,
-        category: q.category,
-        answers: q.answers.order(:created_at).map do |a|
-          {
-            value: a.evaluate(answer_key: true),
-            correct: a.correct
-          }
-        end
-      }
-    end
+  def generate_latex(print_answers)
+    system("rulex lib/latex/exam.rex #{id} #{print_answers} > tmp/exam.tex")
   end
 
   def generate_pdf
-    system('rulex lib/latex/exam.rex > tmp/exam.tex')
     system('pdflatex -output-directory tmp tmp/exam.tex > /dev/null')
     system('pdflatex -output-directory tmp tmp/exam.tex > /dev/null')
   end
