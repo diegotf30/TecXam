@@ -46,7 +46,7 @@ class AnswersController < ApplicationController
   def answer_params
     params
       .require(:answer)
-      .permit(:name, :correct, variables: {})
+      .permit(:name, :correct)
       .merge(question: question)
   end
 
