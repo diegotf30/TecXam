@@ -59,6 +59,7 @@ def essay(answer)
   raw "\\fi\n"
 end
 
+ActiveRecord::Base.logger = nil
 exam = Exam.find_by(id: ARGV[1])
 
 nonstopmode
