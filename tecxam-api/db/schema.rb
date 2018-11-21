@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 2019_04_30_065316) do
     t.bigint "question_id"
     t.hstore "variables", default: {}
     t.index ["question_id"], name: "index_answers_on_question_id"
-    t.index ["variables"], name: "index_answers_on_variables", using: :gin
   end
 
   create_table "courses", force: :cascade do |t|
