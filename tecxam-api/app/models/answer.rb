@@ -1,10 +1,9 @@
 class Answer < ApplicationRecord
   belongs_to :question
   before_save :parse
+  before_save :add_vars_to_question
 
-  alias_attribute :vars, :variables
-
-  OPERATIONS = { 'sin' => 'Math.sin', 'cos' => 'Math.cos', 'tan' => 'Math.tan', 'mod' => '%' }
+  OPERATIONS = { 'sin' => 'Math.sin', 'cos' => 'Math.cos', 'tan' => 'Math.tan', 'mod' => '%', 'sqrt' => 'Math.sqrt' }
 
   def user
     question.user
@@ -16,6 +15,18 @@ class Answer < ApplicationRecord
     rescue Exception
       return replace_variables(answer_key, name)
     end
+  end
+
+  def last_chosen_variables
+    question.last_chosen_variables
+  end
+
+  def variables
+    question.variables
+  end
+
+  def vars
+    question.vars
   end
 
   private

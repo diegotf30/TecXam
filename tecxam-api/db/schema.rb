@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_215941) do
+ActiveRecord::Schema.define(version: 2018_11_21_223605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -20,10 +20,10 @@ ActiveRecord::Schema.define(version: 2018_11_14_215941) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.hstore "variables", default: {}
     t.string "parsed_name", default: ""
     t.boolean "correct", default: false
     t.bigint "question_id"
+    t.hstore "variables", default: {}
     t.hstore "last_chosen_variables", default: {}
     t.index ["last_chosen_variables"], name: "index_answers_on_last_chosen_variables", using: :gin
     t.index ["question_id"], name: "index_answers_on_question_id"
@@ -73,7 +73,11 @@ ActiveRecord::Schema.define(version: 2018_11_14_215941) do
     t.text "tags", default: [], array: true
     t.integer "points", default: 0
     t.string "category", default: "multiple_choice"
+    t.hstore "variables", default: {}
+    t.hstore "last_chosen_variables", default: {}
+    t.index ["last_chosen_variables"], name: "index_questions_on_last_chosen_variables", using: :gin
     t.index ["user_id"], name: "index_questions_on_user_id"
+    t.index ["variables"], name: "index_questions_on_variables", using: :gin
   end
 
   create_table "users", force: :cascade do |t|
