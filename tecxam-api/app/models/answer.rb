@@ -1,7 +1,7 @@
 class Answer < ApplicationRecord
   belongs_to :question
   before_save :parse
-  before_save :add_vars_to_question
+  before_save :choose_and_save_variables
 
   OPERATIONS = { 'sin' => 'Math.sin', 'cos' => 'Math.cos', 'tan' => 'Math.tan', 'mod' => '%', 'sqrt' => 'Math.sqrt' }
 
@@ -40,6 +40,10 @@ class Answer < ApplicationRecord
     end
   end
 
+  def choose_and_save_variables(var, values)
+    self.last_chosen_variables[var] = eval(values).sample
+  end
+
   def replace_variables(answer_key, str)
     (answer_key ? last_chosen_variables : vars).each do |var, values|
       random_choice = answer_key ? values : choose_and_save_variable(var, values)
@@ -48,9 +52,5 @@ class Answer < ApplicationRecord
     save
 
     return str
-  end
-
-  def choose_and_save_variable(var, values)
-    self.last_chosen_variables[var] = eval(values).sample
   end
 end
