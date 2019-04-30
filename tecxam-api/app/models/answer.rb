@@ -47,6 +47,7 @@ class Answer < ApplicationRecord
   end
 
   def update_question_vars
-    question_vars.merge!(vars).save
+    question_vars.merge!(vars)
+    question.save
   end
 end
