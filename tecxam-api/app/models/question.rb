@@ -19,6 +19,10 @@ class Question < ApplicationRecord
     return replace_variables(name)
   end
 
+  def solution
+    return replace_last_chosen(name)
+  end
+
   private
 
   def replace_variables(str)
@@ -27,6 +31,14 @@ class Question < ApplicationRecord
       str = str.gsub(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, random_choice.to_s)
     end
     save
+
+    return str
+  end
+
+  def replace_variables(str)
+    last_chosen_variables.each do |var, val|
+      str = str.gsub(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, val.to_s)
+    end
 
     return str
   end

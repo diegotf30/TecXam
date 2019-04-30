@@ -129,7 +129,7 @@ Tabla para Calificar (para uso exclusivo docente)\\
         newpage
       end
 
-      raw "\\question[#{question.points}] #{question.name}\n"
+      raw "\\question[#{question.points}] #{print_answers? ? question.solution : question.evaluate}\n"
       addpoints
 
       case question.category
