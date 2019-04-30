@@ -6,5 +6,8 @@
 		"Química",
 		"Biología",
 		"Matemáticas"
-	]
+	],
+	"variables": {
+		"x": [1,2,3]
+	}
 }
