@@ -2,7 +2,11 @@ require File.expand_path('../config/environment', __FILE__)
 require './lib/season'
 
 def eval(answer)
-  return answer&.evaluate(answer_key: print_answers?)
+  if print_answers?
+    return answer&.evaluate(answer_key: print_answers?)
+  else
+    return answer&.name
+  end
 end
 
 def print_answers?

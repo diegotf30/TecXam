@@ -22,8 +22,8 @@ class Question < ApplicationRecord
   private
 
   def replace_variables(str)
-    vars.each do |var, values|
-      random_choice = choose_and_save_variable(var, values)
+    vars.each do |var, possible_values|
+      random_choice = choose_and_save_variable(var, possible_values)
       str = str.gsub(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, random_choice.to_s)
     end
     save
