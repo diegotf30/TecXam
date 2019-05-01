@@ -23,6 +23,10 @@ class Question < ApplicationRecord
     return replace_last_chosen(name)
   end
 
+  def correct_answers
+    answers.where(correct: true)
+  end
+
   private
 
   def replace_variables(str)

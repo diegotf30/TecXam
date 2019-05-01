@@ -1,6 +1,7 @@
 class Exam < ApplicationRecord
   belongs_to :course
   has_and_belongs_to_many :questions
+  has_many :attempts
 
   store_accessor :random_questions
   before_save :add_random_questions
@@ -25,6 +26,19 @@ class Exam < ApplicationRecord
     generate_latex(answer_key ? 'print_answers' : '')
     generate_pdf
     true
+  end
+
+  def hand_out(close_date)
+    self.token = loop do
+      random_token = rand(10 ** 5).to_s.rjust(5, '0')
+      break random_token unless Exam.exists?(token: random_token)
+    end
+    self.close_date = close_date
+    true
+  end
+
+  def close
+    self.close_date = Date.current
   end
 
   private

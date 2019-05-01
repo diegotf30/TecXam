@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_065316) do
+ActiveRecord::Schema.define(version: 2019_04_30_134441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -26,6 +26,20 @@ ActiveRecord::Schema.define(version: 2019_04_30_065316) do
     t.hstore "variables", default: {}
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["variables"], name: "index_answers_on_variables", using: :gin
+  end
+
+  create_table "attempts", force: :cascade do |t|
+    t.bigint "exam_id"
+    t.string "exam_token"
+    t.hstore "answers", default: {}
+    t.hstore "hstore", default: {}
+    t.string "student_id"
+    t.datetime "close_date"
+    t.float "grade", default: 0.0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answers"], name: "index_attempts_on_answers", using: :gin
+    t.index ["exam_id"], name: "index_attempts_on_exam_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -47,6 +61,7 @@ ActiveRecord::Schema.define(version: 2019_04_30_065316) do
     t.text "description", default: ""
     t.string "date", default: ""
     t.integer "time_limit", default: 90
+    t.string "token"
     t.index ["course_id"], name: "index_exams_on_course_id"
     t.index ["random_questions"], name: "index_exams_on_random_questions", using: :gin
   end
@@ -97,6 +112,7 @@ ActiveRecord::Schema.define(version: 2019_04_30_065316) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "attempts", "exams"
   add_foreign_key "courses", "users"
   add_foreign_key "questions", "users"
 end
