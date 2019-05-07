@@ -39,7 +39,7 @@ class Question < ApplicationRecord
     return str
   end
 
-  def replace_variables(str)
+  def replace_last_chosen(str)
     last_chosen_variables.each do |var, val|
       str = str.gsub(/\b(#{var}|#{var.upcase}|#{var.downcase})\b/, val.to_s)
     end

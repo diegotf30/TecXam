@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get 'export'
       get 'answer_key'
       post 'hand_out'
+      post 'close'
       get 'random_questions'
     end
 
