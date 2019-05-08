@@ -34,11 +34,12 @@ class Exam < ApplicationRecord
       break random_token unless Exam.exists?(token: random_token)
     end
     self.close_date = close_date
-    true
+    save
   end
 
   def close
     self.close_date = Date.current
+    save
   end
 
   def open?
