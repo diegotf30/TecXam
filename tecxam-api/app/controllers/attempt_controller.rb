@@ -1,13 +1,19 @@
 class AttemptsController < ApplicationController
   before_action :set_attempt, only: [:show, :update, :destroy]
-
-  def index
-    @attempts = Attempt.where(exam: exam)
-    json_response(@attempts)
-  end
+  before_action :skip_authenticate_user!
 
   def show
     json_response(@attempt)
+  end
+
+  def create
+    @attempt = Attempt.new(attempt_params)
+
+    if @attempt.save
+      render :show, status: :created, location: @attempt
+    else
+      validation_error(@attempt)
+    end
   end
 
   def update
@@ -20,6 +26,11 @@ class AttemptsController < ApplicationController
 
   def destroy
     @attempt.destroy
+  end
+
+  def take_exam
+    @exam = Exam.find_by_token(room_code)
+    json_response(@exam)
   end
 
   private
@@ -35,7 +46,8 @@ class AttemptsController < ApplicationController
     @attempt = Attempt.find(params[:id])
   end
 
-  def exam
-    @exam ||= Exam.find(params[:exam_id])
+  def room_code
+    params[:token]
   end
 end
+  

@@ -1,7 +1,7 @@
 class Exam < ApplicationRecord
   belongs_to :course
   has_and_belongs_to_many :questions
-  has_many :attempts
+  has_many :attempts, -> { where exam_token: true }
 
   store_accessor :random_questions
   before_save :add_random_questions
@@ -44,7 +44,7 @@ class Exam < ApplicationRecord
 
   def open?
     if self.token?
-      return self.close_date ? self.close_date < Date.current : true
+      return self.close_date ? self.close_date > Date.current : true
     else
       return false
     end

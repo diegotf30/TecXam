@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     scope module: :exams do
       resources :exams, only: [] do
         resources :questions, only: [:index, :create, :destroy, :update]
-        resources :attempts
+        resources :attempts, only: [:index, :destroy, :update, :show]
       end
     end
   end
@@ -39,7 +39,9 @@ Rails.application.routes.draw do
   end
 
   get 'tags', to: 'questions#tags'
-  post ':token', to: 'root#take_exam'
+  
+  resources :attempt, only: [:create, :destroy, :update, :show]
+  post ':token', to: 'attempt#take_exam'
 
   default_url_options :host => "example.com"
 end
