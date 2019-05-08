@@ -43,7 +43,11 @@ class Exam < ApplicationRecord
   end
 
   def open?
-    self.token? && self.close_date < Date.current
+    if self.token?
+      return self.close_date ? self.close_date < Date.current : true
+    else
+      return false
+    end
   end
 
   private
