@@ -1,6 +1,6 @@
 class ExamsController < ApplicationController
-  before_action :set_exam, only: [:update, :destroy, :show, :export, :add, :answer_key, :present]
-  before_action :require_ownership, only: [:update, :destroy, :export, :present]
+  before_action :set_exam, only: [:update, :destroy, :show, :export, :add, :answer_key, :present, :hand_out, :close, :is_open]
+  before_action :require_ownership, only: [:update, :destroy, :export, :present, :hand_out, :close, :is_open]
 
   def index
     @exams = Exam.where(course: course)
@@ -62,7 +62,7 @@ class ExamsController < ApplicationController
   end
 
   def hand_out
-    if @exam.hand_out(params[:close_date])
+    if @exam.hand_out(close_date: params[:close_date])
       render json: @exam, status: :ok
     else
       validation_error(@exam)

@@ -28,7 +28,7 @@ class Exam < ApplicationRecord
     true
   end
 
-  def hand_out(close_date)
+  def hand_out(close_date: nil)
     self.token = loop do
       random_token = rand(10 ** 5).to_s.rjust(5, '0')
       break random_token unless Exam.exists?(token: random_token)
