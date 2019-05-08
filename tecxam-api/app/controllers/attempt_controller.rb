@@ -29,8 +29,7 @@ class AttemptsController < ApplicationController
   end
 
   def take_exam
-    @exam = Exam.find_by_token(room_code)
-    json_response(@exam)
+    json_response(exam)
   end
 
   private
@@ -40,6 +39,10 @@ class AttemptsController < ApplicationController
       .require(:attempt)
       .permit(:exam_token, :student_id)
       .merge(exam: exam)
+  end
+
+  def exam
+    @exam ||= Exam.find_by_token(room_code)
   end
 
   def set_attempt
