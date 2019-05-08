@@ -41,6 +41,10 @@ class Exam < ApplicationRecord
     self.close_date = Date.current
   end
 
+  def open?
+    self.token? && self.close_date < Date.current
+  end
+
   private
 
   def add_random_questions

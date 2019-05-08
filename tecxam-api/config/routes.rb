@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get 'answer_key'
       post 'hand_out'
       post 'close'
+      get 'is_open'
       get 'random_questions'
     end
 

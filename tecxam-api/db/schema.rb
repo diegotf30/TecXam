@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_134441) do
+ActiveRecord::Schema.define(version: 2019_05_08_035815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2019_04_30_134441) do
     t.hstore "answers", default: {}
     t.hstore "hstore", default: {}
     t.string "student_id"
-    t.datetime "close_date"
     t.float "grade", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -62,6 +61,7 @@ ActiveRecord::Schema.define(version: 2019_04_30_134441) do
     t.string "date", default: ""
     t.integer "time_limit", default: 90
     t.string "token"
+    t.date "close_date"
     t.index ["course_id"], name: "index_exams_on_course_id"
     t.index ["random_questions"], name: "index_exams_on_random_questions", using: :gin
   end

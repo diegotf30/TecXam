@@ -77,6 +77,14 @@ class ExamsController < ApplicationController
     end
   end
 
+  def is_open
+    if @exam.open?
+      render json: @exam, status: :ok
+    else
+      validation_error(@exam)
+    end
+  end
+
   def random_questions
     json_response(questions.order("RANDOM()"))
   end
